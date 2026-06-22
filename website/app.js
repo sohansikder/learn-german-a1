@@ -33,27 +33,26 @@ function initNavbar() {
     lastScroll = scrollY;
   }, { passive: true });
 
-  // Active link highlighting
+  // Active link highlighting using IntersectionObserver
   const sections = document.querySelectorAll('section[id]');
   const navLinks = document.querySelectorAll('.navbar__link');
 
-  window.addEventListener('scroll', () => {
-    const scrollPos = window.scrollY + 200;
-    sections.forEach(section => {
-      const top = section.offsetTop;
-      const height = section.offsetHeight;
-      const id = section.getAttribute('id');
-
-      if (scrollPos >= top && scrollPos < top + height) {
+  const navObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
         navLinks.forEach(link => {
           link.classList.remove('active');
-          if (link.getAttribute('href') === `#${id}`) {
+          if (link.getAttribute('href') === `#${entry.target.id}`) {
             link.classList.add('active');
           }
         });
       }
     });
-  }, { passive: true });
+  }, {
+    rootMargin: '-50% 0px -50% 0px' // Trigger when section is in the middle of the viewport
+  });
+
+  sections.forEach(section => navObserver.observe(section));
 
   // Mobile hamburger
   hamburger.addEventListener('click', () => {
@@ -406,6 +405,285 @@ function initTypingEffect() {
   }
 }
 
+/* (Flutter app iframe removed — now fully web-based) */
+
+window.playAudio = function(event, text) {
+  if (event) {
+    event.stopPropagation();
+  }
+  window.speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = 'de-DE';
+  utterance.rate = parseFloat(localStorage.getItem('db_speechRate') || '0.85');
+
+  // Visual feedback on the button
+  if (event && event.currentTarget) {
+    const btn = event.currentTarget;
+    btn.classList.add('audio-playing');
+    utterance.onend = () => btn.classList.remove('audio-playing');
+    utterance.onerror = () => btn.classList.remove('audio-playing');
+  }
+
+  window.speechSynthesis.speak(utterance);
+};
+
+/* ═══════════════════════════════════════════════════════════
+   SPEED CONTROL — Speech rate toggle
+   ═══════════════════════════════════════════════════════════ */
+function initSpeedControl() {
+  const speeds = [
+    { label: '🐢 Slow', rate: 0.6 },
+    { label: '🚶 Normal', rate: 0.85 },
+    { label: '🏃 Fast', rate: 1.1 },
+  ];
+  const currentRate = parseFloat(localStorage.getItem('db_speechRate') || '0.85');
+
+  const control = document.createElement('div');
+  control.className = 'speed-control';
+  control.innerHTML = `
+    <span class="speed-control__label">🔊 Speech Speed:</span>
+    <div class="speed-control__btns">
+      ${speeds.map(s => `<button class="speed-btn ${s.rate === currentRate ? 'active' : ''}" data-rate="${s.rate}">${s.label}</button>`).join('')}
+    </div>
+  `;
+  // Insert after the gamification widget
+  const gw = document.getElementById('gamification-widget');
+  if (gw) gw.parentNode.insertBefore(control, gw);
+
+  control.querySelectorAll('.speed-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const rate = parseFloat(btn.dataset.rate);
+      localStorage.setItem('db_speechRate', rate);
+      control.querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      // Preview the speed
+      window.playAudio(null, 'Ich lerne Deutsch.');
+    });
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════
+   AUTO-AUDIO — Add 🔊 buttons to grammar tables, numbers, etc.
+   ═══════════════════════════════════════════════════════════ */
+function initAutoAudioButtons() {
+  // Add audio buttons to all grammar table cells with German text
+  document.querySelectorAll('.grammar-table tbody td').forEach(td => {
+    const text = td.textContent.trim();
+    // Skip English-only cells, headers, short labels like "Nom.", "Acc." etc.
+    if (!text || text.length < 2 || /^[A-Z][a-z]+\.$/.test(text) || /^(Masculine|Feminine|Neuter|Plural|Who|What|Where|When|Why|How|Statement|Time|Yes|W-Question)/.test(text)) return;
+    // Check for German text patterns
+    if (/[äöüßÄÖÜ]/.test(text) || /^(der|die|das|ich|du|er|sie|es|wir|ihr|ein|kein|nicht|am|im)\b/i.test(text) || /^[A-Z][a-zäöü]+$/.test(text)) {
+      if (!td.querySelector('.audio-btn')) {
+        const btn = document.createElement('button');
+        btn.className = 'audio-btn audio-btn--inline';
+        btn.textContent = '🔊';
+        btn.title = `Listen: ${text}`;
+        btn.onclick = (e) => window.playAudio(e, text);
+        td.style.position = 'relative';
+        td.appendChild(btn);
+      }
+    }
+  });
+
+  // Add audio to number grid items
+  document.querySelectorAll('.number-grid__item').forEach(item => {
+    const germanWord = item.querySelector('span')?.textContent;
+    if (germanWord && !item.querySelector('.audio-btn')) {
+      item.style.cursor = 'pointer';
+      item.title = `Click to hear: ${germanWord}`;
+      item.addEventListener('click', (e) => window.playAudio(e, germanWord));
+      item.classList.add('has-audio');
+    }
+  });
+
+  // Add audio to culture card highlighted terms
+  document.querySelectorAll('.culture-card__highlight').forEach(el => {
+    el.style.cursor = 'pointer';
+    el.title = `Click to hear: ${el.textContent}`;
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      window.playAudio(e, el.textContent);
+    });
+    el.classList.add('has-audio-highlight');
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════
+   PHRASE SEARCH — Filter phrases by search input
+   ═══════════════════════════════════════════════════════════ */
+function initPhraseSearch() {
+  const tabs = document.getElementById('phrase-tabs');
+  if (!tabs) return;
+
+  const searchBox = document.createElement('div');
+  searchBox.className = 'phrase-search';
+  searchBox.innerHTML = `
+    <input type="text" id="phrase-search-input" placeholder="🔍 Search phrases in German or English..." class="phrase-search__input" />
+  `;
+  tabs.parentNode.insertBefore(searchBox, tabs);
+
+  const input = document.getElementById('phrase-search-input');
+  input.addEventListener('input', () => {
+    const query = input.value.toLowerCase().trim();
+    if (!query) {
+      filterPhrases(currentCategory);
+      return;
+    }
+
+    // Search across all categories
+    const allPhrases = [];
+    Object.entries(phrasesData).forEach(([cat, phrases]) => {
+      phrases.forEach(p => {
+        if (p.german.toLowerCase().includes(query) || p.english.toLowerCase().includes(query) || (p.context && p.context.toLowerCase().includes(query))) {
+          allPhrases.push(p);
+        }
+      });
+    });
+
+    // Deactivate tabs
+    document.querySelectorAll('.phrases__tab').forEach(tab => tab.classList.remove('active'));
+
+    // Render search results
+    const grid = document.getElementById('phrases-grid');
+    grid.innerHTML = '';
+
+    if (allPhrases.length === 0) {
+      grid.innerHTML = '<div style="text-align:center; padding:40px; color:var(--text-secondary);">No phrases found. Try a different search term.</div>';
+      return;
+    }
+
+    allPhrases.forEach((phrase, index) => {
+      const card = document.createElement('div');
+      card.className = 'phrase-card';
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(20px)';
+      card.innerHTML = `
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+          <div class="phrase-card__german">${highlightMatch(phrase.german, query)}</div>
+          <button class="audio-btn" onclick="playAudio(event, '${phrase.german.replace(/'/g, "\\'")}')" title="Listen">🔊</button>
+        </div>
+        <div class="phrase-card__english">${highlightMatch(phrase.english, query)}</div>
+        ${phrase.context ? `<div class="phrase-card__context">💡 ${phrase.context}</div>` : ''}
+      `;
+      grid.appendChild(card);
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          card.style.transition = 'opacity 0.4s ease-out, transform 0.4s ease-out';
+          card.style.opacity = '1';
+          card.style.transform = 'translateY(0)';
+        }, index * 30);
+      });
+    });
+  });
+}
+
+function highlightMatch(text, query) {
+  if (!query) return text;
+  const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+  return text.replace(regex, '<mark>$1</mark>');
+}
+
+/* ═══════════════════════════════════════════════════════════
+   WORD OF THE DAY — Rotating daily word
+   ═══════════════════════════════════════════════════════════ */
+function initWordOfTheDay() {
+  const words = [
+    { de: 'die Gemütlichkeit', en: 'coziness / comfort', ex: 'Deutsche lieben Gemütlichkeit.' },
+    { de: 'der Wanderlust', en: 'desire to travel', ex: 'Ich habe Wanderlust.' },
+    { de: 'das Fernweh', en: 'longing for distant places', ex: 'Ich habe Fernweh.' },
+    { de: 'der Schmetterling', en: 'butterfly', ex: 'Der Schmetterling ist bunt.' },
+    { de: 'die Sehnsucht', en: 'deep longing', ex: 'Sehnsucht nach dem Sommer.' },
+    { de: 'das Fingerspitzengefühl', en: 'intuitive finesse', ex: 'Er hat Fingerspitzengefühl.' },
+    { de: 'der Zeitgeist', en: 'spirit of the times', ex: 'Das ist der Zeitgeist.' },
+  ];
+
+  const dayIndex = Math.floor(Date.now() / 86400000) % words.length;
+  const todaysWord = words[dayIndex];
+
+  const wotd = document.createElement('div');
+  wotd.className = 'wotd reveal';
+  wotd.innerHTML = `
+    <div class="wotd__label">✨ Word of the Day</div>
+    <div class="wotd__word-row">
+      <span class="wotd__word">${todaysWord.de}</span>
+      <button class="audio-btn" onclick="playAudio(event, '${todaysWord.de}')" title="Listen">🔊</button>
+    </div>
+    <div class="wotd__translation">${todaysWord.en}</div>
+    <div class="wotd__example">
+      <em>"${todaysWord.ex}"</em>
+      <button class="audio-btn audio-btn--sm" onclick="playAudio(event, '${todaysWord.ex}')" style="margin-left:8px" title="Listen to example">🔊</button>
+    </div>
+  `;
+
+  // Insert after hero section
+  const hero = document.getElementById('hero');
+  if (hero && hero.nextElementSibling) {
+    hero.parentNode.insertBefore(wotd, hero.nextElementSibling);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   BACK TO TOP BUTTON
+   ═══════════════════════════════════════════════════════════ */
+function initBackToTop() {
+  const btn = document.createElement('button');
+  btn.className = 'back-to-top';
+  btn.innerHTML = '↑';
+  btn.title = 'Back to top';
+  btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  document.body.appendChild(btn);
+
+  window.addEventListener('scroll', () => {
+    btn.classList.toggle('visible', window.scrollY > 500);
+  }, { passive: true });
+}
+
+/* ═══════════════════════════════════════════════════════════
+   KEYBOARD SHORTCUTS
+   ═══════════════════════════════════════════════════════════ */
+function initKeyboardShortcuts() {
+  document.addEventListener('keydown', (e) => {
+    // "/" to focus phrase search
+    if (e.key === '/' && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
+      e.preventDefault();
+      const searchInput = document.getElementById('phrase-search-input');
+      if (searchInput) {
+        searchInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        setTimeout(() => searchInput.focus(), 300);
+      }
+    }
+    // Escape to clear search
+    if (e.key === 'Escape') {
+      const searchInput = document.getElementById('phrase-search-input');
+      if (searchInput && searchInput === document.activeElement) {
+        searchInput.value = '';
+        searchInput.dispatchEvent(new Event('input'));
+        searchInput.blur();
+      }
+    }
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════
+   PROGRESS SAVING — localStorage
+   ═══════════════════════════════════════════════════════════ */
+function initProgressSaving() {
+  const saved = JSON.parse(localStorage.getItem('db_gameState') || '{}');
+  if (saved.xp !== undefined) {
+    xp = saved.xp;
+    level = saved.level || 1;
+    streak = saved.streak || 0;
+    updateGamificationUI();
+  }
+
+  // Save every time XP changes
+  const origAddXP = window.addXP || addXP;
+  window.addXP = function(amount) {
+    origAddXP(amount);
+    localStorage.setItem('db_gameState', JSON.stringify({ xp, level, streak }));
+  };
+}
+
 /* ═══════════════════════════════════════════════════════════
    SMOOTH SCROLL for CTA links
    ═══════════════════════════════════════════════════════════ */
@@ -416,15 +694,6 @@ window.launchApp = function() {
   if (container) {
     container.outerHTML = '<iframe src="../build/web/index.html?v=2" class="app-preview__frame" id="app-iframe"></iframe>';
   }
-};
-
-window.playAudio = function(event, text) {
-  if (event) {
-    event.stopPropagation();
-  }
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = 'de-DE';
-  window.speechSynthesis.speak(utterance);
 };
 
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -519,6 +788,8 @@ window.checkArticle = function(selectedArticle) {
   
   if (selectedArticle === correctArticle) {
     box.classList.add('at-success');
+    // Speak the correct answer
+    window.playAudio(null, `${correctArticle} ${atWords[atCurrentIndex].word}`);
     addXP(10);
     atCurrentIndex = (atCurrentIndex + 1) % atWords.length;
     setTimeout(loadNextArticleWord, 800);
@@ -619,6 +890,8 @@ window.checkSentence = function() {
   if (userSentence === correctSentence) {
     dropzone.style.borderColor = 'var(--das-green)';
     dropzone.style.backgroundColor = 'rgba(102, 187, 106, 0.1)';
+    // Speak the correct sentence
+    window.playAudio(null, correctSentence.replace(' .', '.'));
     addXP(20);
     
     setTimeout(() => {
@@ -640,9 +913,17 @@ window.checkSentence = function() {
   }
 };
 
-// Initialize interactive widgets
+// Initialize everything
 setTimeout(() => {
   updateGamificationUI();
   loadNextArticleWord();
   initSentence();
+  initAutoAudioButtons();
+  initWordOfTheDay();
+  initPhraseSearch();
+  initBackToTop();
+  initSpeedControl();
+  initKeyboardShortcuts();
+  initProgressSaving();
 }, 100);
+

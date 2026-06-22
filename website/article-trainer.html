@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Article Trainer — DeutschBlitz | der, die, das Practice</title>
+  <meta name="description" content="Master German articles (der, die, das) with rapid-fire flashcards. Color-coded training, streak tracking, and XP — DeutschBlitz Article Trainer." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="index.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>" />
+  <style>
+    /* ── Article Trainer Page Styles ── */
+    .trainer-page { min-height: 100vh; display: flex; flex-direction: column; }
+    .trainer-topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: var(--space-md) var(--space-lg);
+      max-width: var(--container-max); margin: 0 auto; width: 100%;
+    }
+    .trainer-topbar__back {
+      display: flex; align-items: center; gap: var(--space-sm);
+      color: var(--text-secondary); font-weight: 600; font-size: 0.95rem;
+      transition: color var(--transition-fast);
+    }
+    .trainer-topbar__back:hover { color: var(--text-primary); }
+    .trainer-topbar__title {
+      font-family: 'Outfit', sans-serif; font-size: 1.25rem; font-weight: 700;
+      display: flex; align-items: center; gap: var(--space-sm);
+    }
+    .trainer-topbar__counter {
+      padding: 6px 16px; border-radius: var(--radius-full);
+      background: var(--glass-bg); border: 1px solid var(--glass-border);
+      font-weight: 700; font-size: 0.9rem;
+    }
+
+    /* Progress bar */
+    .trainer-progress { padding: 0 var(--space-lg); max-width: var(--container-max); margin: 0 auto; width: 100%; }
+    .trainer-progress__bar {
+      height: 6px; border-radius: 3px; background: rgba(255,255,255,0.08); overflow: hidden;
+    }
+    .trainer-progress__fill {
+      height: 100%; border-radius: 3px;
+      background: linear-gradient(90deg, var(--der-blue), var(--die-pink), var(--das-green));
+      transition: width 0.4s ease-out;
+    }
+
+    /* Stats row */
+    .trainer-stats {
+      display: flex; align-items: center; justify-content: center; gap: var(--space-2xl);
+      padding: var(--space-md) var(--space-lg); flex-wrap: wrap;
+    }
+    .trainer-stat {
+      display: flex; flex-direction: column; align-items: center; gap: 2px;
+    }
+    .trainer-stat__value { font-family: 'Outfit', sans-serif; font-size: 1.5rem; font-weight: 800; }
+    .trainer-stat__label { font-size: 0.75rem; color: var(--text-muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; }
+    .trainer-stat__value--correct { color: var(--das-green); }
+    .trainer-stat__value--incorrect { color: var(--red); }
+    .trainer-stat__value--streak { color: var(--orange); }
+
+    /* Word card */
+    .trainer-main { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: var(--space-lg); gap: var(--space-2xl); }
+    .word-card {
+      width: 100%; max-width: 480px; text-align: center;
+      padding: var(--space-3xl) var(--space-xl);
+      background: var(--glass-bg); border: 1px solid var(--glass-border);
+      border-radius: var(--radius-2xl); backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      transition: border-color 0.4s, box-shadow 0.4s, transform 0.3s;
+      position: relative; overflow: hidden;
+    }
+    .word-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--der-blue), var(--die-pink), var(--das-green));
+      opacity: 0.7;
+    }
+    .word-card__word {
+      font-family: 'Outfit', sans-serif; font-size: clamp(2.5rem, 6vw, 3.5rem);
+      font-weight: 800; margin-bottom: var(--space-md);
+      transition: transform 0.3s ease-out, opacity 0.3s;
+    }
+    .word-card__translation {
+      font-size: 1.1rem; color: var(--text-secondary); font-weight: 500;
+    }
+    .word-card__example {
+      font-size: 0.9rem; color: var(--text-muted); margin-top: var(--space-sm);
+      font-style: italic;
+    }
+    .word-card__audio {
+      position: absolute; top: var(--space-md); right: var(--space-md);
+      background: var(--glass-bg); border: 1px solid var(--glass-border);
+      border-radius: var(--radius-full); width: 40px; height: 40px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; cursor: pointer;
+      transition: background var(--transition-fast), transform var(--transition-fast);
+    }
+    .word-card__audio:hover { background: var(--glass-hover); transform: scale(1.1); }
+
+    /* Feedback states */
+    .word-card.correct {
+      border-color: var(--das-green);
+      box-shadow: 0 0 40px rgba(102, 187, 106, 0.2), inset 0 0 40px rgba(102, 187, 106, 0.05);
+    }
+    .word-card.incorrect {
+      border-color: var(--red);
+      box-shadow: 0 0 40px rgba(239, 83, 80, 0.2), inset 0 0 40px rgba(239, 83, 80, 0.05);
+      animation: shake 0.5s ease-out;
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-10px); }
+      40% { transform: translateX(10px); }
+      60% { transform: translateX(-6px); }
+      80% { transform: translateX(6px); }
+    }
+
+    .word-card__feedback {
+      position: absolute; top: var(--space-md); left: var(--space-md);
+      font-size: 1.5rem; opacity: 0; transition: opacity 0.3s;
+    }
+    .word-card.correct .word-card__feedback,
+    .word-card.incorrect .word-card__feedback { opacity: 1; }
+
+    .word-card__correct-answer {
+      font-size: 0.95rem; color: var(--red); font-weight: 600;
+      margin-top: var(--space-md); opacity: 0; height: 0;
+      transition: opacity 0.3s, height 0.3s;
+    }
+    .word-card.incorrect .word-card__correct-answer { opacity: 1; height: auto; padding-top: var(--space-sm); }
+
+    /* Article buttons */
+    .article-buttons {
+      display: flex; gap: var(--space-md); width: 100%; max-width: 480px; justify-content: center;
+    }
+    .article-btn {
+      flex: 1; padding: 18px 12px; border-radius: var(--radius-xl);
+      font-family: 'Outfit', sans-serif; font-size: 1.5rem; font-weight: 800;
+      border: 2px solid transparent; cursor: pointer;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), opacity var(--transition-fast);
+      text-transform: lowercase; letter-spacing: 0.02em;
+    }
+    .article-btn:hover:not(:disabled) { transform: translateY(-3px); }
+    .article-btn:active:not(:disabled) { transform: scale(0.96); }
+    .article-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none !important; }
+
+    .article-btn--der {
+      background: linear-gradient(135deg, #42A5F5, #1E88E5); color: #fff;
+      box-shadow: 0 4px 20px rgba(66, 165, 245, 0.35);
+    }
+    .article-btn--der:hover:not(:disabled) { box-shadow: 0 8px 30px rgba(66, 165, 245, 0.5); }
+
+    .article-btn--die {
+      background: linear-gradient(135deg, #EC407A, #D81B60); color: #fff;
+      box-shadow: 0 4px 20px rgba(236, 64, 122, 0.35);
+    }
+    .article-btn--die:hover:not(:disabled) { box-shadow: 0 8px 30px rgba(236, 64, 122, 0.5); }
+
+    .article-btn--das {
+      background: linear-gradient(135deg, #66BB6A, #43A047); color: #fff;
+      box-shadow: 0 4px 20px rgba(102, 187, 106, 0.35);
+    }
+    .article-btn--das:hover:not(:disabled) { box-shadow: 0 8px 30px rgba(102, 187, 106, 0.5); }
+
+    /* Results screen */
+    .results {
+      display: none; flex-direction: column; align-items: center;
+      justify-content: center; text-align: center; padding: var(--space-2xl);
+      min-height: 60vh; gap: var(--space-lg);
+    }
+    .results.active { display: flex; }
+    .results__emoji { font-size: 5rem; animation: pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
+    @keyframes pop {
+      0% { transform: scale(0); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .results__title { font-family: 'Outfit', sans-serif; font-size: 2rem; font-weight: 800; }
+    .results__stats {
+      display: flex; gap: var(--space-2xl); flex-wrap: wrap; justify-content: center;
+    }
+    .results__stat { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+    .results__stat-value { font-family: 'Outfit', sans-serif; font-size: 2rem; font-weight: 800; }
+    .results__stat-label { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .results__xp {
+      display: inline-flex; align-items: center; gap: var(--space-sm);
+      padding: 12px 28px; border-radius: var(--radius-full);
+      background: linear-gradient(135deg, var(--gold), #FFC107);
+      color: #000; font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 1.2rem;
+      box-shadow: 0 4px 20px rgba(255, 213, 79, 0.4);
+    }
+    .results__actions { display: flex; gap: var(--space-md); flex-wrap: wrap; justify-content: center; margin-top: var(--space-md); }
+
+    /* Confetti */
+    .confetti-container {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 9999; overflow: hidden;
+    }
+    .confetti-piece {
+      position: absolute; width: 10px; height: 10px;
+      top: -20px; opacity: 0;
+      animation: confetti-fall 3s ease-in forwards;
+    }
+    @keyframes confetti-fall {
+      0% { opacity: 1; transform: translateY(0) rotate(0deg); }
+      100% { opacity: 0; transform: translateY(100vh) rotate(720deg); }
+    }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .article-btn { font-size: 1.2rem; padding: 14px 8px; }
+      .trainer-stats { gap: var(--space-lg); }
+    }
+
+    /* Start screen */
+    .start-screen {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; min-height: 60vh; gap: var(--space-lg); padding: var(--space-2xl);
+    }
+    .start-screen__icon { font-size: 4rem; margin-bottom: var(--space-sm); }
+    .start-screen__title { font-family: 'Outfit', sans-serif; font-size: 2.5rem; font-weight: 800; }
+    .start-screen__desc { font-size: 1.1rem; color: var(--text-secondary); max-width: 500px; line-height: 1.7; }
+    .start-screen__rules {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-md);
+      max-width: 500px; width: 100%;
+    }
+    .start-screen__rule {
+      padding: var(--space-md); border-radius: var(--radius-lg);
+      background: var(--glass-bg); border: 1px solid var(--glass-border);
+      text-align: center;
+    }
+    .start-screen__rule-article { font-family: 'Outfit', sans-serif; font-size: 1.5rem; font-weight: 800; }
+    .start-screen__rule-label { font-size: 0.8rem; color: var(--text-muted); margin-top: 4px; }
+    @media (max-width: 480px) { .start-screen__rules { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="trainer-page">
+    <!-- Top Bar -->
+    <div class="trainer-topbar">
+      <a href="index.html" class="trainer-topbar__back">← Home</a>
+      <span class="trainer-topbar__title">🇩🇪 Article Trainer</span>
+      <span class="trainer-topbar__counter" id="at-counter">0 / 15</span>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="trainer-progress" id="at-progress-wrap" style="display:none;">
+      <div class="trainer-progress__bar">
+        <div class="trainer-progress__fill" id="at-progress" style="width: 0%;"></div>
+      </div>
+    </div>
+
+    <!-- Stats Row -->
+    <div class="trainer-stats" id="at-stats" style="display:none;">
+      <div class="trainer-stat">
+        <span class="trainer-stat__value trainer-stat__value--correct" id="at-correct">0</span>
+        <span class="trainer-stat__label">Correct</span>
+      </div>
+      <div class="trainer-stat">
+        <span class="trainer-stat__value trainer-stat__value--incorrect" id="at-incorrect">0</span>
+        <span class="trainer-stat__label">Wrong</span>
+      </div>
+      <div class="trainer-stat">
+        <span class="trainer-stat__value trainer-stat__value--streak" id="at-streak">0</span>
+        <span class="trainer-stat__label">🔥 Streak</span>
+      </div>
+    </div>
+
+    <!-- Start Screen -->
+    <div class="start-screen" id="at-start">
+      <div class="start-screen__icon">🇩🇪</div>
+      <h1 class="start-screen__title">Article Trainer</h1>
+      <p class="start-screen__desc">
+        Choose the correct article for each German noun. Every German noun has a grammatical gender — learn them by heart!
+      </p>
+      <div class="start-screen__rules">
+        <div class="start-screen__rule">
+          <div class="start-screen__rule-article" style="color: var(--der-blue);">der</div>
+          <div class="start-screen__rule-label">Masculine</div>
+        </div>
+        <div class="start-screen__rule">
+          <div class="start-screen__rule-article" style="color: var(--die-pink);">die</div>
+          <div class="start-screen__rule-label">Feminine</div>
+        </div>
+        <div class="start-screen__rule">
+          <div class="start-screen__rule-article" style="color: var(--das-green);">das</div>
+          <div class="start-screen__rule-label">Neuter</div>
+        </div>
+      </div>
+      <button class="btn btn--primary" onclick="startGame()" id="at-start-btn" style="font-size:1.1rem; padding: 16px 48px;">
+        ▶ Start Round (15 words)
+      </button>
+    </div>
+
+    <!-- Game Area -->
+    <div class="trainer-main" id="at-game" style="display:none;">
+      <div class="word-card" id="at-word-card">
+        <span class="word-card__feedback" id="at-feedback-icon">✅</span>
+        <button class="word-card__audio" id="at-audio-btn" onclick="speakWord()" title="Listen">🔊</button>
+        <div class="word-card__word" id="at-word">Tisch</div>
+        <div class="word-card__translation" id="at-translation">Table</div>
+        <div class="word-card__example" id="at-example">"Der Tisch steht am Fenster."</div>
+        <div class="word-card__correct-answer" id="at-correct-answer"></div>
+      </div>
+
+      <div class="article-buttons" id="at-buttons">
+        <button class="article-btn article-btn--der" onclick="answer('der')" id="btn-der">der</button>
+        <button class="article-btn article-btn--die" onclick="answer('die')" id="btn-die">die</button>
+        <button class="article-btn article-btn--das" onclick="answer('das')" id="btn-das">das</button>
+      </div>
+    </div>
+
+    <!-- Results Screen -->
+    <div class="results" id="at-results">
+      <div class="results__emoji" id="results-emoji">🏆</div>
+      <h2 class="results__title" id="results-title">Ausgezeichnet!</h2>
+      <div class="results__stats">
+        <div class="results__stat">
+          <span class="results__stat-value" style="color: var(--das-green);" id="results-correct">0</span>
+          <span class="results__stat-label">Correct</span>
+        </div>
+        <div class="results__stat">
+          <span class="results__stat-value" style="color: var(--red);" id="results-incorrect">0</span>
+          <span class="results__stat-label">Wrong</span>
+        </div>
+        <div class="results__stat">
+          <span class="results__stat-value" style="color: var(--orange);" id="results-best-streak">0</span>
+          <span class="results__stat-label">Best Streak</span>
+        </div>
+        <div class="results__stat">
+          <span class="results__stat-value" style="color: var(--die-pink);" id="results-accuracy">0%</span>
+          <span class="results__stat-label">Accuracy</span>
+        </div>
+      </div>
+      <div class="results__xp" id="results-xp">⚡ +0 XP</div>
+      <div class="results__actions">
+        <a href="index.html" class="btn btn--ghost">🏠 Home</a>
+        <button class="btn btn--primary" onclick="startGame()">🔄 Play Again</button>
+        <a href="verb-trainer.html" class="btn btn--ghost">💬 Try Verbs →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confetti container -->
+  <div class="confetti-container" id="confetti-container"></div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   ARTICLE TRAINER — Full Game Logic
+   ═══════════════════════════════════════════════════════════ */
+
+// ── Vocabulary Database (60+ A1 nouns) ──
+const allWords = [
+  // Begrüßung & Vorstellung
+  { word: "Name", article: "der", translation: "Name", example: "Mein Name ist Sohan.", plural: "Namen" },
+  { word: "Frau", article: "die", translation: "Woman / Mrs.", example: "Die Frau liest ein Buch.", plural: "Frauen" },
+  { word: "Kind", article: "das", translation: "Child", example: "Das Kind spielt im Park.", plural: "Kinder" },
+  { word: "Mann", article: "der", translation: "Man", example: "Der Mann arbeitet.", plural: "Männer" },
+  { word: "Freund", article: "der", translation: "Friend (m)", example: "Mein Freund wohnt in Berlin.", plural: "Freunde" },
+  { word: "Freundin", article: "die", translation: "Friend (f)", example: "Meine Freundin lernt Deutsch.", plural: "Freundinnen" },
+
+  // Essen & Trinken
+  { word: "Brot", article: "das", translation: "Bread", example: "Ich esse das Brot zum Frühstück.", plural: "Brote" },
+  { word: "Wasser", article: "das", translation: "Water", example: "Ich trinke Wasser." },
+  { word: "Kaffee", article: "der", translation: "Coffee", example: "Der Kaffee ist heiß." },
+  { word: "Milch", article: "die", translation: "Milk", example: "Die Milch ist frisch." },
+  { word: "Apfel", article: "der", translation: "Apple", example: "Der Apfel ist rot.", plural: "Äpfel" },
+  { word: "Ei", article: "das", translation: "Egg", example: "Ich möchte ein Ei.", plural: "Eier" },
+  { word: "Suppe", article: "die", translation: "Soup", example: "Die Suppe schmeckt gut.", plural: "Suppen" },
+  { word: "Kuchen", article: "der", translation: "Cake", example: "Der Kuchen ist lecker." },
+  { word: "Kartoffel", article: "die", translation: "Potato", example: "Die Kartoffel ist groß.", plural: "Kartoffeln" },
+  { word: "Reis", article: "der", translation: "Rice", example: "Der Reis ist fertig." },
+  { word: "Salat", article: "der", translation: "Salad", example: "Der Salat ist frisch." },
+  { word: "Fleisch", article: "das", translation: "Meat", example: "Das Fleisch ist teuer." },
+
+  // At the Mensa / University
+  { word: "Mensa", article: "die", translation: "University cafeteria", example: "Wir essen in der Mensa." },
+  { word: "Gericht", article: "das", translation: "Dish / Meal", example: "Das Gericht ist lecker.", plural: "Gerichte" },
+  { word: "Teller", article: "der", translation: "Plate", example: "Der Teller ist leer." },
+  { word: "Vorlesung", article: "die", translation: "Lecture", example: "Die Vorlesung beginnt um 8 Uhr.", plural: "Vorlesungen" },
+  { word: "Bibliothek", article: "die", translation: "Library", example: "Die Bibliothek ist groß.", plural: "Bibliotheken" },
+  { word: "Prüfung", article: "die", translation: "Exam", example: "Die Prüfung ist am Montag.", plural: "Prüfungen" },
+  { word: "Buch", article: "das", translation: "Book", example: "Das Buch ist interessant.", plural: "Bücher" },
+  { word: "Stift", article: "der", translation: "Pen", example: "Der Stift schreibt gut.", plural: "Stifte" },
+
+  // City Transit
+  { word: "Straßenbahn", article: "die", translation: "Tram", example: "Die Straßenbahn fährt zum Hauptbahnhof.", plural: "Straßenbahnen" },
+  { word: "Fahrschein", article: "der", translation: "Ticket (transport)", example: "Ich brauche einen Fahrschein.", plural: "Fahrscheine" },
+  { word: "Haltestelle", article: "die", translation: "Stop (bus/tram)", example: "Die Haltestelle ist dort.", plural: "Haltestellen" },
+  { word: "Fahrrad", article: "das", translation: "Bicycle", example: "Das Fahrrad ist neu.", plural: "Fahrräder" },
+  { word: "Bahnhof", article: "der", translation: "Train station", example: "Der Bahnhof ist in der Nähe.", plural: "Bahnhöfe" },
+  { word: "Auto", article: "das", translation: "Car", example: "Das Auto ist schnell.", plural: "Autos" },
+  { word: "Straße", article: "die", translation: "Street", example: "Die Straße ist lang.", plural: "Straßen" },
+
+  // Wohnen
+  { word: "Wohnung", article: "die", translation: "Apartment", example: "Die Wohnung ist groß.", plural: "Wohnungen" },
+  { word: "Zimmer", article: "das", translation: "Room", example: "Das Zimmer ist hell." },
+  { word: "Tisch", article: "der", translation: "Table", example: "Der Tisch steht am Fenster.", plural: "Tische" },
+  { word: "Lampe", article: "die", translation: "Lamp", example: "Die Lampe ist an.", plural: "Lampen" },
+  { word: "Bett", article: "das", translation: "Bed", example: "Das Bett ist bequem.", plural: "Betten" },
+  { word: "Fenster", article: "das", translation: "Window", example: "Das Fenster ist offen." },
+  { word: "Tür", article: "die", translation: "Door", example: "Die Tür ist geschlossen.", plural: "Türen" },
+  { word: "Küche", article: "die", translation: "Kitchen", example: "Die Küche ist klein.", plural: "Küchen" },
+  { word: "Stuhl", article: "der", translation: "Chair", example: "Der Stuhl ist alt.", plural: "Stühle" },
+  { word: "Schrank", article: "der", translation: "Closet / Cabinet", example: "Der Schrank ist voll.", plural: "Schränke" },
+
+  // Nature & Weather
+  { word: "Sonne", article: "die", translation: "Sun", example: "Die Sonne scheint." },
+  { word: "Regen", article: "der", translation: "Rain", example: "Der Regen hört nicht auf." },
+  { word: "Baum", article: "der", translation: "Tree", example: "Der Baum ist groß.", plural: "Bäume" },
+  { word: "Blume", article: "die", translation: "Flower", example: "Die Blume ist schön.", plural: "Blumen" },
+
+  // Body & Health
+  { word: "Kopf", article: "der", translation: "Head", example: "Mein Kopf tut weh.", plural: "Köpfe" },
+  { word: "Hand", article: "die", translation: "Hand", example: "Die Hand ist sauber.", plural: "Hände" },
+  { word: "Auge", article: "das", translation: "Eye", example: "Das Auge ist blau.", plural: "Augen" },
+
+  // Sustainable Resources Engineering
+  { word: "Energie", article: "die", translation: "Energy", example: "Erneuerbare Energie ist wichtig." },
+  { word: "Umwelt", article: "die", translation: "Environment", example: "Wir schützen die Umwelt." },
+  { word: "Nachhaltigkeit", article: "die", translation: "Sustainability", example: "Nachhaltigkeit ist das Ziel." },
+  { word: "Rohstoff", article: "der", translation: "Raw material", example: "Der Rohstoff wird recycelt.", plural: "Rohstoffe" },
+  { word: "Abfall", article: "der", translation: "Waste", example: "Wir trennen den Abfall.", plural: "Abfälle" },
+  { word: "Klima", article: "das", translation: "Climate", example: "Das Klima verändert sich." },
+
+  // Daily Life
+  { word: "Schule", article: "die", translation: "School", example: "Er geht zur Schule.", plural: "Schulen" },
+  { word: "Hund", article: "der", translation: "Dog", example: "Der Hund ist lieb.", plural: "Hunde" },
+  { word: "Katze", article: "die", translation: "Cat", example: "Die Katze schläft.", plural: "Katzen" },
+  { word: "Uhr", article: "die", translation: "Clock / Watch", example: "Die Uhr ist kaputt.", plural: "Uhren" },
+  { word: "Telefon", article: "das", translation: "Telephone", example: "Das Telefon klingelt.", plural: "Telefone" },
+  { word: "Computer", article: "der", translation: "Computer", example: "Der Computer ist neu." },
+  { word: "Tasche", article: "die", translation: "Bag", example: "Die Tasche ist schwer.", plural: "Taschen" },
+  { word: "Schlüssel", article: "der", translation: "Key", example: "Der Schlüssel ist weg." },
+];
+
+// ── Game State ──
+const ROUND_SIZE = 15;
+const XP_PER_CORRECT = 10;
+let roundWords = [];
+let currentIndex = 0;
+let correctCount = 0;
+let incorrectCount = 0;
+let streak = 0;
+let bestStreak = 0;
+let isAnswering = false;
+
+// ── DOM Elements ──
+const els = {};
+document.addEventListener('DOMContentLoaded', () => {
+  ['at-start', 'at-game', 'at-results', 'at-counter', 'at-progress', 'at-progress-wrap',
+   'at-stats', 'at-correct', 'at-incorrect', 'at-streak', 'at-word', 'at-translation',
+   'at-example', 'at-word-card', 'at-feedback-icon', 'at-correct-answer',
+   'results-emoji', 'results-title', 'results-correct', 'results-incorrect',
+   'results-best-streak', 'results-accuracy', 'results-xp',
+   'btn-der', 'btn-die', 'btn-das', 'confetti-container'].forEach(id => {
+    els[id] = document.getElementById(id);
+  });
+});
+
+function shuffleArray(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function startGame() {
+  roundWords = shuffleArray(allWords).slice(0, ROUND_SIZE);
+  currentIndex = 0;
+  correctCount = 0;
+  incorrectCount = 0;
+  streak = 0;
+  bestStreak = 0;
+  isAnswering = false;
+
+  els['at-start'].style.display = 'none';
+  els['at-results'].classList.remove('active');
+  els['at-game'].style.display = 'flex';
+  els['at-progress-wrap'].style.display = 'block';
+  els['at-stats'].style.display = 'flex';
+
+  updateUI();
+  loadWord();
+}
+
+function loadWord() {
+  if (currentIndex >= roundWords.length) {
+    showResults();
+    return;
+  }
+
+  const word = roundWords[currentIndex];
+  els['at-word'].textContent = word.word;
+  els['at-translation'].textContent = word.translation;
+  els['at-example'].textContent = word.example ? `"${word.example}"` : '';
+  els['at-word-card'].className = 'word-card';
+  els['at-feedback-icon'].textContent = '';
+  els['at-correct-answer'].textContent = '';
+  els['at-correct-answer'].style.display = 'none';
+
+  // Enable buttons
+  setButtonsDisabled(false);
+  isAnswering = false;
+
+  // Animate card in
+  els['at-word'].style.opacity = '0';
+  els['at-word'].style.transform = 'translateY(20px)';
+  requestAnimationFrame(() => {
+    els['at-word'].style.transition = 'opacity 0.3s ease-out, transform 0.3s ease-out';
+    els['at-word'].style.opacity = '1';
+    els['at-word'].style.transform = 'translateY(0)';
+  });
+}
+
+function answer(selectedArticle) {
+  if (isAnswering) return;
+  isAnswering = true;
+
+  const word = roundWords[currentIndex];
+  const isCorrect = selectedArticle === word.article;
+
+  if (isCorrect) {
+    correctCount++;
+    streak++;
+    if (streak > bestStreak) bestStreak = streak;
+    els['at-word-card'].className = 'word-card correct';
+    els['at-feedback-icon'].textContent = '✅';
+    speakText(`${word.article} ${word.word}`);
+  } else {
+    incorrectCount++;
+    streak = 0;
+    els['at-word-card'].className = 'word-card incorrect';
+    els['at-feedback-icon'].textContent = '❌';
+    els['at-correct-answer'].textContent = `Correct: ${word.article} ${word.word}`;
+    els['at-correct-answer'].style.display = 'block';
+  }
+
+  setButtonsDisabled(true);
+  currentIndex++;
+  updateUI();
+
+  // Auto-advance after delay
+  setTimeout(() => {
+    loadWord();
+  }, isCorrect ? 800 : 1500);
+}
+
+function updateUI() {
+  const total = roundWords.length;
+  const answered = correctCount + incorrectCount;
+  els['at-counter'].textContent = `${answered} / ${total}`;
+  els['at-progress'].style.width = `${(answered / total) * 100}%`;
+  els['at-correct'].textContent = correctCount;
+  els['at-incorrect'].textContent = incorrectCount;
+  els['at-streak'].textContent = streak;
+}
+
+function setButtonsDisabled(disabled) {
+  els['btn-der'].disabled = disabled;
+  els['btn-die'].disabled = disabled;
+  els['btn-das'].disabled = disabled;
+}
+
+function showResults() {
+  els['at-game'].style.display = 'none';
+  els['at-stats'].style.display = 'none';
+  els['at-results'].classList.add('active');
+
+  const total = correctCount + incorrectCount;
+  const accuracy = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+  const xpEarned = correctCount * XP_PER_CORRECT;
+
+  els['results-correct'].textContent = correctCount;
+  els['results-incorrect'].textContent = incorrectCount;
+  els['results-best-streak'].textContent = bestStreak;
+  els['results-accuracy'].textContent = `${accuracy}%`;
+  els['results-xp'].textContent = `⚡ +${xpEarned} XP`;
+
+  if (accuracy >= 80) {
+    els['results-emoji'].textContent = '🏆';
+    els['results-title'].textContent = 'Ausgezeichnet!';
+  } else if (accuracy >= 50) {
+    els['results-emoji'].textContent = '👏';
+    els['results-title'].textContent = 'Gut gemacht!';
+  } else {
+    els['results-emoji'].textContent = '💪';
+    els['results-title'].textContent = 'Weiter so!';
+  }
+
+  // Save XP to localStorage
+  saveXP(xpEarned);
+
+  // Confetti if good score
+  if (accuracy >= 50) {
+    launchConfetti();
+  }
+}
+
+function speakWord() {
+  const word = roundWords[currentIndex < roundWords.length ? currentIndex : roundWords.length - 1];
+  speakText(word.word);
+}
+
+function speakText(text) {
+  window.speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = 'de-DE';
+  utterance.rate = parseFloat(localStorage.getItem('db_speechRate') || '0.85');
+  window.speechSynthesis.speak(utterance);
+}
+
+function saveXP(amount) {
+  const saved = JSON.parse(localStorage.getItem('db_gameState') || '{}');
+  saved.xp = (saved.xp || 0) + amount;
+  const xpNeeded = (saved.level || 1) * 100;
+  if (saved.xp >= xpNeeded) {
+    saved.xp -= xpNeeded;
+    saved.level = (saved.level || 1) + 1;
+  }
+  localStorage.setItem('db_gameState', JSON.stringify(saved));
+}
+
+function launchConfetti() {
+  const container = els['confetti-container'];
+  const colors = ['#42A5F5', '#EC407A', '#66BB6A', '#FFD54F', '#FF7043', '#AB47BC'];
+  for (let i = 0; i < 80; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.left = `${Math.random() * 100}%`;
+    piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.animationDelay = `${Math.random() * 1}s`;
+    piece.style.animationDuration = `${2 + Math.random() * 2}s`;
+    piece.style.width = `${6 + Math.random() * 8}px`;
+    piece.style.height = `${6 + Math.random() * 8}px`;
+    piece.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+    container.appendChild(piece);
+  }
+  setTimeout(() => { container.innerHTML = ''; }, 4000);
+}
+
+// Keyboard shortcuts
+document.addEventListener('keydown', (e) => {
+  if (isAnswering) return;
+  if (e.key === '1' || e.key === 'd') answer('der');
+  if (e.key === '2' || e.key === 'i') answer('die');
+  if (e.key === '3' || e.key === 'a') answer('das');
+});
+</script>
+</body>
+</html>

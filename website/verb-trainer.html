@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verb Conjugation Trainer — DeutschBlitz | German A1 Verbs</title>
+  <meta name="description" content="Practice German A1 verb conjugations. Learn to conjugate sein, haben, machen, gehen, and more — DeutschBlitz Verb Trainer." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="index.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>" />
+  <style>
+    .trainer-page { min-height: 100vh; display: flex; flex-direction: column; }
+    .trainer-topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: var(--space-md) var(--space-lg);
+      max-width: var(--container-max); margin: 0 auto; width: 100%;
+    }
+    .trainer-topbar__back {
+      display: flex; align-items: center; gap: var(--space-sm);
+      color: var(--text-secondary); font-weight: 600; font-size: 0.95rem;
+      transition: color var(--transition-fast);
+    }
+    .trainer-topbar__back:hover { color: var(--text-primary); }
+    .trainer-topbar__title {
+      font-family: 'Outfit', sans-serif; font-size: 1.25rem; font-weight: 700;
+      display: flex; align-items: center; gap: var(--space-sm);
+    }
+    .trainer-topbar__counter {
+      padding: 6px 16px; border-radius: var(--radius-full);
+      background: var(--glass-bg); border: 1px solid var(--glass-border);
+      font-weight: 700; font-size: 0.9rem;
+    }
+    .trainer-progress { padding: 0 var(--space-lg); max-width: var(--container-max); margin: 0 auto; width: 100%; }
+    .trainer-progress__bar {
+      height: 6px; border-radius: 3px; background: rgba(255,255,255,0.08); overflow: hidden;
+    }
+    .trainer-progress__fill {
+      height: 100%; border-radius: 3px;
+      background: linear-gradient(90deg, #EC407A, #AB47BC);
+      transition: width 0.4s ease-out;
+    }
+    .trainer-main {
+      flex: 1; display: flex; flex-direction: column; align-items: center;
+      justify-content: center; padding: var(--space-lg); gap: var(--space-2xl);
+    }
+
+    /* Verb card */
+    .verb-card {
+      width: 100%; max-width: 520px; text-align: center;
+      padding: var(--space-2xl) var(--space-xl);
+      background: var(--glass-bg); border: 1px solid var(--glass-border);
+      border-radius: var(--radius-2xl); backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px); position: relative; overflow: hidden;
+    }
+    .verb-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, #EC407A, #AB47BC);
+    }
+    .verb-card__infinitive {
+      font-family: 'Outfit', sans-serif; font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 800; color: #EC407A;
+    }
+    .verb-card__english {
+      font-size: 1rem; color: var(--text-secondary); margin-top: var(--space-xs);
+    }
+    .verb-card__irregular {
+      display: inline-block; margin-top: var(--space-sm);
+      padding: 4px 14px; border-radius: var(--radius-full);
+      background: rgba(236, 64, 122, 0.1); border: 1px solid rgba(236, 64, 122, 0.3);
+      color: #EC407A; font-size: 0.75rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Prompt */
+    .verb-prompt {
+      display: flex; align-items: center; justify-content: center;
+      gap: var(--space-md); font-family: 'Outfit', sans-serif;
+    }
+    .verb-prompt__pronoun {
+      font-size: 1.75rem; font-weight: 700; color: var(--text-primary);
+    }
+    .verb-prompt__blank {
+      display: flex; align-items: center; justify-content: center;
+      min-width: 160px; height: 48px; border-bottom: 3px solid var(--text-muted);
+      font-size: 1.5rem; font-weight: 800; transition: border-color 0.3s, color 0.3s;
+    }
+    .verb-prompt__blank.correct { border-color: var(--das-green); color: var(--das-green); }
+    .verb-prompt__blank.incorrect { border-color: var(--red); color: var(--red); }
+
+    /* Options */
+    .verb-options {
+      display: flex; flex-direction: column; gap: var(--space-md);
+      width: 100%; max-width: 400px;
+    }
+    .verb-option {
+      width: 100%; padding: 16px 24px; border-radius: var(--radius-xl);
+      background: var(--glass-bg); border: 2px solid var(--glass-border);
+      color: var(--text-primary); font-family: 'Outfit', sans-serif;
+      font-size: 1.15rem; font-weight: 600; cursor: pointer;
+      transition: transform var(--transition-fast), border-color var(--transition-fast),
+                  background var(--transition-fast), box-shadow var(--transition-fast);
+    }
+    .verb-option:hover:not(:disabled) {
+      transform: translateY(-2px); border-color: rgba(236, 64, 122, 0.4);
+      background: rgba(236, 64, 122, 0.05);
+    }
+    .verb-option:active:not(:disabled) { transform: scale(0.97); }
+    .verb-option:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
+    .verb-option.correct-option {
+      border-color: var(--das-green) !important; background: rgba(102, 187, 106, 0.1) !important;
+      color: var(--das-green) !important; box-shadow: 0 0 20px rgba(102, 187, 106, 0.2);
+    }
+    .verb-option.wrong-option {
+      border-color: var(--red) !important; background: rgba(239, 83, 80, 0.1) !important;
+      color: var(--red) !important;
+    }
+
+    /* Feedback */
+    .verb-feedback {
+      width: 100%; max-width: 400px; padding: var(--space-md);
+      border-radius: var(--radius-lg); text-align: center;
+      display: none; font-weight: 600;
+      animation: feedbackIn 0.3s ease-out;
+    }
+    @keyframes feedbackIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .verb-feedback.correct {
+      display: block; background: rgba(102, 187, 106, 0.1);
+      border: 1px solid rgba(102, 187, 106, 0.3); color: var(--das-green);
+    }
+    .verb-feedback.incorrect {
+      display: block; background: rgba(239, 83, 80, 0.1);
+      border: 1px solid rgba(239, 83, 80, 0.3); color: var(--red);
+    }
+    .verb-feedback__correct-answer { font-weight: 700; margin-top: 4px; }
+
+    .verb-next-btn {
+      padding: 14px 48px; border-radius: var(--radius-xl);
+      background: linear-gradient(135deg, #EC407A, #D81B60); color: #fff;
+      font-family: 'Outfit', sans-serif; font-size: 1rem; font-weight: 700;
+      box-shadow: 0 4px 20px rgba(236, 64, 122, 0.35); cursor: pointer;
+      display: none; transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+    }
+    .verb-next-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(236, 64, 122, 0.5); }
+    .verb-next-btn.visible { display: inline-flex; }
+
+    /* Results */
+    .results {
+      display: none; flex-direction: column; align-items: center;
+      justify-content: center; text-align: center; padding: var(--space-2xl);
+      min-height: 60vh; gap: var(--space-lg);
+    }
+    .results.active { display: flex; }
+    .results__emoji { font-size: 5rem; animation: pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
+    @keyframes pop { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+    .results__title { font-family: 'Outfit', sans-serif; font-size: 2rem; font-weight: 800; }
+    .results__stats { display: flex; gap: var(--space-2xl); flex-wrap: wrap; justify-content: center; }
+    .results__stat { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+    .results__stat-value { font-family: 'Outfit', sans-serif; font-size: 2rem; font-weight: 800; }
+    .results__stat-label { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .results__xp {
+      display: inline-flex; align-items: center; gap: var(--space-sm);
+      padding: 12px 28px; border-radius: var(--radius-full);
+      background: linear-gradient(135deg, var(--gold), #FFC107);
+      color: #000; font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 1.2rem;
+      box-shadow: 0 4px 20px rgba(255, 213, 79, 0.4);
+    }
+    .results__actions { display: flex; gap: var(--space-md); flex-wrap: wrap; justify-content: center; margin-top: var(--space-md); }
+
+    .confetti-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; overflow: hidden; }
+    .confetti-piece {
+      position: absolute; width: 10px; height: 10px; top: -20px; opacity: 0;
+      animation: confetti-fall 3s ease-in forwards;
+    }
+    @keyframes confetti-fall {
+      0% { opacity: 1; transform: translateY(0) rotate(0deg); }
+      100% { opacity: 0; transform: translateY(100vh) rotate(720deg); }
+    }
+
+    /* Start screen */
+    .start-screen {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; min-height: 60vh; gap: var(--space-lg); padding: var(--space-2xl);
+    }
+    .start-screen__icon { font-size: 4rem; }
+    .start-screen__title { font-family: 'Outfit', sans-serif; font-size: 2.5rem; font-weight: 800; }
+    .start-screen__desc { font-size: 1.1rem; color: var(--text-secondary); max-width: 500px; line-height: 1.7; }
+  </style>
+</head>
+<body>
+  <div class="trainer-page">
+    <div class="trainer-topbar">
+      <a href="index.html" class="trainer-topbar__back">← Home</a>
+      <span class="trainer-topbar__title">💬 Verb Trainer</span>
+      <span class="trainer-topbar__counter" id="vt-counter">0 / 10</span>
+    </div>
+
+    <div class="trainer-progress" id="vt-progress-wrap" style="display:none;">
+      <div class="trainer-progress__bar">
+        <div class="trainer-progress__fill" id="vt-progress" style="width: 0%;"></div>
+      </div>
+    </div>
+
+    <!-- Start Screen -->
+    <div class="start-screen" id="vt-start">
+      <div class="start-screen__icon">💬</div>
+      <h1 class="start-screen__title">Verb Conjugation Trainer</h1>
+      <p class="start-screen__desc">
+        Practice conjugating essential German A1 verbs. You'll see an infinitive and a pronoun — pick the correct conjugated form!
+      </p>
+      <button class="btn btn--primary" onclick="startGame()" style="font-size:1.1rem; padding: 16px 48px; background: linear-gradient(135deg, #EC407A, #D81B60);">
+        ▶ Start Round (10 questions)
+      </button>
+    </div>
+
+    <!-- Game Area -->
+    <div class="trainer-main" id="vt-game" style="display:none;">
+      <div class="verb-card">
+        <div class="verb-card__infinitive" id="vt-infinitive">sein</div>
+        <div class="verb-card__english" id="vt-english">to be</div>
+        <div class="verb-card__irregular" id="vt-irregular" style="display:none;">Irregular</div>
+      </div>
+
+      <div class="verb-prompt">
+        <span class="verb-prompt__pronoun" id="vt-pronoun">ich</span>
+        <div class="verb-prompt__blank" id="vt-blank"></div>
+      </div>
+
+      <div class="verb-options" id="vt-options"></div>
+
+      <div class="verb-feedback" id="vt-feedback">
+        <div id="vt-feedback-text"></div>
+        <div class="verb-feedback__correct-answer" id="vt-feedback-correct"></div>
+      </div>
+
+      <button class="verb-next-btn" id="vt-next-btn" onclick="nextQuestion()">Next →</button>
+    </div>
+
+    <!-- Results -->
+    <div class="results" id="vt-results">
+      <div class="results__emoji" id="vr-emoji">🏆</div>
+      <h2 class="results__title" id="vr-title">Ausgezeichnet!</h2>
+      <div class="results__stats">
+        <div class="results__stat">
+          <span class="results__stat-value" style="color: var(--das-green);" id="vr-correct">0</span>
+          <span class="results__stat-label">Correct</span>
+        </div>
+        <div class="results__stat">
+          <span class="results__stat-value" style="color: var(--red);" id="vr-incorrect">0</span>
+          <span class="results__stat-label">Wrong</span>
+        </div>
+        <div class="results__stat">
+          <span class="results__stat-value" style="color: #EC407A;" id="vr-accuracy">0%</span>
+          <span class="results__stat-label">Accuracy</span>
+        </div>
+      </div>
+      <div class="results__xp" id="vr-xp">⚡ +0 XP</div>
+      <div class="results__actions">
+        <a href="index.html" class="btn btn--ghost">🏠 Home</a>
+        <button class="btn btn--primary" onclick="startGame()" style="background: linear-gradient(135deg, #EC407A, #D81B60);">🔄 Play Again</button>
+        <a href="sentence-builder.html" class="btn btn--ghost">🧩 Try Sentences →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="confetti-container" id="confetti-container"></div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   VERB TRAINER — Full Game Logic
+   ═══════════════════════════════════════════════════════════ */
+
+const verbs = [
+  { infinitive: 'sein', english: 'to be', irregular: true,
+    conjugations: { 'ich': 'bin', 'du': 'bist', 'er/sie/es': 'ist', 'wir': 'sind', 'ihr': 'seid', 'sie/Sie': 'sind' }},
+  { infinitive: 'haben', english: 'to have', irregular: true,
+    conjugations: { 'ich': 'habe', 'du': 'hast', 'er/sie/es': 'hat', 'wir': 'haben', 'ihr': 'habt', 'sie/Sie': 'haben' }},
+  { infinitive: 'machen', english: 'to do/make', irregular: false,
+    conjugations: { 'ich': 'mache', 'du': 'machst', 'er/sie/es': 'macht', 'wir': 'machen', 'ihr': 'macht', 'sie/Sie': 'machen' }},
+  { infinitive: 'gehen', english: 'to go', irregular: false,
+    conjugations: { 'ich': 'gehe', 'du': 'gehst', 'er/sie/es': 'geht', 'wir': 'gehen', 'ihr': 'geht', 'sie/Sie': 'gehen' }},
+  { infinitive: 'kommen', english: 'to come', irregular: false,
+    conjugations: { 'ich': 'komme', 'du': 'kommst', 'er/sie/es': 'kommt', 'wir': 'kommen', 'ihr': 'kommt', 'sie/Sie': 'kommen' }},
+  { infinitive: 'wohnen', english: 'to live/reside', irregular: false,
+    conjugations: { 'ich': 'wohne', 'du': 'wohnst', 'er/sie/es': 'wohnt', 'wir': 'wohnen', 'ihr': 'wohnt', 'sie/Sie': 'wohnen' }},
+  { infinitive: 'sprechen', english: 'to speak', irregular: true,
+    conjugations: { 'ich': 'spreche', 'du': 'sprichst', 'er/sie/es': 'spricht', 'wir': 'sprechen', 'ihr': 'sprecht', 'sie/Sie': 'sprechen' }},
+  { infinitive: 'trinken', english: 'to drink', irregular: false,
+    conjugations: { 'ich': 'trinke', 'du': 'trinkst', 'er/sie/es': 'trinkt', 'wir': 'trinken', 'ihr': 'trinkt', 'sie/Sie': 'trinken' }},
+  { infinitive: 'essen', english: 'to eat', irregular: true,
+    conjugations: { 'ich': 'esse', 'du': 'isst', 'er/sie/es': 'isst', 'wir': 'essen', 'ihr': 'esst', 'sie/Sie': 'essen' }},
+  { infinitive: 'schlafen', english: 'to sleep', irregular: true,
+    conjugations: { 'ich': 'schlafe', 'du': 'schläfst', 'er/sie/es': 'schläft', 'wir': 'schlafen', 'ihr': 'schlaft', 'sie/Sie': 'schlafen' }},
+  { infinitive: 'lesen', english: 'to read', irregular: true,
+    conjugations: { 'ich': 'lese', 'du': 'liest', 'er/sie/es': 'liest', 'wir': 'lesen', 'ihr': 'lest', 'sie/Sie': 'lesen' }},
+  { infinitive: 'fahren', english: 'to drive/travel', irregular: true,
+    conjugations: { 'ich': 'fahre', 'du': 'fährst', 'er/sie/es': 'fährt', 'wir': 'fahren', 'ihr': 'fahrt', 'sie/Sie': 'fahren' }},
+  { infinitive: 'sehen', english: 'to see', irregular: true,
+    conjugations: { 'ich': 'sehe', 'du': 'siehst', 'er/sie/es': 'sieht', 'wir': 'sehen', 'ihr': 'seht', 'sie/Sie': 'sehen' }},
+  { infinitive: 'nehmen', english: 'to take', irregular: true,
+    conjugations: { 'ich': 'nehme', 'du': 'nimmst', 'er/sie/es': 'nimmt', 'wir': 'nehmen', 'ihr': 'nehmt', 'sie/Sie': 'nehmen' }},
+  { infinitive: 'geben', english: 'to give', irregular: true,
+    conjugations: { 'ich': 'gebe', 'du': 'gibst', 'er/sie/es': 'gibt', 'wir': 'geben', 'ihr': 'gebt', 'sie/Sie': 'geben' }},
+  { infinitive: 'lernen', english: 'to learn', irregular: false,
+    conjugations: { 'ich': 'lerne', 'du': 'lernst', 'er/sie/es': 'lernt', 'wir': 'lernen', 'ihr': 'lernt', 'sie/Sie': 'lernen' }},
+  { infinitive: 'arbeiten', english: 'to work', irregular: false,
+    conjugations: { 'ich': 'arbeite', 'du': 'arbeitest', 'er/sie/es': 'arbeitet', 'wir': 'arbeiten', 'ihr': 'arbeitet', 'sie/Sie': 'arbeiten' }},
+  { infinitive: 'spielen', english: 'to play', irregular: false,
+    conjugations: { 'ich': 'spiele', 'du': 'spielst', 'er/sie/es': 'spielt', 'wir': 'spielen', 'ihr': 'spielt', 'sie/Sie': 'spielen' }},
+  { infinitive: 'kaufen', english: 'to buy', irregular: false,
+    conjugations: { 'ich': 'kaufe', 'du': 'kaufst', 'er/sie/es': 'kauft', 'wir': 'kaufen', 'ihr': 'kauft', 'sie/Sie': 'kaufen' }},
+  { infinitive: 'brauchen', english: 'to need', irregular: false,
+    conjugations: { 'ich': 'brauche', 'du': 'brauchst', 'er/sie/es': 'braucht', 'wir': 'brauchen', 'ihr': 'braucht', 'sie/Sie': 'brauchen' }},
+];
+
+const ROUND_SIZE = 10;
+const XP_PER_CORRECT = 5;
+let questions = [];
+let currentIndex = 0;
+let correctCount = 0;
+let incorrectCount = 0;
+let showingResult = false;
+
+function shuffleArray(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function generateQuestions(count) {
+  const generated = [];
+  const shuffledVerbs = shuffleArray(verbs);
+
+  for (let i = 0; i < count; i++) {
+    const verb = shuffledVerbs[i % shuffledVerbs.length];
+    const pronouns = shuffleArray(Object.keys(verb.conjugations));
+    const pronoun = pronouns[0];
+    const correct = verb.conjugations[pronoun];
+
+    // Build options: correct + wrong ones
+    const allConj = [...new Set(Object.values(verb.conjugations))].filter(c => c !== correct);
+    shuffleArray(allConj);
+
+    let options = [correct];
+    // Add from same verb
+    for (let j = 0; j < Math.min(2, allConj.length); j++) {
+      options.push(allConj[j]);
+    }
+    // If not enough, borrow from other verbs
+    while (options.length < 4) {
+      const other = verbs[Math.floor(Math.random() * verbs.length)];
+      const otherConjs = Object.values(other.conjugations);
+      const pick = otherConjs[Math.floor(Math.random() * otherConjs.length)];
+      if (!options.includes(pick)) options.push(pick);
+    }
+
+    generated.push({
+      verb, pronoun, correct,
+      options: shuffleArray(options).slice(0, 4)
+    });
+  }
+  return generated;
+}
+
+function startGame() {
+  questions = generateQuestions(ROUND_SIZE);
+  currentIndex = 0;
+  correctCount = 0;
+  incorrectCount = 0;
+  showingResult = false;
+
+  document.getElementById('vt-start').style.display = 'none';
+  document.getElementById('vt-results').classList.remove('active');
+  document.getElementById('vt-game').style.display = 'flex';
+  document.getElementById('vt-progress-wrap').style.display = 'block';
+
+  loadQuestion();
+}
+
+function loadQuestion() {
+  if (currentIndex >= questions.length) {
+    showResults();
+    return;
+  }
+
+  showingResult = false;
+  const q = questions[currentIndex];
+
+  document.getElementById('vt-infinitive').textContent = q.verb.infinitive;
+  document.getElementById('vt-english').textContent = q.verb.english;
+
+  const irregEl = document.getElementById('vt-irregular');
+  irregEl.style.display = q.verb.irregular ? 'inline-block' : 'none';
+
+  document.getElementById('vt-pronoun').textContent = q.pronoun;
+  document.getElementById('vt-blank').textContent = '';
+  document.getElementById('vt-blank').className = 'verb-prompt__blank';
+
+  document.getElementById('vt-feedback').className = 'verb-feedback';
+  document.getElementById('vt-next-btn').classList.remove('visible');
+
+  // Render options
+  const optionsEl = document.getElementById('vt-options');
+  optionsEl.innerHTML = '';
+  q.options.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'verb-option';
+    btn.textContent = opt;
+    btn.onclick = () => answerVerb(opt, btn);
+    optionsEl.appendChild(btn);
+  });
+
+  updateCounter();
+}
+
+function answerVerb(selected, btnEl) {
+  if (showingResult) return;
+  showingResult = true;
+
+  const q = questions[currentIndex];
+  const isCorrect = selected === q.correct;
+
+  // Show in blank
+  const blank = document.getElementById('vt-blank');
+  blank.textContent = selected;
+  blank.className = `verb-prompt__blank ${isCorrect ? 'correct' : 'incorrect'}`;
+
+  // Disable all options and highlight
+  document.querySelectorAll('.verb-option').forEach(btn => {
+    btn.disabled = true;
+    if (btn.textContent === q.correct) btn.classList.add('correct-option');
+    if (btn.textContent === selected && !isCorrect) btn.classList.add('wrong-option');
+  });
+
+  // Show feedback
+  const feedback = document.getElementById('vt-feedback');
+  const feedbackText = document.getElementById('vt-feedback-text');
+  const feedbackCorrect = document.getElementById('vt-feedback-correct');
+
+  if (isCorrect) {
+    correctCount++;
+    feedback.className = 'verb-feedback correct';
+    feedbackText.textContent = '✅ Sehr gut!';
+    feedbackCorrect.textContent = '';
+    speakText(`${q.pronoun} ${q.correct}`);
+  } else {
+    incorrectCount++;
+    feedback.className = 'verb-feedback incorrect';
+    feedbackText.textContent = '❌ Falsch';
+    feedbackCorrect.textContent = `Correct: ${q.pronoun} ${q.correct}`;
+  }
+
+  document.getElementById('vt-next-btn').classList.add('visible');
+  updateCounter();
+}
+
+function nextQuestion() {
+  currentIndex++;
+  loadQuestion();
+}
+
+function updateCounter() {
+  const answered = correctCount + incorrectCount;
+  document.getElementById('vt-counter').textContent = `${answered} / ${questions.length}`;
+  document.getElementById('vt-progress').style.width = `${(answered / questions.length) * 100}%`;
+}
+
+function showResults() {
+  document.getElementById('vt-game').style.display = 'none';
+  document.getElementById('vt-results').classList.add('active');
+
+  const total = correctCount + incorrectCount;
+  const accuracy = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+  const xpEarned = correctCount * XP_PER_CORRECT;
+
+  document.getElementById('vr-correct').textContent = correctCount;
+  document.getElementById('vr-incorrect').textContent = incorrectCount;
+  document.getElementById('vr-accuracy').textContent = `${accuracy}%`;
+  document.getElementById('vr-xp').textContent = `⚡ +${xpEarned} XP`;
+
+  if (accuracy >= 80) {
+    document.getElementById('vr-emoji').textContent = '🏆';
+    document.getElementById('vr-title').textContent = 'Ausgezeichnet!';
+  } else if (accuracy >= 50) {
+    document.getElementById('vr-emoji').textContent = '👏';
+    document.getElementById('vr-title').textContent = 'Gut gemacht!';
+  } else {
+    document.getElementById('vr-emoji').textContent = '💪';
+    document.getElementById('vr-title').textContent = 'Weiter so!';
+  }
+
+  // Save XP
+  const saved = JSON.parse(localStorage.getItem('db_gameState') || '{}');
+  saved.xp = (saved.xp || 0) + xpEarned;
+  const xpNeeded = (saved.level || 1) * 100;
+  if (saved.xp >= xpNeeded) { saved.xp -= xpNeeded; saved.level = (saved.level || 1) + 1; }
+  localStorage.setItem('db_gameState', JSON.stringify(saved));
+
+  if (accuracy >= 50) launchConfetti();
+}
+
+function speakText(text) {
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'de-DE';
+  u.rate = parseFloat(localStorage.getItem('db_speechRate') || '0.85');
+  window.speechSynthesis.speak(u);
+}
+
+function launchConfetti() {
+  const container = document.getElementById('confetti-container');
+  const colors = ['#EC407A', '#AB47BC', '#42A5F5', '#66BB6A', '#FFD54F', '#FF7043'];
+  for (let i = 0; i < 80; i++) {
+    const p = document.createElement('div');
+    p.className = 'confetti-piece';
+    p.style.left = `${Math.random() * 100}%`;
+    p.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    p.style.animationDelay = `${Math.random() * 1}s`;
+    p.style.animationDuration = `${2 + Math.random() * 2}s`;
+    p.style.width = `${6 + Math.random() * 8}px`;
+    p.style.height = `${6 + Math.random() * 8}px`;
+    p.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+    container.appendChild(p);
+  }
+  setTimeout(() => { container.innerHTML = ''; }, 4000);
+}
+
+// Keyboard: 1-4 to select options
+document.addEventListener('keydown', (e) => {
+  if (showingResult && e.key === 'Enter') { nextQuestion(); return; }
+  if (showingResult) return;
+  const idx = parseInt(e.key) - 1;
+  if (idx >= 0 && idx < 4) {
+    const btns = document.querySelectorAll('.verb-option');
+    if (btns[idx]) btns[idx].click();
+  }
+});
+</script>
+</body>
+</html>

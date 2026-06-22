@@ -5,109 +5,84 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DeutschBlitz — Master German A1 | Gamified Language Learning</title>
   <meta name="description" content="DeutschBlitz is a gamified German A1 learning platform. Master articles (der/die/das), vocabulary, sentence structure, and essential phrases — Blitz style ⚡" />
-  <meta name="keywords" content="German A1, learn German, DeutschBlitz, German articles, German vocabulary, German grammar, language learning" />
-  <meta name="author" content="DeutschBlitz" />
-
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet" />
-
-  <!-- Styles -->
   <link rel="stylesheet" href="index.css" />
-
-  <!-- Favicon -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>" />
 </head>
 <body>
-
-  <!-- ═══════════════════════════════════════════════
+  <!-- ===================================================
        NAVIGATION
-       ═══════════════════════════════════════════════ -->
+       =================================================== -->
   <nav class="navbar" id="navbar">
     <div class="navbar__inner">
       <a href="#hero" class="navbar__logo">
         <span class="navbar__logo-icon">⚡</span>
         <span>DeutschBlitz</span>
       </a>
-
       <ul class="navbar__links">
         <li><a href="#features" class="navbar__link">Features</a></li>
+        <li><a href="article-trainer.html" class="navbar__link">🇩🇪 Articles</a></li>
+        <li><a href="verb-trainer.html" class="navbar__link">💬 Verbs</a></li>
+        <li><a href="sentence-builder.html" class="navbar__link">🧩 Sentences</a></li>
         <li><a href="vocab-quiz.html" class="navbar__link">📚 Vocabulary</a></li>
-        <li><a href="#app-preview" class="navbar__link">Try App</a></li>
-        <li><a href="#grammar" class="navbar__link">Grammar</a></li>
+        <li><a href="grammar.html" class="navbar__link">📖 Grammar</a></li>
         <li><a href="#phrases" class="navbar__link">Phrases</a></li>
-        <li><a href="#culture" class="navbar__link">Culture</a></li>
         <li><a href="#resources" class="navbar__link">Resources</a></li>
       </ul>
-
-      <a href="#app-preview" class="navbar__cta">Launch App →</a>
-
+      <a href="#practice" class="navbar__cta">Start Learning →</a>
       <button class="navbar__hamburger" id="hamburger-btn" aria-label="Toggle navigation">
-        <span></span>
-        <span></span>
-        <span></span>
+        <span></span><span></span><span></span>
       </button>
     </div>
   </nav>
 
-  <!-- Mobile Nav Overlay -->
   <div class="mobile-nav" id="mobile-nav">
     <a href="#features" class="mobile-nav__link">Features</a>
+    <a href="article-trainer.html" class="mobile-nav__link">🇩🇪 Article Trainer</a>
+    <a href="verb-trainer.html" class="mobile-nav__link">💬 Verb Trainer</a>
+    <a href="sentence-builder.html" class="mobile-nav__link">🧩 Sentence Builder</a>
     <a href="vocab-quiz.html" class="mobile-nav__link">📚 Vocabulary</a>
-    <a href="#app-preview" class="mobile-nav__link">Try App</a>
-    <a href="#grammar" class="mobile-nav__link">Grammar</a>
+    <a href="grammar.html" class="mobile-nav__link">📖 Grammar</a>
     <a href="#phrases" class="mobile-nav__link">Phrases</a>
-    <a href="#culture" class="mobile-nav__link">Culture</a>
     <a href="#resources" class="mobile-nav__link">Resources</a>
   </div>
 
-  <!-- ═══════════════════════════════════════════════
+  <!-- ===================================================
        HERO SECTION
-       ═══════════════════════════════════════════════ -->
+       =================================================== -->
   <section class="hero" id="hero">
-    <!-- Background mesh -->
     <div class="hero__mesh"></div>
-
-    <!-- Animated orbs -->
     <div class="hero__orb hero__orb--1"></div>
     <div class="hero__orb hero__orb--2"></div>
     <div class="hero__orb hero__orb--3"></div>
-
     <div class="hero__content">
       <div class="hero__badge">
         <span class="hero__badge-dot"></span>
         German A1 · CEFR Level
       </div>
-
       <h1 class="hero__title">
         Master German A1<br />
         <span class="hero__title-accent" id="hero-typed">Blitz Style ⚡</span>
       </h1>
-
       <p class="hero__subtitle">
         A gamified learning platform to conquer German articles, vocabulary, sentence structure, and cultural fluency — designed for university students and A1 beginners.
       </p>
-
       <div class="hero__actions">
-        <a href="#app-preview" class="btn btn--primary">
-          ▶ Launch DeutschBlitz
-        </a>
-        <a href="#grammar" class="btn btn--ghost">
-          📖 Explore Resources
-        </a>
+        <a href="#practice" class="btn btn--primary">▶ Start Learning</a>
+        <a href="#explore" class="btn btn--ghost">📖 Explore Content</a>
       </div>
     </div>
-
     <div class="hero__scroll-indicator">
       <span>Scroll to explore</span>
       <div class="hero__scroll-arrow"></div>
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════════
+  <!-- ===================================================
        STATS BAR
-       ═══════════════════════════════════════════════ -->
+       =================================================== -->
   <section class="stats-bar" id="stats-bar">
     <div class="container">
       <div class="stats-bar__grid reveal">
@@ -131,554 +106,156 @@
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════════
+  <!-- ===================================================
        FEATURES
-       ═══════════════════════════════════════════════ -->
+       =================================================== -->
   <section class="section features" id="features">
     <div class="container">
       <div class="section__header reveal">
         <h2 class="section__title">Four Powerful Learning Modes</h2>
-        <p class="section__subtitle">
-          Each mode targets a different skill. Mix and match for the fastest A1 progress.
-        </p>
+        <p class="section__subtitle">Each mode targets a different skill. Mix and match for the fastest A1 progress.</p>
       </div>
-
       <div class="features__grid stagger">
-        <!-- Article Trainer -->
         <div class="feature-card">
-          <div class="feature-card__icon">🎯</div>
+          <div class="feature-card__icon feature-card__icon--blue">🇩🇪</div>
           <h3 class="feature-card__title">Article Trainer</h3>
-          <p class="feature-card__desc">
-            Sort nouns into <strong style="color:var(--der-blue)">der</strong>,
-            <strong style="color:var(--die-pink)">die</strong>, or
-            <strong style="color:var(--das-green)">das</strong> buckets.
-            Build muscle memory for German genders with streak-based scoring.
-          </p>
+          <p class="feature-card__desc">Master <i>der, die, das</i> with rapid-fire flashcards. Visual color-coding (Blue/Pink/Green) builds subconscious memory.</p>
         </div>
-
-        <!-- Vocabulary Decks -->
         <div class="feature-card">
-          <div class="feature-card__icon">🃏</div>
-          <h3 class="feature-card__title">Vocabulary Decks</h3>
-          <p class="feature-card__desc">
-            Themed flashcard decks — from Greetings to Sustainable Engineering. Spaced repetition ensures you never forget what you've learned.
-          </p>
+          <div class="feature-card__icon feature-card__icon--gold">📚</div>
+          <h3 class="feature-card__title">Vocab Decks</h3>
+          <p class="feature-card__desc">Theme-based vocabulary sets. Learn words in context with spaced repetition and pronunciation audio.</p>
         </div>
-
-        <!-- Sentence Builder -->
         <div class="feature-card">
-          <div class="feature-card__icon">🧩</div>
+          <div class="feature-card__icon feature-card__icon--teal">🧩</div>
           <h3 class="feature-card__title">Sentence Builder</h3>
-          <p class="feature-card__desc">
-            Drag-and-drop word tiles to construct correct German sentences. Master V2 word order, questions, and negation through play.
-          </p>
+          <p class="feature-card__desc">Drag and drop words to form correct German sentences. Master the tricky V2 word order naturally.</p>
         </div>
-
-        <!-- Gamification -->
         <div class="feature-card">
-          <div class="feature-card__icon">🏆</div>
-          <h3 class="feature-card__title">XP & Achievements</h3>
-          <p class="feature-card__desc">
-            Earn XP for every correct answer, maintain daily streaks 🔥, level up, and unlock achievements. Stay motivated with progress tracking.
-          </p>
+          <div class="feature-card__icon feature-card__icon--pink">🎧</div>
+          <h3 class="feature-card__title">Listening Quiz</h3>
+          <p class="feature-card__desc">Train your ear with native audio clips. Distinguish between similar sounding words and understand spoken A1 German.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <hr class="section-divider" />
-
-  <!-- ═══════════════════════════════════════════════
-       APP PREVIEW
-       ═══════════════════════════════════════════════ -->
-  <section class="section app-preview" id="app-preview">
+  <!-- ===================================================
+       PRACTICE HUB — Interactive Trainers
+       =================================================== -->
+  <section class="section practice-hub" id="practice">
     <div class="container">
       <div class="section__header reveal">
-        <h2 class="section__title">Try DeutschBlitz</h2>
-        <p class="section__subtitle">
-          Experience the app right here. Practice articles, build vocabulary, and track your progress — all in your browser.
-        </p>
+        <h2 class="section__title">Practice & Train</h2>
+        <p class="section__subtitle">Jump into an interactive training mode. Each session tracks your XP and progress.</p>
       </div>
-
-      <div class="app-preview__wrapper reveal--scale">
-        <div class="app-preview__header">
-          <span class="app-preview__dot app-preview__dot--red"></span>
-          <span class="app-preview__dot app-preview__dot--yellow"></span>
-          <span class="app-preview__dot app-preview__dot--green"></span>
-          <span class="app-preview__title">DeutschBlitz — German A1 Learning App</span>
-        </div>
-
-        <div class="app-preview__placeholder" id="app-container">
-          <span class="app-preview__placeholder-emoji">⚡🇩🇪</span>
-          <h3 class="app-preview__placeholder-title">DeutschBlitz App</h3>
-          <p class="app-preview__placeholder-desc">
-            The full Flutter app loads here. Build the app with <code style="color:var(--primary-light)">flutter build web</code> and link it below.
-          </p>
-          <button class="btn btn--primary" onclick="launchApp()">
-            Launch Full App ▶
-          </button>
-        </div>
-      </div>
-
-      <!-- Mini flashcard widget as an interactive demo -->
-      <div style="margin-top: var(--space-3xl); text-align: center;" class="reveal">
-        <h3 style="font-size: 1.5rem; margin-bottom: var(--space-sm); color: var(--text-primary);">
-          Quick Practice — Flashcard Demo
-        </h3>
-        <p style="color: var(--text-secondary); margin-bottom: var(--space-xl); font-size: 0.9rem;">
-          Click the card to flip. Use arrows to browse A1 vocabulary.
-        </p>
-      </div>
-
-      <div class="flashcard-widget reveal">
-        <div class="flashcard" id="flashcard" onclick="toggleFlashcard()">
-          <div class="flashcard__inner">
-            <div class="flashcard__face flashcard__front">
-              <span class="flashcard__article flashcard__article--der" id="fc-article">der</span>
-              <span class="flashcard__word" id="fc-word">Tisch</span>
-              <button class="audio-btn" onclick="playAudio(event, document.getElementById('fc-word').textContent)">🔊</button>
-              <span class="flashcard__hint">Click to reveal →</span>
-            </div>
-            <div class="flashcard__face flashcard__back">
-              <span class="flashcard__translation" id="fc-translation">Table</span>
-              <span class="flashcard__example" id="fc-example">"Der Tisch steht am Fenster."</span>
-              <button class="audio-btn" onclick="playAudio(event, document.getElementById('fc-example').textContent)">🔊</button>
-            </div>
+      <div class="practice__grid stagger">
+        <a href="article-trainer.html" class="practice-card practice-card--der" id="practice-articles">
+          <div class="practice-card__icon">🇩🇪</div>
+          <div class="practice-card__body">
+            <h3 class="practice-card__title">Article Trainer</h3>
+            <p class="practice-card__desc">Master <em>der, die, das</em> — 60+ nouns with streaks, XP, and audio.</p>
           </div>
-        </div>
-        <div class="flashcard__nav">
-          <button class="flashcard__nav-btn" id="fc-prev" onclick="prevFlashcard()">◀</button>
-          <span class="flashcard__counter" id="fc-counter">1 / 10</span>
-          <button class="flashcard__nav-btn" id="fc-next" onclick="nextFlashcard()">▶</button>
-        </div>
+          <span class="practice-card__cta">Play →</span>
+        </a>
+        <a href="verb-trainer.html" class="practice-card practice-card--die" id="practice-verbs">
+          <div class="practice-card__icon">💬</div>
+          <div class="practice-card__body">
+            <h3 class="practice-card__title">Verb Conjugation</h3>
+            <p class="practice-card__desc">Conjugate 20 essential A1 verbs — sein, haben, sprechen, and more.</p>
+          </div>
+          <span class="practice-card__cta">Play →</span>
+        </a>
+        <a href="sentence-builder.html" class="practice-card practice-card--das" id="practice-sentences">
+          <div class="practice-card__icon">🧩</div>
+          <div class="practice-card__body">
+            <h3 class="practice-card__title">Sentence Builder</h3>
+            <p class="practice-card__desc">Arrange words in correct German order — master V2 word order naturally.</p>
+          </div>
+          <span class="practice-card__cta">Play →</span>
+        </a>
       </div>
-      </div>
-
-      <!-- Article Trainer Demo -->
-      <div style="margin-top: var(--space-4xl); text-align: center;" class="reveal">
-        <h3 style="font-size: 1.5rem; margin-bottom: var(--space-sm); color: var(--text-primary);">
-          Mini-Game — Article Trainer
-        </h3>
-        <p style="color: var(--text-secondary); margin-bottom: var(--space-xl); font-size: 0.9rem;">
-          Select the correct gender for the noun. Earn XP for every correct answer!
-        </p>
-      </div>
-      <div class="article-trainer reveal" id="article-trainer">
-        <div class="article-trainer__word-box" id="at-word-box">
-          <span class="article-trainer__word" id="at-word">Apfel</span>
-        </div>
-        <div class="article-trainer__options">
-          <button class="at-btn at-btn--der" onclick="checkArticle('der')">der</button>
-          <button class="at-btn at-btn--die" onclick="checkArticle('die')">die</button>
-          <button class="at-btn at-btn--das" onclick="checkArticle('das')">das</button>
-        </div>
-      </div>
-
-      <!-- Sentence Builder Demo -->
-      <div style="margin-top: var(--space-4xl); text-align: center;" class="reveal">
-        <h3 style="font-size: 1.5rem; margin-bottom: var(--space-sm); color: var(--text-primary);">
-          Mini-Game — Sentence Builder
-        </h3>
-        <p style="color: var(--text-secondary); margin-bottom: var(--space-xl); font-size: 0.9rem;">
-          Click the words in the correct order to form a German sentence.
-        </p>
-      </div>
-      <div class="sentence-builder reveal" id="sentence-builder">
-        <div class="sb-english" id="sb-english">I drink coffee.</div>
-        <div class="sb-dropzone" id="sb-dropzone">
-          <!-- Words will be moved here -->
-        </div>
-        <div class="sb-wordbank" id="sb-wordbank">
-          <!-- Words to click -->
-        </div>
-        <div class="sb-actions">
-          <button class="btn btn--ghost" onclick="resetSentence()">Reset</button>
-          <button class="btn btn--primary" onclick="checkSentence()">Check</button>
-        </div>
-      </div>
-
     </div>
   </section>
 
-  <hr class="section-divider" />
-
-  <!-- ═══════════════════════════════════════════════
-       GRAMMAR REFERENCE
-       ═══════════════════════════════════════════════ -->
-  <section class="section grammar" id="grammar">
+  <!-- ===================================================
+       EXPLORE CONTENT HUB
+       =================================================== -->
+  <section class="section explore-hub" id="explore">
     <div class="container">
       <div class="section__header reveal">
-        <h2 class="section__title">A1 Grammar Reference</h2>
-        <p class="section__subtitle">
-          Comprehensive grammar tables — always available, beautifully organized. Click any topic to expand.
-        </p>
+        <h2 class="section__title">Explore Core Content</h2>
+        <p class="section__subtitle">Everything you need to master German A1 in one place.</p>
       </div>
 
-      <div class="grammar__grid stagger">
-
-        <!-- 1. Articles: Der / Die / Das -->
-        <div class="accordion" id="acc-articles">
-          <button class="accordion__header" onclick="toggleAccordion('acc-articles')">
-            <span class="accordion__icon">📘</span>
-            <span>Articles — Der, Die, Das</span>
-            <svg class="accordion__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-          </button>
-          <div class="accordion__body">
-            <div class="accordion__content">
-              <table class="grammar-table">
-                <thead>
-                  <tr>
-                    <th>Article</th>
-                    <th>Gender</th>
-                    <th>Clue Endings</th>
-                    <th>Examples</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="der">der</td>
-                    <td>Masculine (♂)</td>
-                    <td>-er, -en, -el, -ling, -ich, -ig</td>
-                    <td>der Tisch, der Lehrer, der Frühling</td>
-                  </tr>
-                  <tr>
-                    <td class="die">die</td>
-                    <td>Feminine (♀)</td>
-                    <td>-e, -ung, -heit, -keit, -schaft, -tion, -ie</td>
-                    <td>die Lampe, die Wohnung, die Freiheit</td>
-                  </tr>
-                  <tr>
-                    <td class="das">das</td>
-                    <td>Neuter (⚬)</td>
-                    <td>-chen, -lein, -um, -ment, Ge-</td>
-                    <td>das Mädchen, das Zimmer, das Gebäude</td>
-                  </tr>
-                </tbody>
-              </table>
-              <div class="grammar-tip">
-                💡 <strong>Mnemonic:</strong> All diminutives (-chen, -lein) are always <strong>das</strong>, regardless of the base noun's gender. "das Mädchen" (the girl) is neuter!
-              </div>
+      <div class="explore__grid stagger">
+        <a href="grammar.html" class="explore-card" id="explore-grammar">
+          <div class="explore-card__icon">📖</div>
+          <div class="explore-card__body">
+            <h3 class="explore-card__title">Grammar Reference</h3>
+            <p class="explore-card__desc">Complete A1 grammar guide. Articles, cases, verbs, word order, and time — with full audio and interactive tables.</p>
+            <div class="explore-card__stats">
+              <span>📌 12 Chapters</span>
+              <span>🔊 Full Audio</span>
+              <span>🔍 Searchable</span>
             </div>
           </div>
-        </div>
+          <span class="explore-card__arrow">→</span>
+        </a>
 
-        <!-- 2. Verb Conjugation -->
-        <div class="accordion" id="acc-verbs">
-          <button class="accordion__header" onclick="toggleAccordion('acc-verbs')">
-            <span class="accordion__icon">📗</span>
-            <span>Present Tense — Verb Conjugation</span>
-            <svg class="accordion__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-          </button>
-          <div class="accordion__body">
-            <div class="accordion__content">
-              <table class="grammar-table">
-                <thead>
-                  <tr>
-                    <th>Pronoun</th>
-                    <th>sein (to be)</th>
-                    <th>haben (to have)</th>
-                    <th>machen (to do)</th>
-                    <th>gehen (to go)</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr><td>ich</td><td>bin</td><td>habe</td><td>mache</td><td>gehe</td></tr>
-                  <tr><td>du</td><td>bist</td><td>hast</td><td>machst</td><td>gehst</td></tr>
-                  <tr><td>er/sie/es</td><td>ist</td><td>hat</td><td>macht</td><td>geht</td></tr>
-                  <tr><td>wir</td><td>sind</td><td>haben</td><td>machen</td><td>gehen</td></tr>
-                  <tr><td>ihr</td><td>seid</td><td>habt</td><td>macht</td><td>geht</td></tr>
-                  <tr><td>sie/Sie</td><td>sind</td><td>haben</td><td>machen</td><td>gehen</td></tr>
-                </tbody>
-              </table>
-              <div class="grammar-tip">
-                💡 <strong>Pattern:</strong> Regular verbs follow the stem + ending pattern: <strong>-e, -st, -t, -en, -t, -en</strong>. "sein" and "haben" are irregular — memorize them first!
-              </div>
+        <a href="vocab-quiz.html" class="explore-card" id="explore-vocab">
+          <div class="explore-card__icon">📚</div>
+          <div class="explore-card__body">
+            <h3 class="explore-card__title">Vocabulary Quiz</h3>
+            <p class="explore-card__desc">500+ A1 words across 11 themes. Flash cards with spaced repetition, timed challenges, and score tracking.</p>
+            <div class="explore-card__stats">
+              <span>🃏 500+ Words</span>
+              <span>🗂️ 11 Themes</span>
+              <span>⏱️ Timed Mode</span>
             </div>
           </div>
-        </div>
+          <span class="explore-card__arrow">→</span>
+        </a>
 
-        <!-- 3. Pronouns -->
-        <div class="accordion" id="acc-pronouns">
-          <button class="accordion__header" onclick="toggleAccordion('acc-pronouns')">
-            <span class="accordion__icon">📙</span>
-            <span>Personal Pronouns</span>
-            <svg class="accordion__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-          </button>
-          <div class="accordion__body">
-            <div class="accordion__content">
-              <table class="grammar-table">
-                <thead>
-                  <tr>
-                    <th>English</th>
-                    <th>Nominative</th>
-                    <th>Accusative</th>
-                    <th>Dative</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr><td>I</td><td>ich</td><td>mich</td><td>mir</td></tr>
-                  <tr><td>you (inf.)</td><td>du</td><td>dich</td><td>dir</td></tr>
-                  <tr><td>he</td><td>er</td><td>ihn</td><td>ihm</td></tr>
-                  <tr><td>she</td><td>sie</td><td>sie</td><td>ihr</td></tr>
-                  <tr><td>it</td><td>es</td><td>es</td><td>ihm</td></tr>
-                  <tr><td>we</td><td>wir</td><td>uns</td><td>uns</td></tr>
-                  <tr><td>you (pl.)</td><td>ihr</td><td>euch</td><td>euch</td></tr>
-                  <tr><td>they / you (formal)</td><td>sie/Sie</td><td>sie/Sie</td><td>ihnen/Ihnen</td></tr>
-                </tbody>
-              </table>
-              <div class="grammar-tip">
-                💡 <strong>Focus:</strong> At A1, master <strong>Nominative</strong> (subject) and <strong>Accusative</strong> (direct object) first. Dative comes more at A2, but it's useful to recognize early.
-              </div>
+        <a href="#pronunciation" class="explore-card" id="explore-pronunciation">
+          <div class="explore-card__icon">🎤</div>
+          <div class="explore-card__body">
+            <h3 class="explore-card__title">Pronunciation Trainer</h3>
+            <p class="explore-card__desc">Master tricky German sounds — ü, ö, ä, ch, ei/ie, z, w/v — with clickable audio examples and mouth position tips.</p>
+            <div class="explore-card__stats">
+              <span>🗣️ 8 Sound Groups</span>
+              <span>🎙️ 32 Examples</span>
+              <span>💡 Tips</span>
             </div>
           </div>
-        </div>
+          <span class="explore-card__arrow">↓</span>
+        </a>
 
-        <!-- 4. Sentence Structure -->
-        <div class="accordion" id="acc-structure">
-          <button class="accordion__header" onclick="toggleAccordion('acc-structure')">
-            <span class="accordion__icon">📐</span>
-            <span>Sentence Structure — V2 Rule</span>
-            <svg class="accordion__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-          </button>
-          <div class="accordion__body">
-            <div class="accordion__content">
-              <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: var(--space-md);">
-                In German statements, the <strong style="color: var(--primary-light);">conjugated verb is ALWAYS in position 2</strong>.
-              </p>
-
-              <div class="grammar-formula">
-                <span class="grammar-formula__part grammar-formula__part--subject">Subject</span>
-                <span class="grammar-formula__arrow">→</span>
-                <span class="grammar-formula__part grammar-formula__part--verb">VERB</span>
-                <span class="grammar-formula__arrow">→</span>
-                <span class="grammar-formula__part grammar-formula__part--object">Object</span>
-                <span class="grammar-formula__arrow">→</span>
-                <span class="grammar-formula__part grammar-formula__part--time">Time</span>
-                <span class="grammar-formula__arrow">→</span>
-                <span class="grammar-formula__part grammar-formula__part--place">Place</span>
-              </div>
-
-              <table class="grammar-table" style="margin-top: var(--space-md);">
-                <thead>
-                  <tr>
-                    <th>Type</th>
-                    <th>Example</th>
-                    <th>Translation</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Statement</td>
-                    <td><strong>Ich <span style="color:var(--primary-light)">trinke</span> Kaffee.</strong></td>
-                    <td>I drink coffee.</td>
-                  </tr>
-                  <tr>
-                    <td>Time first</td>
-                    <td><strong>Morgens <span style="color:var(--primary-light)">trinke</span> ich Kaffee.</strong></td>
-                    <td>In the mornings I drink coffee.</td>
-                  </tr>
-                  <tr>
-                    <td>Yes/No Q</td>
-                    <td><strong><span style="color:var(--primary-light)">Trinken</span> Sie Kaffee?</strong></td>
-                    <td>Do you drink coffee?</td>
-                  </tr>
-                  <tr>
-                    <td>W-Question</td>
-                    <td><strong>Was <span style="color:var(--primary-light)">trinken</span> Sie?</strong></td>
-                    <td>What do you drink?</td>
-                  </tr>
-                </tbody>
-              </table>
-
-              <div class="grammar-tip">
-                💡 <strong>V2 Rule:</strong> No matter what starts the sentence, the verb is always in the <strong>second position</strong>. If time comes first, the subject moves after the verb.
-              </div>
+        <a href="#phrases" class="explore-card" id="explore-phrases">
+          <div class="explore-card__icon">💬</div>
+          <div class="explore-card__body">
+            <h3 class="explore-card__title">Essential Phrases</h3>
+            <p class="explore-card__desc">Ready-to-use phrases for greetings, ordering food, asking for directions, shopping, and emergencies.</p>
+            <div class="explore-card__stats">
+              <span>👋 5 Categories</span>
+              <span>🔊 Native Audio</span>
+              <span>🤝 Real Life</span>
             </div>
           </div>
-        </div>
-
-        <!-- 5. W-Fragen -->
-        <div class="accordion" id="acc-wfragen">
-          <button class="accordion__header" onclick="toggleAccordion('acc-wfragen')">
-            <span class="accordion__icon">❓</span>
-            <span>W-Fragen — Question Words</span>
-            <svg class="accordion__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-          </button>
-          <div class="accordion__body">
-            <div class="accordion__content">
-              <table class="grammar-table">
-                <thead>
-                  <tr><th>German</th><th>English</th><th>Example</th></tr>
-                </thead>
-                <tbody>
-                  <tr><td><strong style="color:var(--primary-light)">Wer</strong></td><td>Who</td><td>Wer ist das? — Who is that?</td></tr>
-                  <tr><td><strong style="color:var(--primary-light)">Was</strong></td><td>What</td><td>Was machst du? — What are you doing?</td></tr>
-                  <tr><td><strong style="color:var(--primary-light)">Wo</strong></td><td>Where</td><td>Wo wohnst du? — Where do you live?</td></tr>
-                  <tr><td><strong style="color:var(--primary-light)">Woher</strong></td><td>Where from</td><td>Woher kommst du? — Where do you come from?</td></tr>
-                  <tr><td><strong style="color:var(--primary-light)">Wohin</strong></td><td>Where to</td><td>Wohin gehst du? — Where are you going?</td></tr>
-                  <tr><td><strong style="color:var(--primary-light)">Wann</strong></td><td>When</td><td>Wann beginnt der Kurs? — When does the course start?</td></tr>
-                  <tr><td><strong style="color:var(--primary-light)">Wie</strong></td><td>How</td><td>Wie geht es Ihnen? — How are you?</td></tr>
-                  <tr><td><strong style="color:var(--primary-light)">Warum</strong></td><td>Why</td><td>Warum lernst du Deutsch? — Why are you learning German?</td></tr>
-                  <tr><td><strong style="color:var(--primary-light)">Wie viel(e)</strong></td><td>How much/many</td><td>Wie viel kostet das? — How much does that cost?</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <!-- 6. Negation -->
-        <div class="accordion" id="acc-negation">
-          <button class="accordion__header" onclick="toggleAccordion('acc-negation')">
-            <span class="accordion__icon">🚫</span>
-            <span>Negation — Nicht vs. Kein</span>
-            <svg class="accordion__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-          </button>
-          <div class="accordion__body">
-            <div class="accordion__content">
-              <table class="grammar-table">
-                <thead>
-                  <tr><th>Word</th><th>Usage</th><th>Example</th></tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><strong style="color:var(--die-pink)">nicht</strong></td>
-                    <td>Negates verbs, adjectives, adverbs, definite nouns</td>
-                    <td>Ich <strong style="color:var(--die-pink)">nicht</strong> trinke. → Ich trinke <strong style="color:var(--die-pink)">nicht</strong>.</td>
-                  </tr>
-                  <tr>
-                    <td><strong style="color:var(--die-pink)">kein/keine</strong></td>
-                    <td>Negates indefinite nouns (replaces ein/eine)</td>
-                    <td>Ich habe <strong style="color:var(--die-pink)">kein</strong> Auto. (I have no car.)</td>
-                  </tr>
-                </tbody>
-              </table>
-
-              <table class="grammar-table" style="margin-top: var(--space-md);">
-                <thead>
-                  <tr><th></th><th>Masculine</th><th>Feminine</th><th>Neuter</th><th>Plural</th></tr>
-                </thead>
-                <tbody>
-                  <tr><td><strong>Nom.</strong></td><td>kein</td><td>keine</td><td>kein</td><td>keine</td></tr>
-                  <tr><td><strong>Acc.</strong></td><td>keinen</td><td>keine</td><td>kein</td><td>keine</td></tr>
-                </tbody>
-              </table>
-
-              <div class="grammar-tip">
-                💡 <strong>Rule of thumb:</strong> Use <strong>kein</strong> when you would use "ein" in the positive form. Use <strong>nicht</strong> for everything else.
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 7. Numbers -->
-        <div class="accordion" id="acc-numbers">
-          <button class="accordion__header" onclick="toggleAccordion('acc-numbers')">
-            <span class="accordion__icon">🔢</span>
-            <span>Numbers — 0 to 100</span>
-            <svg class="accordion__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-          </button>
-          <div class="accordion__body">
-            <div class="accordion__content">
-              <div class="number-grid">
-                <div class="number-grid__item"><strong>0</strong><span>null</span></div>
-                <div class="number-grid__item"><strong>1</strong><span>eins</span></div>
-                <div class="number-grid__item"><strong>2</strong><span>zwei</span></div>
-                <div class="number-grid__item"><strong>3</strong><span>drei</span></div>
-                <div class="number-grid__item"><strong>4</strong><span>vier</span></div>
-                <div class="number-grid__item"><strong>5</strong><span>fünf</span></div>
-                <div class="number-grid__item"><strong>6</strong><span>sechs</span></div>
-                <div class="number-grid__item"><strong>7</strong><span>sieben</span></div>
-                <div class="number-grid__item"><strong>8</strong><span>acht</span></div>
-                <div class="number-grid__item"><strong>9</strong><span>neun</span></div>
-                <div class="number-grid__item"><strong>10</strong><span>zehn</span></div>
-                <div class="number-grid__item"><strong>11</strong><span>elf</span></div>
-                <div class="number-grid__item"><strong>12</strong><span>zwölf</span></div>
-                <div class="number-grid__item"><strong>13</strong><span>dreizehn</span></div>
-                <div class="number-grid__item"><strong>14</strong><span>vierzehn</span></div>
-                <div class="number-grid__item"><strong>15</strong><span>fünfzehn</span></div>
-                <div class="number-grid__item"><strong>16</strong><span>sechzehn</span></div>
-                <div class="number-grid__item"><strong>17</strong><span>siebzehn</span></div>
-                <div class="number-grid__item"><strong>18</strong><span>achtzehn</span></div>
-                <div class="number-grid__item"><strong>19</strong><span>neunzehn</span></div>
-                <div class="number-grid__item"><strong>20</strong><span>zwanzig</span></div>
-                <div class="number-grid__item"><strong>30</strong><span>dreißig</span></div>
-                <div class="number-grid__item"><strong>40</strong><span>vierzig</span></div>
-                <div class="number-grid__item"><strong>50</strong><span>fünfzig</span></div>
-                <div class="number-grid__item"><strong>60</strong><span>sechzig</span></div>
-                <div class="number-grid__item"><strong>70</strong><span>siebzig</span></div>
-                <div class="number-grid__item"><strong>80</strong><span>achtzig</span></div>
-                <div class="number-grid__item"><strong>90</strong><span>neunzig</span></div>
-                <div class="number-grid__item"><strong>100</strong><span>hundert</span></div>
-              </div>
-              <div class="grammar-tip">
-                💡 <strong>German number trick:</strong> For 21–99, say the <strong>ones digit first</strong>, then "und", then the tens.
-                Example: 23 = <strong>drei</strong>und<strong>zwanzig</strong> (three-and-twenty).
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 8. Days, Months, Time -->
-        <div class="accordion" id="acc-time">
-          <button class="accordion__header" onclick="toggleAccordion('acc-time')">
-            <span class="accordion__icon">📅</span>
-            <span>Days, Months & Time</span>
-            <svg class="accordion__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-          </button>
-          <div class="accordion__body">
-            <div class="accordion__content">
-              <table class="grammar-table">
-                <thead>
-                  <tr><th>Day (German)</th><th>English</th></tr>
-                </thead>
-                <tbody>
-                  <tr><td>Montag</td><td>Monday</td></tr>
-                  <tr><td>Dienstag</td><td>Tuesday</td></tr>
-                  <tr><td>Mittwoch</td><td>Wednesday</td></tr>
-                  <tr><td>Donnerstag</td><td>Thursday</td></tr>
-                  <tr><td>Freitag</td><td>Friday</td></tr>
-                  <tr><td>Samstag</td><td>Saturday</td></tr>
-                  <tr><td>Sonntag</td><td>Sunday</td></tr>
-                </tbody>
-              </table>
-
-              <table class="grammar-table" style="margin-top: var(--space-md);">
-                <thead>
-                  <tr><th>Month (German)</th><th>English</th><th>Month (German)</th><th>English</th></tr>
-                </thead>
-                <tbody>
-                  <tr><td>Januar</td><td>January</td><td>Juli</td><td>July</td></tr>
-                  <tr><td>Februar</td><td>February</td><td>August</td><td>August</td></tr>
-                  <tr><td>März</td><td>March</td><td>September</td><td>September</td></tr>
-                  <tr><td>April</td><td>April</td><td>Oktober</td><td>October</td></tr>
-                  <tr><td>Mai</td><td>May</td><td>November</td><td>November</td></tr>
-                  <tr><td>Juni</td><td>June</td><td>Dezember</td><td>December</td></tr>
-                </tbody>
-              </table>
-
-              <div class="grammar-tip">
-                💡 All days of the week are <strong class="der" style="color:var(--der-blue)">der</strong> (masculine). All months are also <strong class="der" style="color:var(--der-blue)">der</strong>. Use "am" for days: <em>"am Montag"</em> and "im" for months: <em>"im Januar"</em>.
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div><!-- / grammar__grid -->
+          <span class="explore-card__arrow">↓</span>
+        </a>
+      </div>
     </div>
   </section>
 
-  <hr class="section-divider" />
-
-  <!-- ═══════════════════════════════════════════════
+  <!-- ===================================================
        ESSENTIAL PHRASES
-       ═══════════════════════════════════════════════ -->
+       =================================================== -->
   <section class="section phrases" id="phrases">
     <div class="container">
       <div class="section__header reveal">
         <h2 class="section__title">Essential A1 Phrases</h2>
-        <p class="section__subtitle">
-          Ready-to-use phrases organized by real-life situations. Click a category to filter.
-        </p>
+        <p class="section__subtitle">Ready-to-use phrases organized by real-life situations.</p>
       </div>
 
       <div class="phrases__categories reveal" id="phrase-tabs">
@@ -687,248 +264,207 @@
         <button class="phrases__tab" data-category="directions" onclick="filterPhrases('directions')">🗺️ Directions</button>
         <button class="phrases__tab" data-category="shopping" onclick="filterPhrases('shopping')">🛒 Shopping</button>
         <button class="phrases__tab" data-category="emergency" onclick="filterPhrases('emergency')">🆘 Emergency</button>
-        <button class="phrases__tab" data-category="university" onclick="filterPhrases('university')">🎓 University</button>
       </div>
 
-      <div class="phrases__grid" id="phrases-grid">
-        <!-- Filled dynamically by JS -->
+      <div class="phrases__grid stagger" id="phrases-grid">
+        <!-- Content will be injected by JavaScript -->
       </div>
     </div>
   </section>
 
-  <hr class="section-divider" />
-
-  <!-- ═══════════════════════════════════════════════
+  <!-- ===================================================
        CULTURAL TIPS
-       ═══════════════════════════════════════════════ -->
-  <section class="section" id="culture">
+       =================================================== -->
+  <section class="section culture" id="culture">
     <div class="container">
       <div class="section__header reveal">
-        <h2 class="section__title">German Cultural Insights</h2>
-        <p class="section__subtitle">
-          Language is culture. Understanding these customs will help you communicate naturally.
-        </p>
+        <h2 class="section__title">Culture & Etiquette</h2>
+        <p class="section__subtitle">Language isn't just words; it's understanding the people.</p>
       </div>
-
       <div class="culture__grid stagger">
         <div class="culture-card">
-          <span class="culture-card__emoji">🤝</span>
-          <h3 class="culture-card__title">Sie vs. Du — Formal & Informal</h3>
-          <p class="culture-card__body">
-            In German, <span class="culture-card__highlight">"Sie"</span> (capitalized) is the formal "you" — used with strangers, professors, and in professional settings.
-            <span class="culture-card__highlight">"Du"</span> is informal — for friends, family, and peers. At university, students usually use "du" with each other
-            but "Sie" with professors until invited otherwise. When in doubt, start with "Sie"!
-          </p>
+          <div class="culture-card__icon">🤝</div>
+          <h3 class="culture-card__title">Du vs. Sie</h3>
+          <p class="culture-card__desc"><strong>Sie</strong> is formal — used with strangers, elders, and in business. <strong>Du</strong> is informal — for friends, family, and children.</p>
         </div>
-
         <div class="culture-card">
-          <span class="culture-card__emoji">🍞</span>
-          <h3 class="culture-card__title">Mahlzeit! — German Meal Culture</h3>
-          <p class="culture-card__body">
-            Germans take meals seriously. <span class="culture-card__highlight">"Frühstück"</span> (breakfast) is often bread with cheese and cold cuts.
-            <span class="culture-card__highlight">"Mittagessen"</span> (lunch) is the main warm meal. <span class="culture-card__highlight">"Abendessen"</span> (dinner) is typically lighter — bread again!
-            Saying <span class="culture-card__highlight">"Guten Appetit!"</span> before eating is expected. And never start eating before everyone is served.
-          </p>
+          <div class="culture-card__icon">⏱️</div>
+          <h3 class="culture-card__title">Pünktlichkeit</h3>
+          <p class="culture-card__desc">Punctuality is highly valued in Germany. If a meeting is at 14:00, arriving at 13:55 is "on time". Being 5 minutes late requires an apology.</p>
         </div>
-
         <div class="culture-card">
-          <span class="culture-card__emoji">♻️</span>
-          <h3 class="culture-card__title">Mülltrennung — Recycling</h3>
-          <p class="culture-card__body">
-            Germany is famous for its strict recycling system. You'll encounter <span class="culture-card__highlight">Restmüll</span> (residual waste),
-            <span class="culture-card__highlight">Biomüll</span> (organic), <span class="culture-card__highlight">Papier</span> (paper),
-            <span class="culture-card__highlight">Gelber Sack</span> (packaging), and <span class="culture-card__highlight">Glas</span> (glass — sorted by color!).
-            The <span class="culture-card__highlight">Pfand</span> system gives you money back for returning bottles.
-          </p>
-        </div>
-
-        <div class="culture-card">
-          <span class="culture-card__emoji">🏫</span>
-          <h3 class="culture-card__title">Uni-Leben — University Life</h3>
-          <p class="culture-card__body">
-            German university culture differs from many countries. The <span class="culture-card__highlight">Mensa</span> (cafeteria) serves affordable meals.
-            <span class="culture-card__highlight">Vorlesungen</span> (lectures) are often large, while <span class="culture-card__highlight">Seminare</span> (seminars) are smaller and interactive.
-            Students knock on the desk (<span class="culture-card__highlight">"Klopfen"</span>) instead of clapping to show approval!
-          </p>
-        </div>
-
-        <div class="culture-card">
-          <span class="culture-card__emoji">⏰</span>
-          <h3 class="culture-card__title">Pünktlichkeit — Punctuality</h3>
-          <p class="culture-card__body">
-            Germans value punctuality highly. Being <span class="culture-card__highlight">"pünktlich"</span> (on time) is essential.
-            If you're meeting someone, arrive 5 minutes early. For university, <span class="culture-card__highlight">"c.t."</span> (cum tempore) means
-            the class starts 15 minutes late, while <span class="culture-card__highlight">"s.t."</span> (sine tempore) means it starts exactly on time. Always check!
-          </p>
-        </div>
-
-        <div class="culture-card">
-          <span class="culture-card__emoji">🏠</span>
-          <h3 class="culture-card__title">Ruhezeit — Quiet Hours</h3>
-          <p class="culture-card__body">
-            Germany has strict <span class="culture-card__highlight">"Ruhezeiten"</span> (quiet hours). Generally, you must keep noise low between
-            <span class="culture-card__highlight">22:00 and 6:00</span>, and all day on Sundays and public holidays. No drilling, loud music,
-            or even vacuuming on Sundays! It's the law, and your neighbors will let you know if you forget.
-          </p>
+          <div class="culture-card__icon">🌍</div>
+          <h3 class="culture-card__title">Mülltrennung</h3>
+          <p class="culture-card__desc">Germans take recycling seriously. You must separate your trash into: Papier (Paper), Plastik/Verpackung (Plastic), Restmüll (General), and Biomüll (Organic).</p>
         </div>
       </div>
     </div>
   </section>
 
-  <hr class="section-divider" />
+  <!-- ===================================================
+       PRONUNCIATION TRAINER
+       =================================================== -->
+  <section class="section pronunciation" id="pronunciation">
+    <div class="container">
+      <div class="section__header reveal">
+        <h2 class="section__title">Pronunciation Trainer</h2>
+        <p class="section__subtitle">Master tricky German sounds. Click the buttons to hear the audio.</p>
+      </div>
+      <div class="pronunciation__grid stagger">
+        <!-- Vowels -->
+        <div class="pronunciation__group">
+          <h3 class="pronunciation__group-title">Umlauts (ä, ö, ü)</h3>
+          <div class="pronunciation__card" onclick="speakGerman('Mädchen')">
+            <span class="pronunciation__letter">ä</span>
+            <span class="pronunciation__word">Mädchen</span>
+            <span class="pronunciation__hint">Like the 'e' in "bed"</span>
+            <span class="pronunciation__play">🔊</span>
+          </div>
+          <div class="pronunciation__card" onclick="speakGerman('schön')">
+            <span class="pronunciation__letter">ö</span>
+            <span class="pronunciation__word">schön</span>
+            <span class="pronunciation__hint">Shape lips for 'o', say 'e'</span>
+            <span class="pronunciation__play">🔊</span>
+          </div>
+          <div class="pronunciation__card" onclick="speakGerman('über')">
+            <span class="pronunciation__letter">ü</span>
+            <span class="pronunciation__word">über</span>
+            <span class="pronunciation__hint">Shape lips for 'u', say 'ee'</span>
+            <span class="pronunciation__play">🔊</span>
+          </div>
+        </div>
 
-  <!-- ═══════════════════════════════════════════════
-       RESOURCES
-       ═══════════════════════════════════════════════ -->
+        <!-- Consonants -->
+        <div class="pronunciation__group">
+          <h3 class="pronunciation__group-title">Tricky Consonants</h3>
+          <div class="pronunciation__card" onclick="speakGerman('Wasser')">
+            <span class="pronunciation__letter">w</span>
+            <span class="pronunciation__word">Wasser</span>
+            <span class="pronunciation__hint">Pronounced like English 'v'</span>
+            <span class="pronunciation__play">🔊</span>
+          </div>
+          <div class="pronunciation__card" onclick="speakGerman('Vater')">
+            <span class="pronunciation__letter">v</span>
+            <span class="pronunciation__word">Vater</span>
+            <span class="pronunciation__hint">Pronounced like English 'f'</span>
+            <span class="pronunciation__play">🔊</span>
+          </div>
+          <div class="pronunciation__card" onclick="speakGerman('Zeit')">
+            <span class="pronunciation__letter">z</span>
+            <span class="pronunciation__word">Zeit</span>
+            <span class="pronunciation__hint">Pronounced like 'ts' in "cats"</span>
+            <span class="pronunciation__play">🔊</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================================================
+       LEARNING RESOURCES
+       =================================================== -->
   <section class="section resources" id="resources">
     <div class="container">
       <div class="section__header reveal">
         <h2 class="section__title">Learning Resources</h2>
-        <p class="section__subtitle">
-          External tools, courses, and references to supercharge your German A1 journey.
-        </p>
+        <p class="section__subtitle">External tools, courses, and references to supercharge your German A1 journey.</p>
       </div>
 
+      <h3 class="resources__category-label reveal">📺 Courses & Video Lessons</h3>
       <div class="resources__grid stagger">
         <div class="resource-card">
-          <div class="resource-card__icon">📺</div>
+          <div class="resource-card__icon" style="background: rgba(108, 99, 255, 0.1);">📺</div>
           <h3 class="resource-card__title">Deutsche Welle — Nicos Weg</h3>
-          <p class="resource-card__desc">
-            Free video course for beginners. Follow Nico's journey in Germany and learn real-life vocabulary in context. Excellent companion to DeutschBlitz.
-          </p>
-          <a href="https://learngerman.dw.com/en/nicos-weg/c-36519789" target="_blank" rel="noopener" class="resource-card__link">
-            Visit DW Learn →
-          </a>
+          <p class="resource-card__desc">Free video course for beginners. Follow Nico's journey in Germany.</p>
+          <a href="https://learngerman.dw.com/en/nicos-weg/c-36519789" class="resource-card__link">Visit DW Learn →</a>
         </div>
+        <div class="resource-card">
+          <div class="resource-card__icon" style="background: rgba(255, 75, 75, 0.1);">▶️</div>
+          <h3 class="resource-card__title">Learn German with Anja</h3>
+          <p class="resource-card__desc">Popular YouTube channel with energetic lessons on grammar and culture.</p>
+          <a href="https://www.youtube.com/c/LearnGermanwithAnja" class="resource-card__link">Watch on YouTube →</a>
+        </div>
+        <div class="resource-card">
+          <div class="resource-card__icon" style="background: rgba(255, 213, 79, 0.1);">🚶</div>
+          <h3 class="resource-card__title">Easy German</h3>
+          <p class="resource-card__desc">Street interviews in Germany. Great for hearing natural, spoken German.</p>
+          <a href="https://www.youtube.com/c/EasyGerman" class="resource-card__link">Watch Easy German →</a>
+        </div>
+      </div>
 
+      <h3 class="resources__category-label reveal">📖 Practice & Grammar</h3>
+      <div class="resources__grid stagger">
         <div class="resource-card">
           <div class="resource-card__icon" style="background: rgba(0, 191, 166, 0.1);">🏛️</div>
           <h3 class="resource-card__title">Goethe-Institut A1</h3>
-          <p class="resource-card__desc">
-            Official German language institute. Practice exercises, mock exams, and exam preparation materials for the Goethe-Zertifikat A1.
-          </p>
-          <a href="https://www.goethe.de/en/spr/kup/prf/prf/gzsd1.html" target="_blank" rel="noopener" class="resource-card__link">
-            Visit Goethe →
-          </a>
+          <p class="resource-card__desc">Official practice exercises and mock exams for the Goethe-Zertifikat A1.</p>
+          <a href="https://www.goethe.de/en/spr/kup/prf/prf/gzsd1.html" class="resource-card__link">Visit Goethe →</a>
         </div>
-
         <div class="resource-card">
           <div class="resource-card__icon" style="background: rgba(255, 112, 67, 0.1);">📖</div>
-          <h3 class="resource-card__title">Schubert Verlag — Online Exercises</h3>
-          <p class="resource-card__desc">
-            Free A1 grammar and vocabulary exercises from the famous German textbook publisher. Great for structured practice alongside DeutschBlitz.
-          </p>
-          <a href="https://www.schubert-verlag.de/aufgaben/uebungen_a1/a1_uebungen_index.htm" target="_blank" rel="noopener" class="resource-card__link">
-            Practice Now →
-          </a>
+          <h3 class="resource-card__title">Schubert Verlag</h3>
+          <p class="resource-card__desc">Free A1 grammar and vocabulary exercises from the textbook publisher.</p>
+          <a href="https://www.schubert-verlag.de/aufgaben/uebungen_a1/a1_uebungen_index.htm" class="resource-card__link">Practice Now →</a>
         </div>
-
-        <div class="resource-card">
-          <div class="resource-card__icon" style="background: rgba(255, 213, 79, 0.1);">🎧</div>
-          <h3 class="resource-card__title">Slow German Podcast</h3>
-          <p class="resource-card__desc">
-            A podcast with clear, slowly spoken German on various topics. Perfect for training your listening comprehension at the A1-A2 level.
-          </p>
-          <a href="https://slowgerman.com/" target="_blank" rel="noopener" class="resource-card__link">
-            Listen Now →
-          </a>
-        </div>
-
         <div class="resource-card">
           <div class="resource-card__icon" style="background: rgba(66, 165, 245, 0.1);">📝</div>
-          <h3 class="resource-card__title">Dict.cc — Dictionary</h3>
-          <p class="resource-card__desc">
-            The most comprehensive German-English dictionary. Includes pronunciation, examples, and forum discussions about tricky translations.
-          </p>
-          <a href="https://www.dict.cc/" target="_blank" rel="noopener" class="resource-card__link">
-            Look Up Words →
-          </a>
+          <h3 class="resource-card__title">German is Easy! Blog</h3>
+          <p class="resource-card__desc">Humorous, insightful explanations of confusing German grammar concepts.</p>
+          <a href="https://yourdailygerman.com/" class="resource-card__link">Read the Blog →</a>
         </div>
+      </div>
 
+      <h3 class="resources__category-label reveal">🛠️ Tools & Dictionaries</h3>
+      <div class="resources__grid stagger">
+        <div class="resource-card">
+          <div class="resource-card__icon" style="background: rgba(66, 165, 245, 0.1);">📚</div>
+          <h3 class="resource-card__title">Dict.cc — Dictionary</h3>
+          <p class="resource-card__desc">The most comprehensive German-English dictionary with pronunciation.</p>
+          <a href="https://www.dict.cc/" class="resource-card__link">Look Up Words →</a>
+        </div>
         <div class="resource-card">
           <div class="resource-card__icon" style="background: rgba(236, 64, 122, 0.1);">🗣️</div>
           <h3 class="resource-card__title">Forvo — Pronunciation</h3>
-          <p class="resource-card__desc">
-            Hear native speakers pronounce any German word. Invaluable for mastering the sounds of ü, ö, ä, ch, and other tricky German phonetics.
-          </p>
-          <a href="https://forvo.com/languages/de/" target="_blank" rel="noopener" class="resource-card__link">
-            Listen to Pronunciation →
-          </a>
+          <p class="resource-card__desc">Hear native speakers pronounce any German word.</p>
+          <a href="https://forvo.com/languages/de/" class="resource-card__link">Listen to Pronunciation →</a>
+        </div>
+        <div class="resource-card">
+          <div class="resource-card__icon" style="background: rgba(171, 71, 188, 0.1);">🔤</div>
+          <h3 class="resource-card__title">Verbformen.de — Verb Conjugator</h3>
+          <p class="resource-card__desc">Instantly conjugate any German verb in all tenses.</p>
+          <a href="https://www.verbformen.de/" class="resource-card__link">Conjugate Verbs →</a>
         </div>
       </div>
+
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════════
+  <!-- ===================================================
        FOOTER
-       ═══════════════════════════════════════════════ -->
-  <footer class="footer" id="footer">
+       =================================================== -->
+  <footer class="footer">
     <div class="container">
-      <div class="footer__top">
+      <div class="footer__inner">
         <div class="footer__brand">
-          <div class="footer__brand-name">
-            <span>⚡</span> DeutschBlitz
-          </div>
-          <p class="footer__brand-desc">
-            A gamified German A1 learning platform built for university students and beginners. Master articles, vocabulary, sentence structure, and German culture — Blitz style.
-          </p>
+          <span class="footer__logo">⚡ DeutschBlitz</span>
+          <p>Mastering German A1 through gamification.</p>
         </div>
-
-        <div>
-          <h4 class="footer__column-title">Learn</h4>
-          <ul class="footer__links">
-            <li><a href="#features" class="footer__link">Features</a></li>
-            <li><a href="#grammar" class="footer__link">Grammar</a></li>
-            <li><a href="#phrases" class="footer__link">Phrases</a></li>
-            <li><a href="#culture" class="footer__link">Cultural Tips</a></li>
-          </ul>
-        </div>
-
-        <div>
-          <h4 class="footer__column-title">Resources</h4>
-          <ul class="footer__links">
-            <li><a href="#resources" class="footer__link">External Tools</a></li>
-            <li><a href="#app-preview" class="footer__link">Try the App</a></li>
-            <li><a href="https://learngerman.dw.com/" target="_blank" rel="noopener" class="footer__link">Deutsche Welle</a></li>
-            <li><a href="https://www.goethe.de/" target="_blank" rel="noopener" class="footer__link">Goethe-Institut</a></li>
-          </ul>
-        </div>
-
-        <div>
-          <h4 class="footer__column-title">Project</h4>
-          <ul class="footer__links">
-            <li><a href="#hero" class="footer__link">About</a></li>
-            <li><a href="#stats-bar" class="footer__link">Statistics</a></li>
-            <li><a href="#" class="footer__link">Privacy</a></li>
-            <li><a href="#" class="footer__link">Contact</a></li>
-          </ul>
+        <div class="footer__links">
+          <a href="#hero">Home</a>
+          <a href="article-trainer.html">Articles</a>
+          <a href="verb-trainer.html">Verbs</a>
+          <a href="sentence-builder.html">Sentences</a>
+          <a href="vocab-quiz.html">Vocabulary</a>
+          <a href="grammar.html">Grammar</a>
+          <a href="#phrases">Phrases</a>
         </div>
       </div>
-
-      <div class="footer__bottom">
-        <span>© 2026 DeutschBlitz. Built with ⚡ for German A1 learners.</span>
-        <div class="footer__socials">
-          <a href="#" class="footer__social" aria-label="GitHub">⌨</a>
-          <a href="#" class="footer__social" aria-label="Twitter">𝕏</a>
-          <a href="#" class="footer__social" aria-label="Email">✉</a>
-        </div>
+      <div class="footer__copyright">
+        © 2026 DeutschBlitz. Built for language learners.
       </div>
     </div>
   </footer>
 
-  <!-- Gamification Widget -->
-  <div class="gamification-widget" id="gamification-widget">
-    <div class="gw-header">
-      <span class="gw-level" id="gw-level">Lv 1</span>
-      <span class="gw-streak">🔥 <span id="gw-streak">0</span></span>
-    </div>
-    <div class="gw-xp-bar">
-      <div class="gw-xp-fill" id="gw-xp-fill" style="width: 0%"></div>
-    </div>
-    <div class="gw-xp-text"><span id="gw-xp-current">0</span> / <span id="gw-xp-next">100</span> XP</div>
-  </div>
-
-  <!-- Scripts -->
   <script src="app.js"></script>
 </body>
 </html>

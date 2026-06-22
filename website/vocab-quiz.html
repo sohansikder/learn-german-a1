@@ -17,7 +17,14 @@
   <!-- React via CDN -->
   <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-  <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script crossorigin src="https://unpkg.com/@babel/standalone@7.21.4/babel.min.js"></script>
+  <script>
+    window.onerror = function(message, source, lineno, colno, error) {
+      document.body.innerHTML += '<div style="color:red; font-size:20px; background:black; padding:20px; position:absolute; z-index:9999;">' + 
+        message + '<br>' + source + ':' + lineno + ':' + colno + 
+        (error && error.stack ? '<br>' + error.stack : '') + '</div>';
+    };
+  </script>
 
   <style>
     /* ═══════════════════════════════════════════════
@@ -1864,8 +1871,12 @@
     /* ═══════════════════════════════════════════════════════════
        RENDER
        ═══════════════════════════════════════════════════════════ */
-    const root = ReactDOM.createRoot(document.getElementById('root'));
-    root.render(<VocabularyApp />);
+    if (ReactDOM.createRoot) {
+      const root = ReactDOM.createRoot(document.getElementById('root'));
+      root.render(<VocabularyApp />);
+    } else {
+      ReactDOM.render(<VocabularyApp />, document.getElementById('root'));
+    }
   </script>
 </body>
 </html>
