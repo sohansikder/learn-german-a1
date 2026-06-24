@@ -435,6 +435,7 @@ function setAuthMode(mode) {
   const toggleText = document.getElementById("auth-toggle-text");
   const toggleLink = document.getElementById("auth-toggle-link");
   const emoji = document.getElementById("auth-modal-emoji");
+  const passwordInput = document.getElementById("auth-password");
 
   if (mode === "signup") {
     if (title) title.textContent = "Create Account";
@@ -444,12 +445,34 @@ function setAuthMode(mode) {
       submitBtn.dataset.mode = "signup";
     }
     if (nameGroup) nameGroup.style.display = "flex";
+    if (document.getElementById("auth-password-group")) document.getElementById("auth-password-group").style.display = "flex";
+    if (document.getElementById("auth-divider")) document.getElementById("auth-divider").style.display = "flex";
+    if (document.getElementById("auth-google-btn")) document.getElementById("auth-google-btn").style.display = "flex";
+    if (passwordInput) passwordInput.required = true;
     if (toggleText) toggleText.textContent = "Already have an account? ";
     if (toggleLink) {
       toggleLink.textContent = "Log in";
       toggleLink.onclick = () => setAuthMode("login");
     }
     if (emoji) emoji.textContent = "🚀";
+  } else if (mode === "reset") {
+    if (title) title.textContent = "Reset Password";
+    if (subtitle) subtitle.textContent = "Enter your email to receive a reset link";
+    if (submitBtn) {
+      submitBtn.textContent = "✉️ Send Reset Link";
+      submitBtn.dataset.mode = "reset";
+    }
+    if (nameGroup) nameGroup.style.display = "none";
+    if (document.getElementById("auth-password-group")) document.getElementById("auth-password-group").style.display = "none";
+    if (document.getElementById("auth-divider")) document.getElementById("auth-divider").style.display = "none";
+    if (document.getElementById("auth-google-btn")) document.getElementById("auth-google-btn").style.display = "none";
+    if (passwordInput) passwordInput.required = false;
+    if (toggleText) toggleText.textContent = "Remember your password? ";
+    if (toggleLink) {
+      toggleLink.textContent = "Back to Log In";
+      toggleLink.onclick = () => setAuthMode("login");
+    }
+    if (emoji) emoji.textContent = "🔑";
   } else {
     if (title) title.textContent = "Welcome Back";
     if (subtitle) subtitle.textContent = "Log in to sync your progress";
@@ -458,6 +481,10 @@ function setAuthMode(mode) {
       submitBtn.dataset.mode = "login";
     }
     if (nameGroup) nameGroup.style.display = "none";
+    if (document.getElementById("auth-password-group")) document.getElementById("auth-password-group").style.display = "flex";
+    if (document.getElementById("auth-divider")) document.getElementById("auth-divider").style.display = "flex";
+    if (document.getElementById("auth-google-btn")) document.getElementById("auth-google-btn").style.display = "flex";
+    if (passwordInput) passwordInput.required = true;
     if (toggleText) toggleText.textContent = "Don't have an account? ";
     if (toggleLink) {
       toggleLink.textContent = "Sign up";
@@ -477,7 +504,12 @@ function showAuthError(message) {
 
 function clearAuthError() {
   const errorEl = document.getElementById("auth-error");
-  if (errorEl) errorEl.classList.remove("visible");
+  if (errorEl) {
+    errorEl.classList.remove("visible");
+    errorEl.style.background = "";
+    errorEl.style.borderColor = "";
+    errorEl.style.color = "";
+  }
 }
 
 function showAuthLoading(loading) {
@@ -530,8 +562,29 @@ async function handleAuthSubmit(e) {
   const name = document.getElementById("auth-name")?.value?.trim();
   const mode = document.getElementById("auth-submit-btn")?.dataset?.mode;
 
-  if (!email || !password) {
-    showAuthError("Please enter email and password.");
+  if (!email) {
+    showAuthError("Please enter your email.");
+    return;
+  }
+
+  if (mode === "reset") {
+    showAuthLoading(true);
+    try {
+      await db_auth.sendPasswordResetEmail(email);
+      showAuthError("Password reset link sent! Check your inbox.");
+      document.getElementById("auth-error").style.background = "rgba(102, 187, 106, 0.1)";
+      document.getElementById("auth-error").style.borderColor = "rgba(102, 187, 106, 0.2)";
+      document.getElementById("auth-error").style.color = "#66bb6a";
+    } catch (err) {
+      showAuthError(friendlyError(err.code));
+    } finally {
+      showAuthLoading(false);
+    }
+    return;
+  }
+
+  if (!password) {
+    showAuthError("Please enter your password.");
     return;
   }
 
@@ -579,6 +632,7 @@ function friendlyError(code) {
       "Invalid credentials. Please check your email and password.",
     "auth/operation-not-allowed":
       "Authentication method not enabled in Firebase Console.",
+    "auth/user-disabled": "This account has been disabled.",
   };
   return map[code] || `Something went wrong (${code || 'Unknown Error'}). Please try again.`;
 }

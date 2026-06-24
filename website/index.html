@@ -818,8 +818,11 @@
               required
             />
           </div>
-          <div class="auth-form__group">
-            <label class="auth-form__label" for="auth-password">Password</label>
+          <div class="auth-form__group" id="auth-password-group">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <label class="auth-form__label" for="auth-password">Password</label>
+              <button type="button" tabindex="-1" onclick="setAuthMode('reset')" style="background: none; border: none; color: #95d9c3; font-size: 0.8rem; cursor: pointer; padding: 0; font-family: inherit; font-weight: 500; text-decoration: underline; text-underline-offset: 2px;">Forgot password?</button>
+            </div>
             <input
               class="auth-form__input"
               type="password"
@@ -840,7 +843,7 @@
           </button>
         </form>
 
-        <div class="auth-divider">
+        <div class="auth-divider" id="auth-divider">
           <div class="auth-divider__line"></div>
           <span class="auth-divider__text">or</span>
           <div class="auth-divider__line"></div>
