@@ -1,982 +1,2496 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>A1 Grammar Reference — DeutschBlitz</title>
-  <meta name="description" content="Complete German A1 grammar reference: articles, verb conjugation, pronouns, sentence structure, W-Fragen, negation, numbers, and time expressions." />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>A1 Grammar Reference — DeutschBlitz</title>
+    <meta
+      name="description"
+      content="Complete German A1 grammar reference: articles, verb conjugation, pronouns, sentence structure, W-Fragen, negation, numbers, and time expressions."
+    />
 
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
 
-  <!-- Favicon -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>" />
+    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="auth.css" />
+    <!-- Favicon -->
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>"
+    />
 
-  <style>
-    /* ═══════════════════════════════════════════════════
+    <style>
+      /* ═══════════════════════════════════════════════════
        DESIGN TOKENS
        ═══════════════════════════════════════════════════ */
-    :root {
-      --bg-primary: #0A0A1A;
-      --bg-secondary: #0E0E24;
-      --bg-card: #141432;
-      --bg-card-hover: #1A1A40;
-      --bg-sidebar: #0C0C20;
-      --bg-code: rgba(149, 217, 195, 0.06);
+      :root {
+        --bg-primary: #0a0a1a;
+        --bg-secondary: #0e0e24;
+        --bg-card: #141432;
+        --bg-card-hover: #1a1a40;
+        --bg-sidebar: #0c0c20;
+        --bg-code: rgba(149, 217, 195, 0.06);
 
-      --text-primary: #E8E8F0;
-      --text-secondary: #A0A0B8;
-      --text-muted: #6B6B88;
+        --text-primary: #e8e8f0;
+        --text-secondary: #a0a0b8;
+        --text-muted: #6b6b88;
 
-      --primary: #95D9C3;
-      --primary-light: #B6E6D8;
-      --primary-dark: #6CB59D;
-      --teal: #00BFA6;
-      --der-blue: #42A5F5;
-      --die-pink: #EC407A;
-      --das-green: #66BB6A;
-      --gold: #FFD54F;
-      --orange: #FF7043;
+        --primary: #95d9c3;
+        --primary-light: #b6e6d8;
+        --primary-dark: #6cb59d;
+        --teal: #00bfa6;
+        --der-blue: #42a5f5;
+        --die-pink: #ec407a;
+        --das-green: #66bb6a;
+        --gold: #ffd54f;
+        --orange: #ff7043;
 
-      --glass-bg: rgba(255,255,255,0.03);
-      --glass-border: rgba(255,255,255,0.07);
+        --glass-bg: rgba(255, 255, 255, 0.03);
+        --glass-border: rgba(255, 255, 255, 0.07);
 
-      --gradient-primary: linear-gradient(135deg, #95D9C3, #6CB59D);
-      --gradient-teal: linear-gradient(135deg, #00BFA6, #00E5CC);
+        --gradient-primary: linear-gradient(135deg, #95d9c3, #6cb59d);
+        --gradient-teal: linear-gradient(135deg, #00bfa6, #00e5cc);
 
-      --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
-      --shadow-md: 0 4px 20px rgba(0,0,0,0.4);
-      --shadow-glow: 0 0 30px rgba(149,217,195,0.2);
+        --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+        --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.4);
+        --shadow-glow: 0 0 30px rgba(149, 217, 195, 0.2);
 
-      --radius-sm: 8px;
-      --radius-md: 12px;
-      --radius-lg: 16px;
-      --radius-xl: 20px;
-      --radius-2xl: 24px;
-      --radius-full: 9999px;
+        --radius-sm: 8px;
+        --radius-md: 12px;
+        --radius-lg: 16px;
+        --radius-xl: 20px;
+        --radius-2xl: 24px;
+        --radius-full: 9999px;
 
-      --sidebar-width: 280px;
-      --header-height: 64px;
+        --sidebar-width: 280px;
+        --header-height: 64px;
 
-      --transition-fast: 200ms cubic-bezier(0.4,0,0.2,1);
-      --transition-base: 300ms cubic-bezier(0.4,0,0.2,1);
-    }
+        --transition-fast: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+        --transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+      }
 
-    /* ═══════════════════════════════════════════════════
+      /* ═══════════════════════════════════════════════════
        RESET & BASE
        ═══════════════════════════════════════════════════ */
-    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-    html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-height) + 24px); }
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: calc(var(--header-height) + 24px);
+      }
 
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--bg-primary);
-      color: var(--text-primary);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-    }
+      body {
+        font-family:
+          "Inter",
+          -apple-system,
+          BlinkMacSystemFont,
+          sans-serif;
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+      }
 
-    h1, h2, h3, h4 { font-family: 'Outfit', 'Inter', sans-serif; font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
+      h1,
+      h2,
+      h3,
+      h4 {
+        font-family: "Outfit", "Inter", sans-serif;
+        font-weight: 700;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+      }
 
-    ::selection { background: var(--primary); color: #000; }
+      ::selection {
+        background: var(--primary);
+        color: #000;
+      }
 
-    a { color: var(--primary-light); text-decoration: none; }
-    a:hover { color: var(--primary); }
+      a {
+        color: var(--primary-light);
+        text-decoration: none;
+      }
+      a:hover {
+        color: var(--primary);
+      }
 
-    /* ═══════════════════════════════════════════════════
+      /* ═══════════════════════════════════════════════════
        BACKGROUND MESH
        ═══════════════════════════════════════════════════ */
-    .bg-mesh {
-      position: fixed; inset: 0; z-index: 0; pointer-events: none;
-      background:
-        radial-gradient(ellipse 600px 400px at 20% 30%, rgba(149,217,195,0.06), transparent),
-        radial-gradient(ellipse 500px 300px at 80% 70%, rgba(0,191,166,0.04), transparent),
-        radial-gradient(ellipse 400px 400px at 50% 50%, rgba(139,92,246,0.03), transparent);
-    }
+      .bg-mesh {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        background:
+          radial-gradient(
+            ellipse 600px 400px at 20% 30%,
+            rgba(149, 217, 195, 0.06),
+            transparent
+          ),
+          radial-gradient(
+            ellipse 500px 300px at 80% 70%,
+            rgba(0, 191, 166, 0.04),
+            transparent
+          ),
+          radial-gradient(
+            ellipse 400px 400px at 50% 50%,
+            rgba(139, 92, 246, 0.03),
+            transparent
+          );
+      }
 
-    /* ═══════════════════════════════════════════════════
+      /* ═══════════════════════════════════════════════════
        HEADER
        ═══════════════════════════════════════════════════ */
-    .header {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      height: var(--header-height);
-      background: rgba(10,10,26,0.88);
-      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--glass-border);
-      display: flex; align-items: center;
-      padding: 0 32px;
-    }
+      .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        height: var(--header-height);
+        background: rgba(10, 10, 26, 0.88);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--glass-border);
+        display: flex;
+        align-items: center;
+        padding: 0 32px;
+      }
 
-    .header__inner {
-      display: flex; align-items: center; justify-content: space-between;
-      width: 100%; max-width: 1400px; margin: 0 auto;
-    }
+      .header__inner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 1400px;
+        margin: 0 auto;
+      }
 
-    .header__left { display: flex; align-items: center; gap: 24px; }
+      .header__left {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+      }
 
-    .header__back {
-      display: inline-flex; align-items: center; gap: 8px;
-      color: var(--text-secondary); font-size: 0.9rem; font-weight: 500;
-      transition: color var(--transition-fast);
-    }
-    .header__back:hover { color: var(--primary); }
+      .header__back {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: color var(--transition-fast);
+      }
+      .header__back:hover {
+        color: var(--primary);
+      }
 
-    .header__title {
-      font-size: 1.1rem; font-weight: 700; color: var(--text-primary);
-      display: flex; align-items: center; gap: 8px;
-    }
+      .header__title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
 
-    .header__badge {
-      display: inline-flex; align-items: center; gap: 6px;
-      padding: 4px 14px; border-radius: var(--radius-full);
-      background: var(--bg-code); border: 1px solid rgba(149,217,195,0.15);
-      font-size: 0.75rem; font-weight: 700; color: var(--primary);
-      letter-spacing: 0.06em; text-transform: uppercase;
-    }
+      .header__badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 14px;
+        border-radius: var(--radius-full);
+        background: var(--bg-code);
+        border: 1px solid rgba(149, 217, 195, 0.15);
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: var(--primary);
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
 
-    .header__right { display: flex; align-items: center; gap: 16px; }
+      .header__right {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
 
-    .header__search {
-      display: flex; align-items: center; gap: 8px;
-      padding: 8px 16px; border-radius: var(--radius-full);
-      background: var(--glass-bg); border: 1px solid var(--glass-border);
-      transition: border-color var(--transition-fast);
-    }
-    .header__search:focus-within { border-color: var(--primary); }
-    .header__search-icon { color: var(--text-muted); font-size: 0.85rem; }
-    .header__search input {
-      background: none; border: none; outline: none;
-      color: var(--text-primary); font-size: 0.85rem; width: 180px;
-      font-family: 'Inter', sans-serif;
-    }
-    .header__search input::placeholder { color: var(--text-muted); }
+      .header__search {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        border-radius: var(--radius-full);
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        transition: border-color var(--transition-fast);
+      }
+      .header__search:focus-within {
+        border-color: var(--primary);
+      }
+      .header__search-icon {
+        color: var(--text-muted);
+        font-size: 0.85rem;
+      }
+      .header__search input {
+        background: none;
+        border: none;
+        outline: none;
+        color: var(--text-primary);
+        font-size: 0.85rem;
+        width: 180px;
+        font-family: "Inter", sans-serif;
+      }
+      .header__search input::placeholder {
+        color: var(--text-muted);
+      }
 
-    /* ═══════════════════════════════════════════════════
+      /* ═══════════════════════════════════════════════════
        SIDEBAR
        ═══════════════════════════════════════════════════ */
-    .sidebar {
-      position: fixed; top: var(--header-height); left: 0; bottom: 0;
-      width: var(--sidebar-width); z-index: 50;
-      background: var(--bg-sidebar);
-      border-right: 1px solid var(--glass-border);
-      padding: 24px 0; overflow-y: auto;
-    }
+      .sidebar {
+        position: fixed;
+        top: var(--header-height);
+        left: 0;
+        bottom: 0;
+        width: var(--sidebar-width);
+        z-index: 50;
+        background: var(--bg-sidebar);
+        border-right: 1px solid var(--glass-border);
+        padding: 24px 0;
+        overflow-y: auto;
+      }
 
-    .sidebar::-webkit-scrollbar { width: 4px; }
-    .sidebar::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 2px; }
+      .sidebar::-webkit-scrollbar {
+        width: 4px;
+      }
+      .sidebar::-webkit-scrollbar-thumb {
+        background: var(--glass-border);
+        border-radius: 2px;
+      }
 
-    .sidebar__section-label {
-      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em;
-      text-transform: uppercase; color: var(--text-muted);
-      padding: 0 24px; margin-bottom: 12px; margin-top: 8px;
-    }
+      .sidebar__section-label {
+        font-size: 0.65rem;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        padding: 0 24px;
+        margin-bottom: 12px;
+        margin-top: 8px;
+      }
 
-    .sidebar__link {
-      display: flex; align-items: center; gap: 12px;
-      padding: 10px 24px; font-size: 0.88rem; font-weight: 500;
-      color: var(--text-secondary); transition: all var(--transition-fast);
-      border-left: 3px solid transparent; text-decoration: none;
-    }
+      .sidebar__link {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 24px;
+        font-size: 0.88rem;
+        font-weight: 500;
+        color: var(--text-secondary);
+        transition: all var(--transition-fast);
+        border-left: 3px solid transparent;
+        text-decoration: none;
+      }
 
-    .sidebar__link:hover {
-      color: var(--text-primary); background: rgba(149,217,195,0.04);
-    }
+      .sidebar__link:hover {
+        color: var(--text-primary);
+        background: rgba(149, 217, 195, 0.04);
+      }
 
-    .sidebar__link.active {
-      color: var(--primary); border-left-color: var(--primary);
-      background: rgba(149,217,195,0.06); font-weight: 600;
-    }
+      .sidebar__link.active {
+        color: var(--primary);
+        border-left-color: var(--primary);
+        background: rgba(149, 217, 195, 0.06);
+        font-weight: 600;
+      }
 
-    .sidebar__link-icon { font-size: 1.1rem; width: 24px; text-align: center; }
+      .sidebar__link-icon {
+        font-size: 1.1rem;
+        width: 24px;
+        text-align: center;
+      }
 
-    .sidebar__progress {
-      margin: 24px 20px 0; padding: 16px; border-radius: var(--radius-md);
-      background: var(--glass-bg); border: 1px solid var(--glass-border);
-    }
-    .sidebar__progress-label { font-size: 0.7rem; font-weight: 700; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
-    .sidebar__progress-bar { height: 4px; border-radius: 2px; background: rgba(255,255,255,0.06); overflow: hidden; }
-    .sidebar__progress-fill { height: 100%; width: 0%; background: var(--gradient-primary); border-radius: 2px; transition: width 0.5s ease; }
-    .sidebar__progress-text { font-size: 0.75rem; color: var(--text-secondary); margin-top: 6px; }
+      .sidebar__progress {
+        margin: 24px 20px 0;
+        padding: 16px;
+        border-radius: var(--radius-md);
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+      }
+      .sidebar__progress-label {
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: var(--text-muted);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+      }
+      .sidebar__progress-bar {
+        height: 4px;
+        border-radius: 2px;
+        background: rgba(255, 255, 255, 0.06);
+        overflow: hidden;
+      }
+      .sidebar__progress-fill {
+        height: 100%;
+        width: 0%;
+        background: var(--gradient-primary);
+        border-radius: 2px;
+        transition: width 0.5s ease;
+      }
+      .sidebar__progress-text {
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        margin-top: 6px;
+      }
 
-    /* ═══════════════════════════════════════════════════
+      /* ═══════════════════════════════════════════════════
        MAIN CONTENT
        ═══════════════════════════════════════════════════ */
-    .main {
-      margin-left: var(--sidebar-width);
-      margin-top: var(--header-height);
-      padding: 40px 48px 80px;
-      position: relative; z-index: 1;
-      max-width: calc(1100px + var(--sidebar-width));
-    }
+      .main {
+        margin-left: var(--sidebar-width);
+        margin-top: var(--header-height);
+        padding: 40px 48px 80px;
+        position: relative;
+        z-index: 1;
+        max-width: calc(1100px + var(--sidebar-width));
+      }
 
-    /* Hero */
-    .grammar-hero {
-      margin-bottom: 48px; padding: 48px;
-      background: linear-gradient(135deg, rgba(149,217,195,0.06), rgba(0,191,166,0.03));
-      border: 1px solid rgba(149,217,195,0.12);
-      border-radius: var(--radius-2xl); position: relative; overflow: hidden;
-    }
-    .grammar-hero::before {
-      content: ''; position: absolute; top: -40%; right: -10%;
-      width: 300px; height: 300px;
-      background: radial-gradient(circle, rgba(149,217,195,0.08), transparent 70%);
-      pointer-events: none;
-    }
-    .grammar-hero h1 {
-      font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 800;
-      margin-bottom: 12px; position: relative;
-    }
-    .grammar-hero h1 span {
-      background: var(--gradient-primary); -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent; background-clip: text;
-    }
-    .grammar-hero p { color: var(--text-secondary); font-size: 1.05rem; max-width: 600px; line-height: 1.7; position: relative; }
-    .grammar-hero__stats {
-      display: flex; gap: 24px; margin-top: 24px; position: relative;
-    }
-    .grammar-hero__stat {
-      display: flex; align-items: center; gap: 8px;
-      padding: 8px 16px; border-radius: var(--radius-full);
-      background: var(--glass-bg); border: 1px solid var(--glass-border);
-      font-size: 0.85rem; color: var(--text-secondary);
-    }
+      /* Hero */
+      .grammar-hero {
+        margin-bottom: 48px;
+        padding: 48px;
+        background: linear-gradient(
+          135deg,
+          rgba(149, 217, 195, 0.06),
+          rgba(0, 191, 166, 0.03)
+        );
+        border: 1px solid rgba(149, 217, 195, 0.12);
+        border-radius: var(--radius-2xl);
+        position: relative;
+        overflow: hidden;
+      }
+      .grammar-hero::before {
+        content: "";
+        position: absolute;
+        top: -40%;
+        right: -10%;
+        width: 300px;
+        height: 300px;
+        background: radial-gradient(
+          circle,
+          rgba(149, 217, 195, 0.08),
+          transparent 70%
+        );
+        pointer-events: none;
+      }
+      .grammar-hero h1 {
+        font-size: clamp(2rem, 4vw, 2.8rem);
+        font-weight: 800;
+        margin-bottom: 12px;
+        position: relative;
+      }
+      .grammar-hero h1 span {
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .grammar-hero p {
+        color: var(--text-secondary);
+        font-size: 1.05rem;
+        max-width: 600px;
+        line-height: 1.7;
+        position: relative;
+      }
+      .grammar-hero__stats {
+        display: flex;
+        gap: 24px;
+        margin-top: 24px;
+        position: relative;
+      }
+      .grammar-hero__stat {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        border-radius: var(--radius-full);
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+      }
 
-    /* Section */
-    .grammar-section {
-      margin-bottom: 56px; scroll-margin-top: calc(var(--header-height) + 24px);
-    }
+      /* Section */
+      .grammar-section {
+        margin-bottom: 56px;
+        scroll-margin-top: calc(var(--header-height) + 24px);
+      }
 
-    .grammar-section__header {
-      display: flex; align-items: center; gap: 16px;
-      margin-bottom: 24px; padding-bottom: 16px;
-      border-bottom: 1px solid var(--glass-border);
-    }
-    .grammar-section__icon {
-      width: 48px; height: 48px; display: flex; align-items: center; justify-content: center;
-      border-radius: var(--radius-md); font-size: 1.5rem;
-      background: var(--bg-code); border: 1px solid rgba(149,217,195,0.1);
-    }
-    .grammar-section__title-group { flex: 1; }
-    .grammar-section__title { font-size: 1.5rem; font-weight: 700; color: var(--text-primary); }
-    .grammar-section__subtitle { font-size: 0.85rem; color: var(--text-secondary); margin-top: 2px; }
+      .grammar-section__header {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 24px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid var(--glass-border);
+      }
+      .grammar-section__icon {
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: var(--radius-md);
+        font-size: 1.5rem;
+        background: var(--bg-code);
+        border: 1px solid rgba(149, 217, 195, 0.1);
+      }
+      .grammar-section__title-group {
+        flex: 1;
+      }
+      .grammar-section__title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--text-primary);
+      }
+      .grammar-section__subtitle {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        margin-top: 2px;
+      }
 
-    .grammar-section__body { padding-left: 4px; }
+      .grammar-section__body {
+        padding-left: 4px;
+      }
 
-    /* Table */
-    .g-table-wrapper {
-      overflow-x: auto; margin-bottom: 20px;
-      border-radius: var(--radius-lg); border: 1px solid var(--glass-border);
-    }
+      /* Table */
+      .g-table-wrapper {
+        overflow-x: auto;
+        margin-bottom: 20px;
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--glass-border);
+      }
 
-    .g-table {
-      width: 100%; border-collapse: collapse; font-size: 0.9rem;
-    }
-    .g-table thead { background: rgba(149,217,195,0.06); }
-    .g-table th {
-      padding: 12px 16px; text-align: left;
-      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--text-muted);
-      border-bottom: 1px solid var(--glass-border);
-    }
-    .g-table td {
-      padding: 12px 16px; border-bottom: 1px solid rgba(255,255,255,0.03);
-      color: var(--text-primary); vertical-align: middle;
-    }
-    .g-table tbody tr { transition: background var(--transition-fast); }
-    .g-table tbody tr:hover { background: rgba(149,217,195,0.03); }
-    .g-table tbody tr:last-child td { border-bottom: none; }
+      .g-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.9rem;
+      }
+      .g-table thead {
+        background: rgba(149, 217, 195, 0.06);
+      }
+      .g-table th {
+        padding: 12px 16px;
+        text-align: left;
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        border-bottom: 1px solid var(--glass-border);
+      }
+      .g-table td {
+        padding: 12px 16px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        color: var(--text-primary);
+        vertical-align: middle;
+      }
+      .g-table tbody tr {
+        transition: background var(--transition-fast);
+      }
+      .g-table tbody tr:hover {
+        background: rgba(149, 217, 195, 0.03);
+      }
+      .g-table tbody tr:last-child td {
+        border-bottom: none;
+      }
 
-    /* Article colors */
-    .g-der { color: var(--der-blue); font-weight: 700; }
-    .g-die { color: var(--die-pink); font-weight: 700; }
-    .g-das { color: var(--das-green); font-weight: 700; }
+      /* Article colors */
+      .g-der {
+        color: var(--der-blue);
+        font-weight: 700;
+      }
+      .g-die {
+        color: var(--die-pink);
+        font-weight: 700;
+      }
+      .g-das {
+        color: var(--das-green);
+        font-weight: 700;
+      }
 
-    /* Inline audio button */
-    .g-audio {
-      display: inline-flex; align-items: center; justify-content: center;
-      width: 26px; height: 26px; border-radius: 50%;
-      background: rgba(149,217,195,0.08); border: 1px solid rgba(149,217,195,0.15);
-      cursor: pointer; font-size: 12px; margin-left: 6px;
-      transition: all var(--transition-fast); vertical-align: middle;
-      flex-shrink: 0;
-    }
-    .g-audio:hover {
-      background: rgba(149,217,195,0.2); border-color: var(--primary);
-      transform: scale(1.1); box-shadow: 0 0 10px rgba(149,217,195,0.2);
-    }
-    .g-audio:active { transform: scale(0.95); }
+      /* Inline audio button */
+      .g-audio {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        background: rgba(149, 217, 195, 0.08);
+        border: 1px solid rgba(149, 217, 195, 0.15);
+        cursor: pointer;
+        font-size: 12px;
+        margin-left: 6px;
+        transition: all var(--transition-fast);
+        vertical-align: middle;
+        flex-shrink: 0;
+      }
+      .g-audio:hover {
+        background: rgba(149, 217, 195, 0.2);
+        border-color: var(--primary);
+        transform: scale(1.1);
+        box-shadow: 0 0 10px rgba(149, 217, 195, 0.2);
+      }
+      .g-audio:active {
+        transform: scale(0.95);
+      }
 
-    /* Tip box */
-    .g-tip {
-      display: flex; gap: 12px; padding: 16px 20px;
-      background: rgba(149,217,195,0.04);
-      border: 1px solid rgba(149,217,195,0.12);
-      border-radius: var(--radius-md); margin-top: 16px;
-      font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6;
-    }
-    .g-tip__icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 2px; }
+      /* Tip box */
+      .g-tip {
+        display: flex;
+        gap: 12px;
+        padding: 16px 20px;
+        background: rgba(149, 217, 195, 0.04);
+        border: 1px solid rgba(149, 217, 195, 0.12);
+        border-radius: var(--radius-md);
+        margin-top: 16px;
+        font-size: 0.88rem;
+        color: var(--text-secondary);
+        line-height: 1.6;
+      }
+      .g-tip__icon {
+        font-size: 1.1rem;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
 
-    /* Formula blocks */
-    .g-formula {
-      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
-      padding: 16px 20px; background: var(--glass-bg);
-      border: 1px solid var(--glass-border); border-radius: var(--radius-lg);
-      margin-bottom: 16px;
-    }
-    .g-formula__part {
-      padding: 6px 16px; border-radius: var(--radius-sm);
-      font-weight: 600; font-size: 0.85rem;
-    }
-    .g-formula__part--subject { background: rgba(66,165,245,0.12); color: var(--der-blue); border: 1px solid rgba(66,165,245,0.2); }
-    .g-formula__part--verb { background: rgba(149,217,195,0.15); color: var(--primary); border: 1px solid rgba(149,217,195,0.25); font-weight: 800; }
-    .g-formula__part--object { background: rgba(236,64,122,0.1); color: var(--die-pink); border: 1px solid rgba(236,64,122,0.2); }
-    .g-formula__part--time { background: rgba(255,213,79,0.1); color: var(--gold); border: 1px solid rgba(255,213,79,0.2); }
-    .g-formula__part--place { background: rgba(255,112,67,0.1); color: var(--orange); border: 1px solid rgba(255,112,67,0.2); }
-    .g-formula__arrow { color: var(--text-muted); font-size: 0.85rem; }
+      /* Formula blocks */
+      .g-formula {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+        padding: 16px 20px;
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        border-radius: var(--radius-lg);
+        margin-bottom: 16px;
+      }
+      .g-formula__part {
+        padding: 6px 16px;
+        border-radius: var(--radius-sm);
+        font-weight: 600;
+        font-size: 0.85rem;
+      }
+      .g-formula__part--subject {
+        background: rgba(66, 165, 245, 0.12);
+        color: var(--der-blue);
+        border: 1px solid rgba(66, 165, 245, 0.2);
+      }
+      .g-formula__part--verb {
+        background: rgba(149, 217, 195, 0.15);
+        color: var(--primary);
+        border: 1px solid rgba(149, 217, 195, 0.25);
+        font-weight: 800;
+      }
+      .g-formula__part--object {
+        background: rgba(236, 64, 122, 0.1);
+        color: var(--die-pink);
+        border: 1px solid rgba(236, 64, 122, 0.2);
+      }
+      .g-formula__part--time {
+        background: rgba(255, 213, 79, 0.1);
+        color: var(--gold);
+        border: 1px solid rgba(255, 213, 79, 0.2);
+      }
+      .g-formula__part--place {
+        background: rgba(255, 112, 67, 0.1);
+        color: var(--orange);
+        border: 1px solid rgba(255, 112, 67, 0.2);
+      }
+      .g-formula__arrow {
+        color: var(--text-muted);
+        font-size: 0.85rem;
+      }
 
-    /* Number grid */
-    .g-number-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-      gap: 10px; margin-bottom: 16px;
-    }
-    .g-number-item {
-      display: flex; flex-direction: column; align-items: center;
-      padding: 12px 8px; border-radius: var(--radius-md);
-      background: var(--glass-bg); border: 1px solid var(--glass-border);
-      cursor: pointer; transition: all var(--transition-fast);
-    }
-    .g-number-item:hover {
-      background: rgba(149,217,195,0.06); border-color: rgba(149,217,195,0.2);
-      transform: translateY(-2px); box-shadow: 0 4px 12px rgba(149,217,195,0.1);
-    }
-    .g-number-item__num { font-family: 'Outfit', sans-serif; font-size: 1.4rem; font-weight: 800; color: var(--text-primary); }
-    .g-number-item__word { font-size: 0.78rem; color: var(--text-secondary); margin-top: 2px; }
+      /* Number grid */
+      .g-number-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 10px;
+        margin-bottom: 16px;
+      }
+      .g-number-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 12px 8px;
+        border-radius: var(--radius-md);
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        cursor: pointer;
+        transition: all var(--transition-fast);
+      }
+      .g-number-item:hover {
+        background: rgba(149, 217, 195, 0.06);
+        border-color: rgba(149, 217, 195, 0.2);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(149, 217, 195, 0.1);
+      }
+      .g-number-item__num {
+        font-family: "Outfit", sans-serif;
+        font-size: 1.4rem;
+        font-weight: 800;
+        color: var(--text-primary);
+      }
+      .g-number-item__word {
+        font-size: 0.78rem;
+        color: var(--text-secondary);
+        margin-top: 2px;
+      }
 
-    /* Example sentences */
-    .g-example {
-      display: flex; align-items: center; gap: 10px;
-      padding: 10px 16px; border-radius: var(--radius-full);
-      background: var(--glass-bg); border: 1px solid var(--glass-border);
-      margin-bottom: 8px; font-size: 0.9rem; width: fit-content;
-    }
-    .g-example__de { font-weight: 600; color: var(--text-primary); }
-    .g-example__en { color: var(--text-muted); font-style: italic; }
+      /* Example sentences */
+      .g-example {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 16px;
+        border-radius: var(--radius-full);
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        margin-bottom: 8px;
+        font-size: 0.9rem;
+        width: fit-content;
+      }
+      .g-example__de {
+        font-weight: 600;
+        color: var(--text-primary);
+      }
+      .g-example__en {
+        color: var(--text-muted);
+        font-style: italic;
+      }
 
-    /* Highlight text */
-    .g-highlight { color: var(--primary-light); font-weight: 600; }
-    .g-strong { font-weight: 700; color: var(--text-primary); }
+      /* Highlight text */
+      .g-highlight {
+        color: var(--primary-light);
+        font-weight: 600;
+      }
+      .g-strong {
+        font-weight: 700;
+        color: var(--text-primary);
+      }
 
-    /* ═══════════════════════════════════════════════════
+      /* ═══════════════════════════════════════════════════
        MOBILE SIDEBAR TOGGLE
        ═══════════════════════════════════════════════════ */
-    .sidebar-toggle {
-      display: none; position: fixed; bottom: 20px; left: 20px; z-index: 200;
-      width: 48px; height: 48px; border-radius: 50%;
-      background: var(--gradient-primary); color: #000;
-      font-size: 1.2rem; font-weight: 700; border: none; cursor: pointer;
-      box-shadow: var(--shadow-md);
-    }
+      .sidebar-toggle {
+        display: none;
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        z-index: 200;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: var(--gradient-primary);
+        color: #000;
+        font-size: 1.2rem;
+        font-weight: 700;
+        border: none;
+        cursor: pointer;
+        box-shadow: var(--shadow-md);
+      }
 
-    /* ═══════════════════════════════════════════════════
+      /* ═══════════════════════════════════════════════════
        RESPONSIVE
        ═══════════════════════════════════════════════════ */
-    @media (max-width: 900px) {
-      .sidebar {
-        transform: translateX(-100%);
-        transition: transform var(--transition-base);
-        z-index: 150;
+      @media (max-width: 900px) {
+        .sidebar {
+          transform: translateX(-100%);
+          transition: transform var(--transition-base);
+          z-index: 150;
+        }
+        .sidebar.open {
+          transform: translateX(0);
+        }
+        .sidebar-toggle {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .main {
+          margin-left: 0;
+          padding: 32px 20px 80px;
+        }
+        .grammar-hero {
+          padding: 32px 24px;
+        }
+        .header__search {
+          display: none;
+        }
+        .grammar-hero__stats {
+          flex-wrap: wrap;
+        }
       }
-      .sidebar.open { transform: translateX(0); }
-      .sidebar-toggle { display: flex; align-items: center; justify-content: center; }
-      .main { margin-left: 0; padding: 32px 20px 80px; }
-      .grammar-hero { padding: 32px 24px; }
-      .header__search { display: none; }
-      .grammar-hero__stats { flex-wrap: wrap; }
-    }
 
-    @media (max-width: 640px) {
-      .g-number-grid { grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); }
-      .g-formula { flex-direction: column; align-items: flex-start; }
-      .g-formula__arrow { display: none; }
-    }
+      @media (max-width: 640px) {
+        .g-number-grid {
+          grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        }
+        .g-formula {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        .g-formula__arrow {
+          display: none;
+        }
+        .g-table th,
+        .g-table td {
+          padding: 10px 10px;
+          font-size: 0.8rem;
+        }
+        .g-audio {
+          min-width: 36px;
+          min-height: 36px;
+          font-size: 14px;
+        }
+        .grammar-hero h1 {
+          font-size: clamp(1.5rem, 5vw, 2rem);
+        }
+        .grammar-hero p {
+          font-size: 0.9rem;
+        }
+        .grammar-hero__stats {
+          gap: 12px;
+        }
+        .grammar-hero__stat {
+          font-size: 0.75rem;
+          padding: 6px 12px;
+        }
+        .grammar-section__title {
+          font-size: 1.2rem;
+        }
+        .header {
+          padding: 0 16px;
+        }
+        .header__badge {
+          display: none;
+        }
+      }
 
-    /* Scrollbar */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: var(--bg-primary); }
-    ::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 3px; }
-    ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
-  </style>
-</head>
-<body>
-  <div class="bg-mesh"></div>
+      /* Scrollbar */
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--bg-primary);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--glass-border);
+        border-radius: 3px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--text-muted);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bg-mesh"></div>
 
-  <!-- ═══════════════════════════════════════════════
+    <!-- ═══════════════════════════════════════════════
 HEADER
 ═══════════════════════════════════════════════ -->
-  <header class="header">
-    <div class="header__inner">
-      <div class="header__left">
-        <a href="index.html" class="header__back">← Home</a>
-        <div class="header__title">
-          <span>📖</span> A1 Grammar Reference
+    <header class="header">
+      <div class="header__inner">
+        <div class="header__left">
+          <a href="index.html" class="header__back">← Home</a>
+          <div class="header__title"><span>📖</span> A1 Grammar Reference</div>
+          <span class="header__badge">Netzwerk neu A1</span>
         </div>
-        <span class="header__badge">Netzwerk neu A1</span>
-      </div>
-      <div class="header__right">
-        <div class="header__search">
-          <span class="header__search-icon">🔍</span>
-          <input type="text" id="grammar-search" placeholder="Search grammar…" />
+        <div class="header__right">
+          <div class="header__search">
+            <span class="header__search-icon">🔍</span>
+            <input
+              type="text"
+              id="grammar-search"
+              placeholder="Search grammar…"
+            />
+          </div>
+          <button
+            class="navbar__auth-btn"
+            id="auth-login-btn"
+            onclick="openAuthModal('login')"
+            style="padding: 6px 14px; font-size: 0.8rem; margin-left: 12px"
+          >
+            👤 Log In
+          </button>
+          <div
+            class="navbar__user"
+            id="auth-user-widget"
+            style="display: none; margin-left: 12px"
+            onclick="toggleUserDropdown()"
+          >
+            <div class="navbar__user-avatar">?</div>
+            <span class="navbar__user-name" style="max-width: 80px">User</span>
+            <div class="user-dropdown" id="user-dropdown">
+              <div class="user-dropdown__item" style="pointer-events: none">
+                <span>☁️</span
+                ><span
+                  class="sync-indicator"
+                  id="sync-indicator"
+                  style="display: none"
+                ></span>
+              </div>
+              <div class="user-dropdown__divider"></div>
+              <button
+                class="user-dropdown__item user-dropdown__item--danger"
+                onclick="authSignOut()"
+              >
+                <span>🚪</span> Log Out
+              </button>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </header>
+    </header>
 
-  <!-- ═══════════════════════════════════════════════
+    <!-- ═══════════════════════════════════════════════
 SIDEBAR
 ═══════════════════════════════════════════════ -->
-  <aside class="sidebar" id="sidebar">
-    <div class="sidebar__section-label">Grammar Topics</div>
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar__section-label">Grammar Topics</div>
 
-    <a href="#articles" class="sidebar__link active" data-section="articles">
-      <span class="sidebar__link-icon">📘</span> Articles — Der, Die, Das
-    </a>
-    <a href="#verbs" class="sidebar__link" data-section="verbs">
-      <span class="sidebar__link-icon">📗</span> Verb Conjugation
-    </a>
-    <a href="#pronouns" class="sidebar__link" data-section="pronouns">
-      <span class="sidebar__link-icon">📙</span> Personal Pronouns
-    </a>
-    <a href="#structure" class="sidebar__link" data-section="structure">
-      <span class="sidebar__link-icon">📐</span> Sentence Structure
-    </a>
-    <a href="#wfragen" class="sidebar__link" data-section="wfragen">
-      <span class="sidebar__link-icon">❓</span> W-Fragen
-    </a>
-    <a href="#negation" class="sidebar__link" data-section="negation">
-      <span class="sidebar__link-icon">🚫</span> Negation
-    </a>
-    <a href="#numbers" class="sidebar__link" data-section="numbers">
-      <span class="sidebar__link-icon">🔢</span> Numbers 0 – 100
-    </a>
-    <a href="#time" class="sidebar__link" data-section="time">
-      <span class="sidebar__link-icon">📅</span> Days, Months & Time
-    </a>
+      <a href="#articles" class="sidebar__link active" data-section="articles">
+        <span class="sidebar__link-icon">📘</span> Articles — Der, Die, Das
+      </a>
+      <a href="#verbs" class="sidebar__link" data-section="verbs">
+        <span class="sidebar__link-icon">📗</span> Verb Conjugation
+      </a>
+      <a href="#pronouns" class="sidebar__link" data-section="pronouns">
+        <span class="sidebar__link-icon">📙</span> Personal Pronouns
+      </a>
+      <a href="#structure" class="sidebar__link" data-section="structure">
+        <span class="sidebar__link-icon">📐</span> Sentence Structure
+      </a>
+      <a href="#wfragen" class="sidebar__link" data-section="wfragen">
+        <span class="sidebar__link-icon">❓</span> W-Fragen
+      </a>
+      <a href="#negation" class="sidebar__link" data-section="negation">
+        <span class="sidebar__link-icon">🚫</span> Negation
+      </a>
+      <a href="#numbers" class="sidebar__link" data-section="numbers">
+        <span class="sidebar__link-icon">🔢</span> Numbers 0 – 100
+      </a>
+      <a href="#time" class="sidebar__link" data-section="time">
+        <span class="sidebar__link-icon">📅</span> Days, Months & Time
+      </a>
 
-    <div class="sidebar__progress">
-      <div class="sidebar__progress-label">Reading Progress</div>
-      <div class="sidebar__progress-bar"><div class="sidebar__progress-fill" id="progress-fill"></div></div>
-      <div class="sidebar__progress-text" id="progress-text">0% completed</div>
-    </div>
-  </aside>
+      <div class="sidebar__progress">
+        <div class="sidebar__progress-label">Reading Progress</div>
+        <div class="sidebar__progress-bar">
+          <div class="sidebar__progress-fill" id="progress-fill"></div>
+        </div>
+        <div class="sidebar__progress-text" id="progress-text">
+          0% completed
+        </div>
+      </div>
+    </aside>
 
-  <!-- Mobile toggle -->
-  <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle sidebar">☰</button>
+    <!-- Mobile toggle -->
+    <button
+      class="sidebar-toggle"
+      id="sidebar-toggle"
+      aria-label="Toggle sidebar"
+    >
+      ☰
+    </button>
 
-  <!-- ═══════════════════════════════════════════════
+    <!-- ═══════════════════════════════════════════════
 MAINCONTENT
 ═══════════════════════════════════════════════ -->
-  <main class="main">
+    <main class="main">
+      <!-- Hero -->
+      <div class="grammar-hero">
+        <h1>German A1 <span>Grammar Reference</span></h1>
+        <p>
+          Your complete guide to foundational German grammar. Every rule, every
+          table, every exception — organized for fast learning. Click 🔊 on any
+          German text to hear the pronunciation.
+        </p>
+        <div class="grammar-hero__stats">
+          <span class="grammar-hero__stat">📖 8 Topics</span>
+          <span class="grammar-hero__stat">📊 15+ Tables</span>
+          <span class="grammar-hero__stat">🔊 Full Audio</span>
+          <span class="grammar-hero__stat">🎓 CEFR A1</span>
+        </div>
+      </div>
 
-    <!-- Hero -->
-    <div class="grammar-hero">
-      <h1>German A1 <span>Grammar Reference</span></h1>
-      <p>Your complete guide to foundational German grammar. Every rule, every table, every exception — organized for fast learning. Click 🔊 on any German text to hear the pronunciation.</p>
-      <div class="grammar-hero__stats">
-        <span class="grammar-hero__stat">📖 8 Topics</span>
-        <span class="grammar-hero__stat">📊 15+ Tables</span>
-        <span class="grammar-hero__stat">🔊 Full Audio</span>
-        <span class="grammar-hero__stat">🎓 CEFR A1</span>
+      <!-- ═══════════════════════════════════════════════
+1.ARTICLES
+═══════════════════════════════════════════════ -->
+      <section class="grammar-section" id="articles">
+        <div class="grammar-section__header">
+          <div class="grammar-section__icon">📘</div>
+          <div class="grammar-section__title-group">
+            <h2 class="grammar-section__title">Articles — Der, Die, Das</h2>
+            <p class="grammar-section__subtitle">
+              Every German noun has a grammatical gender. The article tells you
+              which one.
+            </p>
+          </div>
+        </div>
+        <div class="grammar-section__body">
+          <div class="g-table-wrapper">
+            <table class="g-table">
+              <thead>
+                <tr>
+                  <th>Article</th>
+                  <th>Gender</th>
+                  <th>Clue Endings</th>
+                  <th>Examples</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="g-der">der</span></td>
+                  <td>Masculine ♂</td>
+                  <td>-er, -en, -el, -ling, -ich, -ig</td>
+                  <td>der Tisch, der Lehrer, der Frühling</td>
+                  <td>
+                    <button
+                      class="g-audio"
+                      onclick="speak('der Tisch, der Lehrer, der Frühling')"
+                    >
+                      🔊
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td><span class="g-die">die</span></td>
+                  <td>Feminine ♀</td>
+                  <td>-e, -ung, -heit, -keit, -schaft, -tion, -ie</td>
+                  <td>die Lampe, die Wohnung, die Freiheit</td>
+                  <td>
+                    <button
+                      class="g-audio"
+                      onclick="speak('die Lampe, die Wohnung, die Freiheit')"
+                    >
+                      🔊
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td><span class="g-das">das</span></td>
+                  <td>Neuter ⚬</td>
+                  <td>-chen, -lein, -um, -ment, Ge-</td>
+                  <td>das Mädchen, das Zimmer, das Gebäude</td>
+                  <td>
+                    <button
+                      class="g-audio"
+                      onclick="speak('das Mädchen, das Zimmer, das Gebäude')"
+                    >
+                      🔊
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4
+            style="
+              margin: 24px 0 12px;
+              color: var(--text-secondary);
+              font-size: 0.9rem;
+            "
+          >
+            Definite vs. Indefinite Articles
+          </h4>
+          <div class="g-table-wrapper">
+            <table class="g-table">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Masculine</th>
+                  <th>Feminine</th>
+                  <th>Neuter</th>
+                  <th>Plural</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="g-strong">Definite</td>
+                  <td class="g-der">der</td>
+                  <td class="g-die">die</td>
+                  <td class="g-das">das</td>
+                  <td class="g-die">die</td>
+                </tr>
+                <tr>
+                  <td class="g-strong">Indefinite</td>
+                  <td>ein</td>
+                  <td>eine</td>
+                  <td>ein</td>
+                  <td>— (keine)</td>
+                </tr>
+                <tr>
+                  <td class="g-strong">Acc. Def.</td>
+                  <td class="g-der">den</td>
+                  <td class="g-die">die</td>
+                  <td class="g-das">das</td>
+                  <td class="g-die">die</td>
+                </tr>
+                <tr>
+                  <td class="g-strong">Acc. Indef.</td>
+                  <td>einen</td>
+                  <td>eine</td>
+                  <td>ein</td>
+                  <td>— (keine)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="g-tip">
+            <span class="g-tip__icon">💡</span>
+            <div>
+              <strong>Mnemonic:</strong> All diminutives (<span
+                class="g-highlight"
+                >-chen, -lein</span
+              >) are <em>always</em> <span class="g-das">das</span>, regardless
+              of the base noun's gender.
+              <button class="g-audio" onclick="speak('das Mädchen')">🔊</button>
+              <em>"das Mädchen"</em> (the girl) is neuter!
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════
+2.VERBS
+═══════════════════════════════════════════════ -->
+      <section class="grammar-section" id="verbs">
+        <div class="grammar-section__header">
+          <div class="grammar-section__icon">📗</div>
+          <div class="grammar-section__title-group">
+            <h2 class="grammar-section__title">
+              Present Tense — Verb Conjugation
+            </h2>
+            <p class="grammar-section__subtitle">
+              Regular and irregular verbs in the present tense (Präsens).
+            </p>
+          </div>
+        </div>
+        <div class="grammar-section__body">
+          <h4
+            style="
+              margin-bottom: 12px;
+              color: var(--text-secondary);
+              font-size: 0.9rem;
+            "
+          >
+            Regular Verb Pattern: Stem + Ending
+          </h4>
+          <div class="g-formula">
+            <span class="g-formula__part g-formula__part--verb">Verb Stem</span>
+            <span class="g-formula__arrow">+</span>
+            <span class="g-formula__part g-formula__part--subject">-e</span>
+            <span class="g-formula__part g-formula__part--subject">-st</span>
+            <span class="g-formula__part g-formula__part--subject">-t</span>
+            <span class="g-formula__part g-formula__part--subject">-en</span>
+            <span class="g-formula__part g-formula__part--subject">-t</span>
+            <span class="g-formula__part g-formula__part--subject">-en</span>
+          </div>
+
+          <div class="g-table-wrapper">
+            <table class="g-table">
+              <thead>
+                <tr>
+                  <th>Pronoun</th>
+                  <th>sein <em>(to be)</em></th>
+                  <th>haben <em>(to have)</em></th>
+                  <th>machen <em>(to do)</em></th>
+                  <th>gehen <em>(to go)</em></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="g-strong">ich</td>
+                  <td>bin</td>
+                  <td>habe</td>
+                  <td>mache</td>
+                  <td>gehe</td>
+                  <td>
+                    <button
+                      class="g-audio"
+                      onclick="speak('ich bin, ich habe, ich mache, ich gehe')"
+                    >
+                      🔊
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="g-strong">du</td>
+                  <td>bist</td>
+                  <td>hast</td>
+                  <td>machst</td>
+                  <td>gehst</td>
+                  <td>
+                    <button
+                      class="g-audio"
+                      onclick="speak('du bist, du hast, du machst, du gehst')"
+                    >
+                      🔊
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="g-strong">er/sie/es</td>
+                  <td>ist</td>
+                  <td>hat</td>
+                  <td>macht</td>
+                  <td>geht</td>
+                  <td>
+                    <button
+                      class="g-audio"
+                      onclick="speak('er ist, er hat, er macht, er geht')"
+                    >
+                      🔊
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="g-strong">wir</td>
+                  <td>sind</td>
+                  <td>haben</td>
+                  <td>machen</td>
+                  <td>gehen</td>
+                  <td>
+                    <button
+                      class="g-audio"
+                      onclick="
+                        speak('wir sind, wir haben, wir machen, wir gehen')
+                      "
+                    >
+                      🔊
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="g-strong">ihr</td>
+                  <td>seid</td>
+                  <td>habt</td>
+                  <td>macht</td>
+                  <td>geht</td>
+                  <td>
+                    <button
+                      class="g-audio"
+                      onclick="speak('ihr seid, ihr habt, ihr macht, ihr geht')"
+                    >
+                      🔊
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="g-strong">sie/Sie</td>
+                  <td>sind</td>
+                  <td>haben</td>
+                  <td>machen</td>
+                  <td>gehen</td>
+                  <td>
+                    <button
+                      class="g-audio"
+                      onclick="
+                        speak('sie sind, sie haben, sie machen, sie gehen')
+                      "
+                    >
+                      🔊
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="g-tip">
+            <span class="g-tip__icon">💡</span>
+            <div>
+              <strong>Pattern:</strong> Regular verbs follow the stem + ending:
+              <span class="g-highlight">-e, -st, -t, -en, -t, -en</span>.
+              <em>"sein"</em> and <em>"haben"</em> are irregular — memorize them
+              first!
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════
+3.PRONOUNS
+═══════════════════════════════════════════════ -->
+      <section class="grammar-section" id="pronouns">
+        <div class="grammar-section__header">
+          <div class="grammar-section__icon">📙</div>
+          <div class="grammar-section__title-group">
+            <h2 class="grammar-section__title">Personal Pronouns</h2>
+            <p class="grammar-section__subtitle">
+              Nominative, Accusative, and Dative forms.
+            </p>
+          </div>
+        </div>
+        <div class="grammar-section__body">
+          <div class="g-table-wrapper">
+            <table class="g-table">
+              <thead>
+                <tr>
+                  <th>English</th>
+                  <th>Nominative</th>
+                  <th>Accusative</th>
+                  <th>Dative</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>I</td>
+                  <td class="g-strong">ich</td>
+                  <td>mich</td>
+                  <td>mir</td>
+                  <td>
+                    <button class="g-audio" onclick="speak('ich, mich, mir')">
+                      🔊
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>you (inf.)</td>
+                  <td class="g-strong">du</td>
+                  <td>dich</td>
+                  <td>dir</td>
+                  <td>
+                    <button class="g-audio" onclick="speak('du, dich, dir')">
+                      🔊
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>he</td>
+                  <td class="g-strong">er</td>
+                  <td>ihn</td>
+                  <td>ihm</td>
+                  <td>
+                    <button class="g-audio" onclick="speak('er, ihn, ihm')">
+                      🔊
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>she</td>
+                  <td class="g-strong">sie</td>
+                  <td>sie</td>
+                  <td>ihr</td>
+                  <td>
+                    <button class="g-audio" onclick="speak('sie, sie, ihr')">
+                      🔊
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>it</td>
+                  <td class="g-strong">es</td>
+                  <td>es</td>
+                  <td>ihm</td>
+                  <td>
+                    <button class="g-audio" onclick="speak('es, es, ihm')">
+                      🔊
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>we</td>
+                  <td class="g-strong">wir</td>
+                  <td>uns</td>
+                  <td>uns</td>
+                  <td>
+                    <button class="g-audio" onclick="speak('wir, uns, uns')">
+                      🔊
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>you (pl.)</td>
+                  <td class="g-strong">ihr</td>
+                  <td>euch</td>
+                  <td>euch</td>
+                  <td>
+                    <button class="g-audio" onclick="speak('ihr, euch, euch')">
+                      🔊
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>they / you (formal)</td>
+                  <td class="g-strong">sie/Sie</td>
+                  <td>sie/Sie</td>
+                  <td>ihnen/Ihnen</td>
+                  <td>
+                    <button class="g-audio" onclick="speak('sie, sie, ihnen')">
+                      🔊
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="g-tip">
+            <span class="g-tip__icon">💡</span>
+            <div>
+              <strong>Focus:</strong> At A1, master
+              <span class="g-highlight">Nominative</span> (subject) and
+              <span class="g-highlight">Accusative</span> (direct object) first.
+              Dative comes more at A2.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════
+4.SENTENCESTRUCTURE
+═══════════════════════════════════════════════ -->
+      <section class="grammar-section" id="structure">
+        <div class="grammar-section__header">
+          <div class="grammar-section__icon">📐</div>
+          <div class="grammar-section__title-group">
+            <h2 class="grammar-section__title">Sentence Structure — V2 Rule</h2>
+            <p class="grammar-section__subtitle">
+              The verb is ALWAYS in position 2 in German statements.
+            </p>
+          </div>
+        </div>
+        <div class="grammar-section__body">
+          <div class="g-formula">
+            <span class="g-formula__part g-formula__part--subject"
+              >Subject</span
+            >
+            <span class="g-formula__arrow">→</span>
+            <span class="g-formula__part g-formula__part--verb"
+              >VERB (pos. 2)</span
+            >
+            <span class="g-formula__arrow">→</span>
+            <span class="g-formula__part g-formula__part--object">Object</span>
+            <span class="g-formula__arrow">→</span>
+            <span class="g-formula__part g-formula__part--time">Time</span>
+            <span class="g-formula__arrow">→</span>
+            <span class="g-formula__part g-formula__part--place">Place</span>
+          </div>
+          <div class="g-table-wrapper">
+            <table class="g-table">
+              <thead>
+                <tr>
+                  <th>Type</th>
+                  <th>Example</th>
+                  <th>Translation</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="g-strong">Statement</td>
+                  <td>Ich <span class="g-highlight">trinke</span> Kaffee.</td>
+                  <td style="color: var(--text-muted)">I drink coffee.</td>
+                  <td>
+                    <button
+                      class="g-audio"
+                      onclick="speak('Ich trinke Kaffee.')"
+                    >
+                      🔊
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="g-strong">Time first</td>
+                  <td>
+                    Morgens <span class="g-highlight">trinke</span> ich Kaffee.
+                  </td>
+                  <td style="color: var(--text-muted)">
+                    In the mornings I drink coffee.
+                  </td>
+                  <td>
+                    <button
+                      class="g-audio"
+                      onclick="speak('Morgens trinke ich Kaffee.')"
+                    >
+                      🔊
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="g-strong">Yes/No Q</td>
+                  <td><span class="g-highlight">Trinken</span> Sie Kaffee?</td>
+                  <td style="color: var(--text-muted)">Do you drink coffee?</td>
+                  <td>
+                    <button
+                      class="g-audio"
+                      onclick="speak('Trinken Sie Kaffee?')"
+                    >
+                      🔊
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="g-strong">W-Question</td>
+                  <td>Was <span class="g-highlight">trinken</span> Sie?</td>
+                  <td style="color: var(--text-muted)">What do you drink?</td>
+                  <td>
+                    <button class="g-audio" onclick="speak('Was trinken Sie?')">
+                      🔊
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="g-tip">
+            <span class="g-tip__icon">💡</span>
+            <div>
+              <strong>V2 Rule:</strong> No matter what starts the sentence, the
+              verb is always in the
+              <span class="g-highlight">second position</span>. If time comes
+              first, the subject moves after the verb.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════
+5.W-FRAGEN
+═══════════════════════════════════════════════ -->
+      <section class="grammar-section" id="wfragen">
+        <div class="grammar-section__header">
+          <div class="grammar-section__icon">❓</div>
+          <div class="grammar-section__title-group">
+            <h2 class="grammar-section__title">W-Fragen — Question Words</h2>
+            <p class="grammar-section__subtitle">
+              All the essential question words you need for A1.
+            </p>
+          </div>
+        </div>
+        <div class="grammar-section__body">
+          <div class="g-table-wrapper">
+            <table class="g-table">
+              <thead>
+                <tr>
+                  <th>German</th>
+                  <th>English</th>
+                  <th>Example</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="g-highlight">Wer</td>
+                  <td>Who</td>
+                  <td>Wer ist das?</td>
+                  <td>
+                    <button class="g-audio" onclick="speak('Wer ist das?')">
+                      🔊
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="g-highlight">Was</td>
+                  <td>What</td>
+                  <td>Was machst du?</td>
+                  <td>
+                    <button class="g-audio" onclick="speak('Was machst du?')">
+                      🔊
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="g-highlight">Wo</td>
+                  <td>Where</td>
+                  <td>Wo wohnst du?</td>
+                  <td>
+                    <button class="g-audio" onclick="speak('Wo wohnst du?')">
+                      🔊
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="g-highlight">Woher</td>
+                  <td>Where from</td>
+                  <td>Woher kommst du?</td>
+                  <td>
+                    <button class="g-audio" onclick="speak('Woher kommst du?')">
+                      🔊
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="g-highlight">Wohin</td>
+                  <td>Where to</td>
+                  <td>Wohin gehst du?</td>
+                  <td>
+                    <button class="g-audio" onclick="speak('Wohin gehst du?')">
+                      🔊
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="g-highlight">Wann</td>
+                  <td>When</td>
+                  <td>Wann beginnt der Kurs?</td>
+                  <td>
+                    <button
+                      class="g-audio"
+                      onclick="speak('Wann beginnt der Kurs?')"
+                    >
+                      🔊
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="g-highlight">Wie</td>
+                  <td>How</td>
+                  <td>Wie geht es Ihnen?</td>
+                  <td>
+                    <button
+                      class="g-audio"
+                      onclick="speak('Wie geht es Ihnen?')"
+                    >
+                      🔊
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="g-highlight">Warum</td>
+                  <td>Why</td>
+                  <td>Warum lernst du Deutsch?</td>
+                  <td>
+                    <button
+                      class="g-audio"
+                      onclick="speak('Warum lernst du Deutsch?')"
+                    >
+                      🔊
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="g-highlight">Wie viel(e)</td>
+                  <td>How much/many</td>
+                  <td>Wie viel kostet das?</td>
+                  <td>
+                    <button
+                      class="g-audio"
+                      onclick="speak('Wie viel kostet das?')"
+                    >
+                      🔊
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════
+6.NEGATION
+═══════════════════════════════════════════════ -->
+      <section class="grammar-section" id="negation">
+        <div class="grammar-section__header">
+          <div class="grammar-section__icon">🚫</div>
+          <div class="grammar-section__title-group">
+            <h2 class="grammar-section__title">Negation — Nicht vs. Kein</h2>
+            <p class="grammar-section__subtitle">
+              Two ways to say "not" / "no" in German.
+            </p>
+          </div>
+        </div>
+        <div class="grammar-section__body">
+          <div class="g-table-wrapper">
+            <table class="g-table">
+              <thead>
+                <tr>
+                  <th>Word</th>
+                  <th>Usage</th>
+                  <th>Example</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="g-die">nicht</span></td>
+                  <td>Negates verbs, adjectives, adverbs, definite nouns</td>
+                  <td>Ich trinke <span class="g-die">nicht</span>.</td>
+                  <td>
+                    <button
+                      class="g-audio"
+                      onclick="speak('Ich trinke nicht.')"
+                    >
+                      🔊
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td><span class="g-die">kein/keine</span></td>
+                  <td>Negates indefinite nouns (replaces ein/eine)</td>
+                  <td>Ich habe <span class="g-die">kein</span> Auto.</td>
+                  <td>
+                    <button
+                      class="g-audio"
+                      onclick="speak('Ich habe kein Auto.')"
+                    >
+                      🔊
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4
+            style="
+              margin: 24px 0 12px;
+              color: var(--text-secondary);
+              font-size: 0.9rem;
+            "
+          >
+            Kein — Declension Table
+          </h4>
+          <div class="g-table-wrapper">
+            <table class="g-table">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Masculine</th>
+                  <th>Feminine</th>
+                  <th>Neuter</th>
+                  <th>Plural</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="g-strong">Nominative</td>
+                  <td>kein</td>
+                  <td>keine</td>
+                  <td>kein</td>
+                  <td>keine</td>
+                </tr>
+                <tr>
+                  <td class="g-strong">Accusative</td>
+                  <td>keinen</td>
+                  <td>keine</td>
+                  <td>kein</td>
+                  <td>keine</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="g-tip">
+            <span class="g-tip__icon">💡</span>
+            <div>
+              <strong>Rule of thumb:</strong> Use
+              <span class="g-highlight">kein</span> when you would use "ein" in
+              the positive form. Use <span class="g-highlight">nicht</span> for
+              everything else.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════
+7.NUMBERS
+═══════════════════════════════════════════════ -->
+      <section class="grammar-section" id="numbers">
+        <div class="grammar-section__header">
+          <div class="grammar-section__icon">🔢</div>
+          <div class="grammar-section__title-group">
+            <h2 class="grammar-section__title">Numbers — 0 to 100</h2>
+            <p class="grammar-section__subtitle">
+              Click any number to hear the German pronunciation.
+            </p>
+          </div>
+        </div>
+        <div class="grammar-section__body">
+          <div class="g-number-grid" id="number-grid"></div>
+          <div class="g-tip">
+            <span class="g-tip__icon">💡</span>
+            <div>
+              <strong>German number trick:</strong> For 21–99, say the
+              <span class="g-highlight">ones digit first</span>, then "und",
+              then the tens. Example: 23 =
+              <span class="g-highlight">drei</span>und<span class="g-highlight"
+                >zwanzig</span
+              >
+              (three-and-twenty).
+              <button class="g-audio" onclick="speak('dreiundzwanzig')">
+                🔊
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════
+8.DAYS,MONTHS&TIME
+═══════════════════════════════════════════════ -->
+      <section class="grammar-section" id="time">
+        <div class="grammar-section__header">
+          <div class="grammar-section__icon">📅</div>
+          <div class="grammar-section__title-group">
+            <h2 class="grammar-section__title">Days, Months & Time</h2>
+            <p class="grammar-section__subtitle">
+              Essential time vocabulary. All days and months are masculine
+              (der).
+            </p>
+          </div>
+        </div>
+        <div class="grammar-section__body">
+          <h4
+            style="
+              margin-bottom: 12px;
+              color: var(--text-secondary);
+              font-size: 0.9rem;
+            "
+          >
+            Days of the Week
+          </h4>
+          <div class="g-table-wrapper">
+            <table class="g-table">
+              <thead>
+                <tr>
+                  <th>German</th>
+                  <th>English</th>
+                  <th>Usage</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="g-strong">Montag</td>
+                  <td>Monday</td>
+                  <td><em>am Montag</em></td>
+                  <td>
+                    <button
+                      class="g-audio"
+                      onclick="speak('Montag, am Montag')"
+                    >
+                      🔊
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="g-strong">Dienstag</td>
+                  <td>Tuesday</td>
+                  <td><em>am Dienstag</em></td>
+                  <td>
+                    <button class="g-audio" onclick="speak('Dienstag')">
+                      🔊
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="g-strong">Mittwoch</td>
+                  <td>Wednesday</td>
+                  <td><em>am Mittwoch</em></td>
+                  <td>
+                    <button class="g-audio" onclick="speak('Mittwoch')">
+                      🔊
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="g-strong">Donnerstag</td>
+                  <td>Thursday</td>
+                  <td><em>am Donnerstag</em></td>
+                  <td>
+                    <button class="g-audio" onclick="speak('Donnerstag')">
+                      🔊
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="g-strong">Freitag</td>
+                  <td>Friday</td>
+                  <td><em>am Freitag</em></td>
+                  <td>
+                    <button class="g-audio" onclick="speak('Freitag')">
+                      🔊
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="g-strong">Samstag</td>
+                  <td>Saturday</td>
+                  <td><em>am Samstag</em></td>
+                  <td>
+                    <button class="g-audio" onclick="speak('Samstag')">
+                      🔊
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="g-strong">Sonntag</td>
+                  <td>Sunday</td>
+                  <td><em>am Sonntag</em></td>
+                  <td>
+                    <button class="g-audio" onclick="speak('Sonntag')">
+                      🔊
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4
+            style="
+              margin: 24px 0 12px;
+              color: var(--text-secondary);
+              font-size: 0.9rem;
+            "
+          >
+            Months of the Year
+          </h4>
+          <div class="g-table-wrapper">
+            <table class="g-table">
+              <thead>
+                <tr>
+                  <th>German</th>
+                  <th>English</th>
+                  <th>German</th>
+                  <th>English</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="g-strong">Januar</td>
+                  <td>January</td>
+                  <td class="g-strong">Juli</td>
+                  <td>July</td>
+                </tr>
+                <tr>
+                  <td class="g-strong">Februar</td>
+                  <td>February</td>
+                  <td class="g-strong">August</td>
+                  <td>August</td>
+                </tr>
+                <tr>
+                  <td class="g-strong">März</td>
+                  <td>March</td>
+                  <td class="g-strong">September</td>
+                  <td>September</td>
+                </tr>
+                <tr>
+                  <td class="g-strong">April</td>
+                  <td>April</td>
+                  <td class="g-strong">Oktober</td>
+                  <td>October</td>
+                </tr>
+                <tr>
+                  <td class="g-strong">Mai</td>
+                  <td>May</td>
+                  <td class="g-strong">November</td>
+                  <td>November</td>
+                </tr>
+                <tr>
+                  <td class="g-strong">Juni</td>
+                  <td>June</td>
+                  <td class="g-strong">Dezember</td>
+                  <td>December</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4
+            style="
+              margin: 24px 0 12px;
+              color: var(--text-secondary);
+              font-size: 0.9rem;
+            "
+          >
+            Telling Time
+          </h4>
+          <div class="g-table-wrapper">
+            <table class="g-table">
+              <thead>
+                <tr>
+                  <th>German</th>
+                  <th>English</th>
+                  <th>Example</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="g-highlight">Wie spät ist es?</td>
+                  <td>What time is it?</td>
+                  <td></td>
+                  <td>
+                    <button class="g-audio" onclick="speak('Wie spät ist es?')">
+                      🔊
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Es ist drei Uhr.</td>
+                  <td>It is 3 o'clock.</td>
+                  <td>3:00</td>
+                  <td>
+                    <button class="g-audio" onclick="speak('Es ist drei Uhr.')">
+                      🔊
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Es ist halb vier.</td>
+                  <td>It is half past three.</td>
+                  <td>3:30</td>
+                  <td>
+                    <button
+                      class="g-audio"
+                      onclick="speak('Es ist halb vier.')"
+                    >
+                      🔊
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Es ist Viertel nach drei.</td>
+                  <td>It is quarter past three.</td>
+                  <td>3:15</td>
+                  <td>
+                    <button
+                      class="g-audio"
+                      onclick="speak('Es ist Viertel nach drei.')"
+                    >
+                      🔊
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Es ist Viertel vor vier.</td>
+                  <td>It is quarter to four.</td>
+                  <td>3:45</td>
+                  <td>
+                    <button
+                      class="g-audio"
+                      onclick="speak('Es ist Viertel vor vier.')"
+                    >
+                      🔊
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="g-tip">
+            <span class="g-tip__icon">💡</span>
+            <div>
+              All days are <span class="g-der">der</span> (masculine). Use
+              <span class="g-highlight">"am"</span> for days:
+              <em>"am Montag"</em> and <span class="g-highlight">"im"</span> for
+              months: <em>"im Januar"</em>. <strong>Careful:</strong>
+              <em>"halb vier"</em> means 3:30 (half <em>to</em> four), not 4:30!
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════════════
+CONTINUELEARNING
+═══════════════════════════════════════════════ -->
+      <section
+        class="grammar-section"
+        id="resources"
+        style="
+          margin-top: 64px;
+          padding-top: 32px;
+          border-top: 1px solid var(--glass-border);
+        "
+      >
+        <div class="grammar-section__header">
+          <div class="grammar-section__icon">🔗</div>
+          <div class="grammar-section__title-group">
+            <h2 class="grammar-section__title">Continue Learning</h2>
+            <p class="grammar-section__subtitle">
+              Recommended resources to practice what you've learned here.
+            </p>
+          </div>
+        </div>
+        <div class="grammar-section__body">
+          <div
+            style="
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+              gap: 16px;
+            "
+          >
+            <a
+              href="https://www.schubert-verlag.de/aufgaben/uebungen_a1/a1_uebungen_index.htm"
+              target="_blank"
+              rel="noopener"
+              style="
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 16px;
+                background: var(--glass-bg);
+                border: 1px solid var(--glass-border);
+                border-radius: var(--radius-lg);
+                text-decoration: none;
+                transition: all 200ms ease;
+                color: var(--text-primary);
+              "
+              onmouseover="
+                this.style.borderColor = 'rgba(149,217,195,0.3)';
+                this.style.transform = 'translateY(-2px)';
+              "
+              onmouseout="
+                this.style.borderColor = 'var(--glass-border)';
+                this.style.transform = 'translateY(0)';
+              "
+            >
+              <span style="font-size: 1.5rem">📖</span>
+              <div>
+                <strong style="font-size: 0.9rem">Schubert Verlag</strong
+                ><br /><span
+                  style="font-size: 0.78rem; color: var(--text-muted)"
+                  >Free A1 grammar exercises</span
+                >
+              </div>
+            </a>
+
+            <a
+              href="https://www.deutschakademie.de/online-deutschkurs/english/"
+              target="_blank"
+              rel="noopener"
+              style="
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 16px;
+                background: var(--glass-bg);
+                border: 1px solid var(--glass-border);
+                border-radius: var(--radius-lg);
+                text-decoration: none;
+                transition: all 200ms ease;
+                color: var(--text-primary);
+              "
+              onmouseover="
+                this.style.borderColor = 'rgba(149,217,195,0.3)';
+                this.style.transform = 'translateY(-2px)';
+              "
+              onmouseout="
+                this.style.borderColor = 'var(--glass-border)';
+                this.style.transform = 'translateY(0)';
+              "
+            >
+              <span style="font-size: 1.5rem">🏋️</span>
+              <div>
+                <strong style="font-size: 0.9rem">Deutsch Akademie</strong
+                ><br /><span
+                  style="font-size: 0.78rem; color: var(--text-muted)"
+                  >20,000+ grammar drills</span
+                >
+              </div>
+            </a>
+
+            <a
+              href="https://www.verbformen.de/"
+              target="_blank"
+              rel="noopener"
+              style="
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 16px;
+                background: var(--glass-bg);
+                border: 1px solid var(--glass-border);
+                border-radius: var(--radius-lg);
+                text-decoration: none;
+                transition: all 200ms ease;
+                color: var(--text-primary);
+              "
+              onmouseover="
+                this.style.borderColor = 'rgba(149,217,195,0.3)';
+                this.style.transform = 'translateY(-2px)';
+              "
+              onmouseout="
+                this.style.borderColor = 'var(--glass-border)';
+                this.style.transform = 'translateY(0)';
+              "
+            >
+              <span style="font-size: 1.5rem">🔤</span>
+              <div>
+                <strong style="font-size: 0.9rem">Verbformen.de</strong
+                ><br /><span
+                  style="font-size: 0.78rem; color: var(--text-muted)"
+                  >Conjugate any verb</span
+                >
+              </div>
+            </a>
+
+            <a
+              href="https://yourdailygerman.com/"
+              target="_blank"
+              rel="noopener"
+              style="
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 16px;
+                background: var(--glass-bg);
+                border: 1px solid var(--glass-border);
+                border-radius: var(--radius-lg);
+                text-decoration: none;
+                transition: all 200ms ease;
+                color: var(--text-primary);
+              "
+              onmouseover="
+                this.style.borderColor = 'rgba(149,217,195,0.3)';
+                this.style.transform = 'translateY(-2px)';
+              "
+              onmouseout="
+                this.style.borderColor = 'var(--glass-border)';
+                this.style.transform = 'translateY(0)';
+              "
+            >
+              <span style="font-size: 1.5rem">📝</span>
+              <div>
+                <strong style="font-size: 0.9rem">German is Easy!</strong
+                ><br /><span
+                  style="font-size: 0.78rem; color: var(--text-muted)"
+                  >Grammar explained with humor</span
+                >
+              </div>
+            </a>
+
+            <a
+              href="vocab-quiz.html"
+              style="
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 16px;
+                background: var(--glass-bg);
+                border: 1px solid var(--glass-border);
+                border-radius: var(--radius-lg);
+                text-decoration: none;
+                transition: all 200ms ease;
+                color: var(--text-primary);
+              "
+              onmouseover="
+                this.style.borderColor = 'rgba(149,217,195,0.3)';
+                this.style.transform = 'translateY(-2px)';
+              "
+              onmouseout="
+                this.style.borderColor = 'var(--glass-border)';
+                this.style.transform = 'translateY(0)';
+              "
+            >
+              <span style="font-size: 1.5rem">📚</span>
+              <div>
+                <strong style="font-size: 0.9rem">Vocabulary Quiz</strong
+                ><br /><span
+                  style="font-size: 0.78rem; color: var(--text-muted)"
+                  >Test your A1 vocabulary</span
+                >
+              </div>
+            </a>
+
+            <a
+              href="index.html"
+              style="
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 16px;
+                background: var(--glass-bg);
+                border: 1px solid var(--glass-border);
+                border-radius: var(--radius-lg);
+                text-decoration: none;
+                transition: all 200ms ease;
+                color: var(--text-primary);
+              "
+              onmouseover="
+                this.style.borderColor = 'rgba(149,217,195,0.3)';
+                this.style.transform = 'translateY(-2px)';
+              "
+              onmouseout="
+                this.style.borderColor = 'var(--glass-border)';
+                this.style.transform = 'translateY(0)';
+              "
+            >
+              <span style="font-size: 1.5rem">⚡</span>
+              <div>
+                <strong style="font-size: 0.9rem">DeutschBlitz Home</strong
+                ><br /><span
+                  style="font-size: 0.78rem; color: var(--text-muted)"
+                  >All learning tools</span
+                >
+              </div>
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ═══════════════════════════════════════════════
+SCRIPTS
+═══════════════════════════════════════════════ -->
+    <script>
+      // ── Speech ──
+      function speak(text) {
+        if (!text || !window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = "de-DE";
+        u.rate = 0.85;
+        window.speechSynthesis.speak(u);
+      }
+
+      // ── Number Grid ──
+      const nums = [
+        [0, "null"],
+        [1, "eins"],
+        [2, "zwei"],
+        [3, "drei"],
+        [4, "vier"],
+        [5, "fünf"],
+        [6, "sechs"],
+        [7, "sieben"],
+        [8, "acht"],
+        [9, "neun"],
+        [10, "zehn"],
+        [11, "elf"],
+        [12, "zwölf"],
+        [13, "dreizehn"],
+        [14, "vierzehn"],
+        [15, "fünfzehn"],
+        [16, "sechzehn"],
+        [17, "siebzehn"],
+        [18, "achtzehn"],
+        [19, "neunzehn"],
+        [20, "zwanzig"],
+        [21, "einundzwanzig"],
+        [22, "zweiundzwanzig"],
+        [23, "dreiundzwanzig"],
+        [30, "dreißig"],
+        [40, "vierzig"],
+        [50, "fünfzig"],
+        [60, "sechzig"],
+        [70, "siebzig"],
+        [80, "achtzig"],
+        [90, "neunzig"],
+        [100, "hundert"],
+      ];
+      const grid = document.getElementById("number-grid");
+      nums.forEach(([n, w]) => {
+        const el = document.createElement("div");
+        el.className = "g-number-item";
+        el.innerHTML = `<span class="g-number-item__num">${n}</span><span class="g-number-item__word">${w}</span>`;
+        el.title = `Click to hear: ${w}`;
+        el.addEventListener("click", () => speak(w));
+        grid.appendChild(el);
+      });
+
+      // ── Sidebar Active Tracking ──
+      const sections = document.querySelectorAll(".grammar-section");
+      const sidebarLinks = document.querySelectorAll(".sidebar__link");
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              sidebarLinks.forEach((l) => l.classList.remove("active"));
+              const id = entry.target.id;
+              const link = document.querySelector(
+                `.sidebar__link[href="#${id}"]`,
+              );
+              if (link) link.classList.add("active");
+            }
+          });
+        },
+        { threshold: 0.15, rootMargin: "-80px 0px -60% 0px" },
+      );
+
+      sections.forEach((s) => observer.observe(s));
+
+      // ── Scroll Progress ──
+      const progressFill = document.getElementById("progress-fill");
+      const progressText = document.getElementById("progress-text");
+      window.addEventListener(
+        "scroll",
+        () => {
+          const docHeight =
+            document.documentElement.scrollHeight - window.innerHeight;
+          const pct = Math.min(
+            100,
+            Math.round((window.scrollY / docHeight) * 100),
+          );
+          progressFill.style.width = pct + "%";
+          progressText.textContent = pct + "% completed";
+        },
+        { passive: true },
+      );
+
+      // ── Sidebar Toggle (Mobile) ──
+      const sidebar = document.getElementById("sidebar");
+      const toggle = document.getElementById("sidebar-toggle");
+      toggle.addEventListener("click", () => {
+        sidebar.classList.toggle("open");
+        toggle.textContent = sidebar.classList.contains("open") ? "✕" : "☰";
+      });
+      sidebarLinks.forEach((link) => {
+        link.addEventListener("click", () => {
+          if (window.innerWidth <= 900) {
+            sidebar.classList.remove("open");
+            toggle.textContent = "☰";
+          }
+        });
+      });
+
+      // ── Search ──
+      const searchInput = document.getElementById("grammar-search");
+      searchInput.addEventListener("input", () => {
+        const query = searchInput.value.toLowerCase().trim();
+        sections.forEach((section) => {
+          const text = section.textContent.toLowerCase();
+          section.style.display = !query || text.includes(query) ? "" : "none";
+        });
+      });
+    </script>
+    <!-- Auth Modal Overlay -->
+    <div class="auth-overlay" id="auth-overlay">
+      <div class="auth-modal">
+        <button class="auth-modal__close" onclick="closeAuthModal()">✕</button>
+        <div class="auth-modal__header">
+          <span class="auth-modal__emoji" id="auth-modal-emoji">⚡</span>
+          <h2 class="auth-modal__title" id="auth-modal-title">Welcome Back</h2>
+          <p class="auth-modal__subtitle" id="auth-modal-subtitle">
+            Log in to sync your progress
+          </p>
+        </div>
+        <div class="auth-error" id="auth-error"></div>
+        <form class="auth-form" onsubmit="handleAuthSubmit(event)">
+          <div
+            class="auth-form__group"
+            id="auth-name-group"
+            style="display: none"
+          >
+            <label class="auth-form__label" for="auth-name">Display Name</label>
+            <input
+              class="auth-form__input"
+              type="text"
+              id="auth-name"
+              placeholder="e.g. Sohan"
+              autocomplete="name"
+            />
+          </div>
+          <div class="auth-form__group">
+            <label class="auth-form__label" for="auth-email">Email</label>
+            <input
+              class="auth-form__input"
+              type="email"
+              id="auth-email"
+              placeholder="your@email.com"
+              autocomplete="email"
+              required
+            />
+          </div>
+          <div class="auth-form__group">
+            <label class="auth-form__label" for="auth-password">Password</label>
+            <input
+              class="auth-form__input"
+              type="password"
+              id="auth-password"
+              placeholder="Min. 6 characters"
+              autocomplete="current-password"
+              required
+              minlength="6"
+            />
+          </div>
+          <button
+            type="submit"
+            class="auth-form__submit"
+            id="auth-submit-btn"
+            data-mode="login"
+          >
+            ⚡ Log In
+          </button>
+        </form>
+        <div class="auth-divider">
+          <div class="auth-divider__line"></div>
+          <span class="auth-divider__text">or</span>
+          <div class="auth-divider__line"></div>
+        </div>
+        <button
+          class="auth-google-btn"
+          id="auth-google-btn"
+          onclick="handleGoogleSignIn()"
+        >
+          <svg class="auth-google-btn__icon" viewBox="0 0 24 24">
+            <path
+              fill="#4285F4"
+              d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"
+            />
+            <path
+              fill="#34A853"
+              d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+            />
+            <path
+              fill="#FBBC05"
+              d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+            />
+            <path
+              fill="#EA4335"
+              d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+            />
+          </svg>
+          Continue with Google
+        </button>
+        <div class="auth-toggle">
+          <span id="auth-toggle-text">Don't have an account? </span>
+          <button
+            class="auth-toggle__link"
+            id="auth-toggle-link"
+            type="button"
+            onclick="setAuthMode('signup')"
+          >
+            Sign up
+          </button>
+        </div>
       </div>
     </div>
 
-    <!-- ═══════════════════════════════════════════════
-1.ARTICLES
-═══════════════════════════════════════════════ -->
-    <section class="grammar-section" id="articles">
-      <div class="grammar-section__header">
-        <div class="grammar-section__icon">📘</div>
-        <div class="grammar-section__title-group">
-          <h2 class="grammar-section__title">Articles — Der, Die, Das</h2>
-          <p class="grammar-section__subtitle">Every German noun has a grammatical gender. The article tells you which one.</p>
-        </div>
-      </div>
-      <div class="grammar-section__body">
-        <div class="g-table-wrapper">
-          <table class="g-table">
-            <thead><tr><th>Article</th><th>Gender</th><th>Clue Endings</th><th>Examples</th><th></th></tr></thead>
-            <tbody>
-              <tr>
-                <td><span class="g-der">der</span></td>
-                <td>Masculine ♂</td>
-                <td>-er, -en, -el, -ling, -ich, -ig</td>
-                <td>der Tisch, der Lehrer, der Frühling</td>
-                <td><button class="g-audio" onclick="speak('der Tisch, der Lehrer, der Frühling')">🔊</button></td>
-              </tr>
-              <tr>
-                <td><span class="g-die">die</span></td>
-                <td>Feminine ♀</td>
-                <td>-e, -ung, -heit, -keit, -schaft, -tion, -ie</td>
-                <td>die Lampe, die Wohnung, die Freiheit</td>
-                <td><button class="g-audio" onclick="speak('die Lampe, die Wohnung, die Freiheit')">🔊</button></td>
-              </tr>
-              <tr>
-                <td><span class="g-das">das</span></td>
-                <td>Neuter ⚬</td>
-                <td>-chen, -lein, -um, -ment, Ge-</td>
-                <td>das Mädchen, das Zimmer, das Gebäude</td>
-                <td><button class="g-audio" onclick="speak('das Mädchen, das Zimmer, das Gebäude')">🔊</button></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <h4 style="margin: 24px 0 12px; color: var(--text-secondary); font-size: 0.9rem;">Definite vs. Indefinite Articles</h4>
-        <div class="g-table-wrapper">
-          <table class="g-table">
-            <thead><tr><th></th><th>Masculine</th><th>Feminine</th><th>Neuter</th><th>Plural</th></tr></thead>
-            <tbody>
-              <tr><td class="g-strong">Definite</td><td class="g-der">der</td><td class="g-die">die</td><td class="g-das">das</td><td class="g-die">die</td></tr>
-              <tr><td class="g-strong">Indefinite</td><td>ein</td><td>eine</td><td>ein</td><td>— (keine)</td></tr>
-              <tr><td class="g-strong">Acc. Def.</td><td class="g-der">den</td><td class="g-die">die</td><td class="g-das">das</td><td class="g-die">die</td></tr>
-              <tr><td class="g-strong">Acc. Indef.</td><td>einen</td><td>eine</td><td>ein</td><td>— (keine)</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="g-tip">
-          <span class="g-tip__icon">💡</span>
-          <div><strong>Mnemonic:</strong> All diminutives (<span class="g-highlight">-chen, -lein</span>) are <em>always</em> <span class="g-das">das</span>, regardless of the base noun's gender. <button class="g-audio" onclick="speak('das Mädchen')">🔊</button> <em>"das Mädchen"</em> (the girl) is neuter!</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════════
-2.VERBS
-═══════════════════════════════════════════════ -->
-    <section class="grammar-section" id="verbs">
-      <div class="grammar-section__header">
-        <div class="grammar-section__icon">📗</div>
-        <div class="grammar-section__title-group">
-          <h2 class="grammar-section__title">Present Tense — Verb Conjugation</h2>
-          <p class="grammar-section__subtitle">Regular and irregular verbs in the present tense (Präsens).</p>
-        </div>
-      </div>
-      <div class="grammar-section__body">
-
-        <h4 style="margin-bottom: 12px; color: var(--text-secondary); font-size: 0.9rem;">Regular Verb Pattern: Stem + Ending</h4>
-        <div class="g-formula">
-          <span class="g-formula__part g-formula__part--verb">Verb Stem</span>
-          <span class="g-formula__arrow">+</span>
-          <span class="g-formula__part g-formula__part--subject">-e</span>
-          <span class="g-formula__part g-formula__part--subject">-st</span>
-          <span class="g-formula__part g-formula__part--subject">-t</span>
-          <span class="g-formula__part g-formula__part--subject">-en</span>
-          <span class="g-formula__part g-formula__part--subject">-t</span>
-          <span class="g-formula__part g-formula__part--subject">-en</span>
-        </div>
-
-        <div class="g-table-wrapper">
-          <table class="g-table">
-            <thead><tr><th>Pronoun</th><th>sein <em>(to be)</em></th><th>haben <em>(to have)</em></th><th>machen <em>(to do)</em></th><th>gehen <em>(to go)</em></th><th></th></tr></thead>
-            <tbody>
-              <tr><td class="g-strong">ich</td><td>bin</td><td>habe</td><td>mache</td><td>gehe</td><td><button class="g-audio" onclick="speak('ich bin, ich habe, ich mache, ich gehe')">🔊</button></td></tr>
-              <tr><td class="g-strong">du</td><td>bist</td><td>hast</td><td>machst</td><td>gehst</td><td><button class="g-audio" onclick="speak('du bist, du hast, du machst, du gehst')">🔊</button></td></tr>
-              <tr><td class="g-strong">er/sie/es</td><td>ist</td><td>hat</td><td>macht</td><td>geht</td><td><button class="g-audio" onclick="speak('er ist, er hat, er macht, er geht')">🔊</button></td></tr>
-              <tr><td class="g-strong">wir</td><td>sind</td><td>haben</td><td>machen</td><td>gehen</td><td><button class="g-audio" onclick="speak('wir sind, wir haben, wir machen, wir gehen')">🔊</button></td></tr>
-              <tr><td class="g-strong">ihr</td><td>seid</td><td>habt</td><td>macht</td><td>geht</td><td><button class="g-audio" onclick="speak('ihr seid, ihr habt, ihr macht, ihr geht')">🔊</button></td></tr>
-              <tr><td class="g-strong">sie/Sie</td><td>sind</td><td>haben</td><td>machen</td><td>gehen</td><td><button class="g-audio" onclick="speak('sie sind, sie haben, sie machen, sie gehen')">🔊</button></td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="g-tip">
-          <span class="g-tip__icon">💡</span>
-          <div><strong>Pattern:</strong> Regular verbs follow the stem + ending: <span class="g-highlight">-e, -st, -t, -en, -t, -en</span>. <em>"sein"</em> and <em>"haben"</em> are irregular — memorize them first!</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════════
-3.PRONOUNS
-═══════════════════════════════════════════════ -->
-    <section class="grammar-section" id="pronouns">
-      <div class="grammar-section__header">
-        <div class="grammar-section__icon">📙</div>
-        <div class="grammar-section__title-group">
-          <h2 class="grammar-section__title">Personal Pronouns</h2>
-          <p class="grammar-section__subtitle">Nominative, Accusative, and Dative forms.</p>
-        </div>
-      </div>
-      <div class="grammar-section__body">
-        <div class="g-table-wrapper">
-          <table class="g-table">
-            <thead><tr><th>English</th><th>Nominative</th><th>Accusative</th><th>Dative</th><th></th></tr></thead>
-            <tbody>
-              <tr><td>I</td><td class="g-strong">ich</td><td>mich</td><td>mir</td><td><button class="g-audio" onclick="speak('ich, mich, mir')">🔊</button></td></tr>
-              <tr><td>you (inf.)</td><td class="g-strong">du</td><td>dich</td><td>dir</td><td><button class="g-audio" onclick="speak('du, dich, dir')">🔊</button></td></tr>
-              <tr><td>he</td><td class="g-strong">er</td><td>ihn</td><td>ihm</td><td><button class="g-audio" onclick="speak('er, ihn, ihm')">🔊</button></td></tr>
-              <tr><td>she</td><td class="g-strong">sie</td><td>sie</td><td>ihr</td><td><button class="g-audio" onclick="speak('sie, sie, ihr')">🔊</button></td></tr>
-              <tr><td>it</td><td class="g-strong">es</td><td>es</td><td>ihm</td><td><button class="g-audio" onclick="speak('es, es, ihm')">🔊</button></td></tr>
-              <tr><td>we</td><td class="g-strong">wir</td><td>uns</td><td>uns</td><td><button class="g-audio" onclick="speak('wir, uns, uns')">🔊</button></td></tr>
-              <tr><td>you (pl.)</td><td class="g-strong">ihr</td><td>euch</td><td>euch</td><td><button class="g-audio" onclick="speak('ihr, euch, euch')">🔊</button></td></tr>
-              <tr><td>they / you (formal)</td><td class="g-strong">sie/Sie</td><td>sie/Sie</td><td>ihnen/Ihnen</td><td><button class="g-audio" onclick="speak('sie, sie, ihnen')">🔊</button></td></tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="g-tip">
-          <span class="g-tip__icon">💡</span>
-          <div><strong>Focus:</strong> At A1, master <span class="g-highlight">Nominative</span> (subject) and <span class="g-highlight">Accusative</span> (direct object) first. Dative comes more at A2.</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════════
-4.SENTENCESTRUCTURE
-═══════════════════════════════════════════════ -->
-    <section class="grammar-section" id="structure">
-      <div class="grammar-section__header">
-        <div class="grammar-section__icon">📐</div>
-        <div class="grammar-section__title-group">
-          <h2 class="grammar-section__title">Sentence Structure — V2 Rule</h2>
-          <p class="grammar-section__subtitle">The verb is ALWAYS in position 2 in German statements.</p>
-        </div>
-      </div>
-      <div class="grammar-section__body">
-        <div class="g-formula">
-          <span class="g-formula__part g-formula__part--subject">Subject</span>
-          <span class="g-formula__arrow">→</span>
-          <span class="g-formula__part g-formula__part--verb">VERB (pos. 2)</span>
-          <span class="g-formula__arrow">→</span>
-          <span class="g-formula__part g-formula__part--object">Object</span>
-          <span class="g-formula__arrow">→</span>
-          <span class="g-formula__part g-formula__part--time">Time</span>
-          <span class="g-formula__arrow">→</span>
-          <span class="g-formula__part g-formula__part--place">Place</span>
-        </div>
-        <div class="g-table-wrapper">
-          <table class="g-table">
-            <thead><tr><th>Type</th><th>Example</th><th>Translation</th><th></th></tr></thead>
-            <tbody>
-              <tr><td class="g-strong">Statement</td><td>Ich <span class="g-highlight">trinke</span> Kaffee.</td><td style="color:var(--text-muted)">I drink coffee.</td><td><button class="g-audio" onclick="speak('Ich trinke Kaffee.')">🔊</button></td></tr>
-              <tr><td class="g-strong">Time first</td><td>Morgens <span class="g-highlight">trinke</span> ich Kaffee.</td><td style="color:var(--text-muted)">In the mornings I drink coffee.</td><td><button class="g-audio" onclick="speak('Morgens trinke ich Kaffee.')">🔊</button></td></tr>
-              <tr><td class="g-strong">Yes/No Q</td><td><span class="g-highlight">Trinken</span> Sie Kaffee?</td><td style="color:var(--text-muted)">Do you drink coffee?</td><td><button class="g-audio" onclick="speak('Trinken Sie Kaffee?')">🔊</button></td></tr>
-              <tr><td class="g-strong">W-Question</td><td>Was <span class="g-highlight">trinken</span> Sie?</td><td style="color:var(--text-muted)">What do you drink?</td><td><button class="g-audio" onclick="speak('Was trinken Sie?')">🔊</button></td></tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="g-tip">
-          <span class="g-tip__icon">💡</span>
-          <div><strong>V2 Rule:</strong> No matter what starts the sentence, the verb is always in the <span class="g-highlight">second position</span>. If time comes first, the subject moves after the verb.</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════════
-5.W-FRAGEN
-═══════════════════════════════════════════════ -->
-    <section class="grammar-section" id="wfragen">
-      <div class="grammar-section__header">
-        <div class="grammar-section__icon">❓</div>
-        <div class="grammar-section__title-group">
-          <h2 class="grammar-section__title">W-Fragen — Question Words</h2>
-          <p class="grammar-section__subtitle">All the essential question words you need for A1.</p>
-        </div>
-      </div>
-      <div class="grammar-section__body">
-        <div class="g-table-wrapper">
-          <table class="g-table">
-            <thead><tr><th>German</th><th>English</th><th>Example</th><th></th></tr></thead>
-            <tbody>
-              <tr><td class="g-highlight">Wer</td><td>Who</td><td>Wer ist das?</td><td><button class="g-audio" onclick="speak('Wer ist das?')">🔊</button></td></tr>
-              <tr><td class="g-highlight">Was</td><td>What</td><td>Was machst du?</td><td><button class="g-audio" onclick="speak('Was machst du?')">🔊</button></td></tr>
-              <tr><td class="g-highlight">Wo</td><td>Where</td><td>Wo wohnst du?</td><td><button class="g-audio" onclick="speak('Wo wohnst du?')">🔊</button></td></tr>
-              <tr><td class="g-highlight">Woher</td><td>Where from</td><td>Woher kommst du?</td><td><button class="g-audio" onclick="speak('Woher kommst du?')">🔊</button></td></tr>
-              <tr><td class="g-highlight">Wohin</td><td>Where to</td><td>Wohin gehst du?</td><td><button class="g-audio" onclick="speak('Wohin gehst du?')">🔊</button></td></tr>
-              <tr><td class="g-highlight">Wann</td><td>When</td><td>Wann beginnt der Kurs?</td><td><button class="g-audio" onclick="speak('Wann beginnt der Kurs?')">🔊</button></td></tr>
-              <tr><td class="g-highlight">Wie</td><td>How</td><td>Wie geht es Ihnen?</td><td><button class="g-audio" onclick="speak('Wie geht es Ihnen?')">🔊</button></td></tr>
-              <tr><td class="g-highlight">Warum</td><td>Why</td><td>Warum lernst du Deutsch?</td><td><button class="g-audio" onclick="speak('Warum lernst du Deutsch?')">🔊</button></td></tr>
-              <tr><td class="g-highlight">Wie viel(e)</td><td>How much/many</td><td>Wie viel kostet das?</td><td><button class="g-audio" onclick="speak('Wie viel kostet das?')">🔊</button></td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════════
-6.NEGATION
-═══════════════════════════════════════════════ -->
-    <section class="grammar-section" id="negation">
-      <div class="grammar-section__header">
-        <div class="grammar-section__icon">🚫</div>
-        <div class="grammar-section__title-group">
-          <h2 class="grammar-section__title">Negation — Nicht vs. Kein</h2>
-          <p class="grammar-section__subtitle">Two ways to say "not" / "no" in German.</p>
-        </div>
-      </div>
-      <div class="grammar-section__body">
-        <div class="g-table-wrapper">
-          <table class="g-table">
-            <thead><tr><th>Word</th><th>Usage</th><th>Example</th><th></th></tr></thead>
-            <tbody>
-              <tr>
-                <td><span class="g-die">nicht</span></td>
-                <td>Negates verbs, adjectives, adverbs, definite nouns</td>
-                <td>Ich trinke <span class="g-die">nicht</span>.</td>
-                <td><button class="g-audio" onclick="speak('Ich trinke nicht.')">🔊</button></td>
-              </tr>
-              <tr>
-                <td><span class="g-die">kein/keine</span></td>
-                <td>Negates indefinite nouns (replaces ein/eine)</td>
-                <td>Ich habe <span class="g-die">kein</span> Auto.</td>
-                <td><button class="g-audio" onclick="speak('Ich habe kein Auto.')">🔊</button></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <h4 style="margin: 24px 0 12px; color: var(--text-secondary); font-size: 0.9rem;">Kein — Declension Table</h4>
-        <div class="g-table-wrapper">
-          <table class="g-table">
-            <thead><tr><th></th><th>Masculine</th><th>Feminine</th><th>Neuter</th><th>Plural</th></tr></thead>
-            <tbody>
-              <tr><td class="g-strong">Nominative</td><td>kein</td><td>keine</td><td>kein</td><td>keine</td></tr>
-              <tr><td class="g-strong">Accusative</td><td>keinen</td><td>keine</td><td>kein</td><td>keine</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="g-tip">
-          <span class="g-tip__icon">💡</span>
-          <div><strong>Rule of thumb:</strong> Use <span class="g-highlight">kein</span> when you would use "ein" in the positive form. Use <span class="g-highlight">nicht</span> for everything else.</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════════
-7.NUMBERS
-═══════════════════════════════════════════════ -->
-    <section class="grammar-section" id="numbers">
-      <div class="grammar-section__header">
-        <div class="grammar-section__icon">🔢</div>
-        <div class="grammar-section__title-group">
-          <h2 class="grammar-section__title">Numbers — 0 to 100</h2>
-          <p class="grammar-section__subtitle">Click any number to hear the German pronunciation.</p>
-        </div>
-      </div>
-      <div class="grammar-section__body">
-        <div class="g-number-grid" id="number-grid"></div>
-        <div class="g-tip">
-          <span class="g-tip__icon">💡</span>
-          <div><strong>German number trick:</strong> For 21–99, say the <span class="g-highlight">ones digit first</span>, then "und", then the tens. Example: 23 = <span class="g-highlight">drei</span>und<span class="g-highlight">zwanzig</span> (three-and-twenty). <button class="g-audio" onclick="speak('dreiundzwanzig')">🔊</button></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════════
-8.DAYS,MONTHS&TIME
-═══════════════════════════════════════════════ -->
-    <section class="grammar-section" id="time">
-      <div class="grammar-section__header">
-        <div class="grammar-section__icon">📅</div>
-        <div class="grammar-section__title-group">
-          <h2 class="grammar-section__title">Days, Months & Time</h2>
-          <p class="grammar-section__subtitle">Essential time vocabulary. All days and months are masculine (der).</p>
-        </div>
-      </div>
-      <div class="grammar-section__body">
-
-        <h4 style="margin-bottom: 12px; color: var(--text-secondary); font-size: 0.9rem;">Days of the Week</h4>
-        <div class="g-table-wrapper">
-          <table class="g-table">
-            <thead><tr><th>German</th><th>English</th><th>Usage</th><th></th></tr></thead>
-            <tbody>
-              <tr><td class="g-strong">Montag</td><td>Monday</td><td><em>am Montag</em></td><td><button class="g-audio" onclick="speak('Montag, am Montag')">🔊</button></td></tr>
-              <tr><td class="g-strong">Dienstag</td><td>Tuesday</td><td><em>am Dienstag</em></td><td><button class="g-audio" onclick="speak('Dienstag')">🔊</button></td></tr>
-              <tr><td class="g-strong">Mittwoch</td><td>Wednesday</td><td><em>am Mittwoch</em></td><td><button class="g-audio" onclick="speak('Mittwoch')">🔊</button></td></tr>
-              <tr><td class="g-strong">Donnerstag</td><td>Thursday</td><td><em>am Donnerstag</em></td><td><button class="g-audio" onclick="speak('Donnerstag')">🔊</button></td></tr>
-              <tr><td class="g-strong">Freitag</td><td>Friday</td><td><em>am Freitag</em></td><td><button class="g-audio" onclick="speak('Freitag')">🔊</button></td></tr>
-              <tr><td class="g-strong">Samstag</td><td>Saturday</td><td><em>am Samstag</em></td><td><button class="g-audio" onclick="speak('Samstag')">🔊</button></td></tr>
-              <tr><td class="g-strong">Sonntag</td><td>Sunday</td><td><em>am Sonntag</em></td><td><button class="g-audio" onclick="speak('Sonntag')">🔊</button></td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <h4 style="margin: 24px 0 12px; color: var(--text-secondary); font-size: 0.9rem;">Months of the Year</h4>
-        <div class="g-table-wrapper">
-          <table class="g-table">
-            <thead><tr><th>German</th><th>English</th><th>German</th><th>English</th></tr></thead>
-            <tbody>
-              <tr><td class="g-strong">Januar</td><td>January</td><td class="g-strong">Juli</td><td>July</td></tr>
-              <tr><td class="g-strong">Februar</td><td>February</td><td class="g-strong">August</td><td>August</td></tr>
-              <tr><td class="g-strong">März</td><td>March</td><td class="g-strong">September</td><td>September</td></tr>
-              <tr><td class="g-strong">April</td><td>April</td><td class="g-strong">Oktober</td><td>October</td></tr>
-              <tr><td class="g-strong">Mai</td><td>May</td><td class="g-strong">November</td><td>November</td></tr>
-              <tr><td class="g-strong">Juni</td><td>June</td><td class="g-strong">Dezember</td><td>December</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <h4 style="margin: 24px 0 12px; color: var(--text-secondary); font-size: 0.9rem;">Telling Time</h4>
-        <div class="g-table-wrapper">
-          <table class="g-table">
-            <thead><tr><th>German</th><th>English</th><th>Example</th><th></th></tr></thead>
-            <tbody>
-              <tr><td class="g-highlight">Wie spät ist es?</td><td>What time is it?</td><td></td><td><button class="g-audio" onclick="speak('Wie spät ist es?')">🔊</button></td></tr>
-              <tr><td>Es ist drei Uhr.</td><td>It is 3 o'clock.</td><td>3:00</td><td><button class="g-audio" onclick="speak('Es ist drei Uhr.')">🔊</button></td></tr>
-              <tr><td>Es ist halb vier.</td><td>It is half past three.</td><td>3:30</td><td><button class="g-audio" onclick="speak('Es ist halb vier.')">🔊</button></td></tr>
-              <tr><td>Es ist Viertel nach drei.</td><td>It is quarter past three.</td><td>3:15</td><td><button class="g-audio" onclick="speak('Es ist Viertel nach drei.')">🔊</button></td></tr>
-              <tr><td>Es ist Viertel vor vier.</td><td>It is quarter to four.</td><td>3:45</td><td><button class="g-audio" onclick="speak('Es ist Viertel vor vier.')">🔊</button></td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="g-tip">
-          <span class="g-tip__icon">💡</span>
-          <div>All days are <span class="g-der">der</span> (masculine). Use <span class="g-highlight">"am"</span> for days: <em>"am Montag"</em> and <span class="g-highlight">"im"</span> for months: <em>"im Januar"</em>. <strong>Careful:</strong> <em>"halb vier"</em> means 3:30 (half <em>to</em> four), not 4:30!</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════════
-CONTINUELEARNING
-═══════════════════════════════════════════════ -->
-    <section class="grammar-section" id="resources" style="margin-top: 64px; padding-top: 32px; border-top: 1px solid var(--glass-border);">
-      <div class="grammar-section__header">
-        <div class="grammar-section__icon">🔗</div>
-        <div class="grammar-section__title-group">
-          <h2 class="grammar-section__title">Continue Learning</h2>
-          <p class="grammar-section__subtitle">Recommended resources to practice what you've learned here.</p>
-        </div>
-      </div>
-      <div class="grammar-section__body">
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
-
-          <a href="https://www.schubert-verlag.de/aufgaben/uebungen_a1/a1_uebungen_index.htm" target="_blank" rel="noopener" style="display:flex; align-items:center; gap:12px; padding:16px; background:var(--glass-bg); border:1px solid var(--glass-border); border-radius:var(--radius-lg); text-decoration:none; transition:all 200ms ease; color:var(--text-primary);" onmouseover="this.style.borderColor='rgba(149,217,195,0.3)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--glass-border)'; this.style.transform='translateY(0)'">
-            <span style="font-size:1.5rem;">📖</span>
-            <div><strong style="font-size:0.9rem;">Schubert Verlag</strong><br><span style="font-size:0.78rem; color:var(--text-muted);">Free A1 grammar exercises</span></div>
-          </a>
-
-          <a href="https://www.deutschakademie.de/online-deutschkurs/english/" target="_blank" rel="noopener" style="display:flex; align-items:center; gap:12px; padding:16px; background:var(--glass-bg); border:1px solid var(--glass-border); border-radius:var(--radius-lg); text-decoration:none; transition:all 200ms ease; color:var(--text-primary);" onmouseover="this.style.borderColor='rgba(149,217,195,0.3)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--glass-border)'; this.style.transform='translateY(0)'">
-            <span style="font-size:1.5rem;">🏋️</span>
-            <div><strong style="font-size:0.9rem;">Deutsch Akademie</strong><br><span style="font-size:0.78rem; color:var(--text-muted);">20,000+ grammar drills</span></div>
-          </a>
-
-          <a href="https://www.verbformen.de/" target="_blank" rel="noopener" style="display:flex; align-items:center; gap:12px; padding:16px; background:var(--glass-bg); border:1px solid var(--glass-border); border-radius:var(--radius-lg); text-decoration:none; transition:all 200ms ease; color:var(--text-primary);" onmouseover="this.style.borderColor='rgba(149,217,195,0.3)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--glass-border)'; this.style.transform='translateY(0)'">
-            <span style="font-size:1.5rem;">🔤</span>
-            <div><strong style="font-size:0.9rem;">Verbformen.de</strong><br><span style="font-size:0.78rem; color:var(--text-muted);">Conjugate any verb</span></div>
-          </a>
-
-          <a href="https://yourdailygerman.com/" target="_blank" rel="noopener" style="display:flex; align-items:center; gap:12px; padding:16px; background:var(--glass-bg); border:1px solid var(--glass-border); border-radius:var(--radius-lg); text-decoration:none; transition:all 200ms ease; color:var(--text-primary);" onmouseover="this.style.borderColor='rgba(149,217,195,0.3)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--glass-border)'; this.style.transform='translateY(0)'">
-            <span style="font-size:1.5rem;">📝</span>
-            <div><strong style="font-size:0.9rem;">German is Easy!</strong><br><span style="font-size:0.78rem; color:var(--text-muted);">Grammar explained with humor</span></div>
-          </a>
-
-          <a href="vocab-quiz.html" style="display:flex; align-items:center; gap:12px; padding:16px; background:var(--glass-bg); border:1px solid var(--glass-border); border-radius:var(--radius-lg); text-decoration:none; transition:all 200ms ease; color:var(--text-primary);" onmouseover="this.style.borderColor='rgba(149,217,195,0.3)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--glass-border)'; this.style.transform='translateY(0)'">
-            <span style="font-size:1.5rem;">📚</span>
-            <div><strong style="font-size:0.9rem;">Vocabulary Quiz</strong><br><span style="font-size:0.78rem; color:var(--text-muted);">Test your A1 vocabulary</span></div>
-          </a>
-
-          <a href="index.html" style="display:flex; align-items:center; gap:12px; padding:16px; background:var(--glass-bg); border:1px solid var(--glass-border); border-radius:var(--radius-lg); text-decoration:none; transition:all 200ms ease; color:var(--text-primary);" onmouseover="this.style.borderColor='rgba(149,217,195,0.3)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--glass-border)'; this.style.transform='translateY(0)'">
-            <span style="font-size:1.5rem;">⚡</span>
-            <div><strong style="font-size:0.9rem;">DeutschBlitz Home</strong><br><span style="font-size:0.78rem; color:var(--text-muted);">All learning tools</span></div>
-          </a>
-
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- ═══════════════════════════════════════════════
-SCRIPTS
-═══════════════════════════════════════════════ -->
-  <script>
-    // ── Speech ──
-    function speak(text) {
-      if (!text || !window.speechSynthesis) return;
-      window.speechSynthesis.cancel();
-      const u = new SpeechSynthesisUtterance(text);
-      u.lang = 'de-DE';
-      u.rate = 0.85;
-      window.speechSynthesis.speak(u);
-    }
-
-    // ── Number Grid ──
-    const nums = [
-      [0,'null'],[1,'eins'],[2,'zwei'],[3,'drei'],[4,'vier'],[5,'fünf'],
-      [6,'sechs'],[7,'sieben'],[8,'acht'],[9,'neun'],[10,'zehn'],
-      [11,'elf'],[12,'zwölf'],[13,'dreizehn'],[14,'vierzehn'],[15,'fünfzehn'],
-      [16,'sechzehn'],[17,'siebzehn'],[18,'achtzehn'],[19,'neunzehn'],[20,'zwanzig'],
-      [21,'einundzwanzig'],[22,'zweiundzwanzig'],[23,'dreiundzwanzig'],
-      [30,'dreißig'],[40,'vierzig'],[50,'fünfzig'],[60,'sechzig'],
-      [70,'siebzig'],[80,'achtzig'],[90,'neunzig'],[100,'hundert'],
-    ];
-    const grid = document.getElementById('number-grid');
-    nums.forEach(([n, w]) => {
-      const el = document.createElement('div');
-      el.className = 'g-number-item';
-      el.innerHTML = `<span class="g-number-item__num">${n}</span><span class="g-number-item__word">${w}</span>`;
-      el.title = `Click to hear: ${w}`;
-      el.addEventListener('click', () => speak(w));
-      grid.appendChild(el);
-    });
-
-    // ── Sidebar Active Tracking ──
-    const sections = document.querySelectorAll('.grammar-section');
-    const sidebarLinks = document.querySelectorAll('.sidebar__link');
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          sidebarLinks.forEach(l => l.classList.remove('active'));
-          const id = entry.target.id;
-          const link = document.querySelector(`.sidebar__link[href="#${id}"]`);
-          if (link) link.classList.add('active');
-        }
-      });
-    }, { threshold: 0.15, rootMargin: '-80px 0px -60% 0px' });
-
-    sections.forEach(s => observer.observe(s));
-
-    // ── Scroll Progress ──
-    const progressFill = document.getElementById('progress-fill');
-    const progressText = document.getElementById('progress-text');
-    window.addEventListener('scroll', () => {
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const pct = Math.min(100, Math.round((window.scrollY / docHeight) * 100));
-      progressFill.style.width = pct + '%';
-      progressText.textContent = pct + '% completed';
-    }, { passive: true });
-
-    // ── Sidebar Toggle (Mobile) ──
-    const sidebar = document.getElementById('sidebar');
-    const toggle = document.getElementById('sidebar-toggle');
-    toggle.addEventListener('click', () => {
-      sidebar.classList.toggle('open');
-      toggle.textContent = sidebar.classList.contains('open') ? '✕' : '☰';
-    });
-    sidebarLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        if (window.innerWidth <= 900) {
-          sidebar.classList.remove('open');
-          toggle.textContent = '☰';
-        }
-      });
-    });
-
-    // ── Search ──
-    const searchInput = document.getElementById('grammar-search');
-    searchInput.addEventListener('input', () => {
-      const query = searchInput.value.toLowerCase().trim();
-      sections.forEach(section => {
-        const text = section.textContent.toLowerCase();
-        section.style.display = (!query || text.includes(query)) ? '' : 'none';
-      });
-    });
-  </script>
-</body>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+    <script src="auth.js"></script>
+  </body>
 </html>

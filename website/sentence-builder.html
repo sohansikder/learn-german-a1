@@ -1,568 +1,997 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sentence Builder — DeutschBlitz | German Word Order Practice</title>
-  <meta name="description" content="Master German A1 word order by arranging words into correct sentences. Practice V2 word order, articles, and sentence structure — DeutschBlitz Sentence Builder." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="index.css" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>" />
-  <style>
-    .trainer-page { min-height: 100vh; display: flex; flex-direction: column; }
-    .trainer-topbar {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: var(--space-md) var(--space-lg);
-      max-width: var(--container-max); margin: 0 auto; width: 100%;
-    }
-    .trainer-topbar__back {
-      display: flex; align-items: center; gap: var(--space-sm);
-      color: var(--text-secondary); font-weight: 600; font-size: 0.95rem;
-      transition: color var(--transition-fast);
-    }
-    .trainer-topbar__back:hover { color: var(--text-primary); }
-    .trainer-topbar__title {
-      font-family: 'Outfit', sans-serif; font-size: 1.25rem; font-weight: 700;
-    }
-    .trainer-topbar__counter {
-      padding: 6px 16px; border-radius: var(--radius-full);
-      background: var(--glass-bg); border: 1px solid var(--glass-border);
-      font-weight: 700; font-size: 0.9rem;
-    }
-    .trainer-progress { padding: 0 var(--space-lg); max-width: var(--container-max); margin: 0 auto; width: 100%; }
-    .trainer-progress__bar {
-      height: 6px; border-radius: 3px; background: rgba(255,255,255,0.08); overflow: hidden;
-    }
-    .trainer-progress__fill {
-      height: 100%; border-radius: 3px;
-      background: linear-gradient(90deg, var(--teal), #00E5CC);
-      transition: width 0.4s ease-out;
-    }
-    .trainer-main {
-      flex: 1; display: flex; flex-direction: column; align-items: center;
-      justify-content: center; padding: var(--space-lg); gap: var(--space-xl);
-      max-width: 700px; margin: 0 auto; width: 100%;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sentence Builder — DeutschBlitz | German Word Order Practice</title>
+    <meta
+      name="description"
+      content="Master German A1 word order by arranging words into correct sentences. Practice V2 word order, articles, and sentence structure — DeutschBlitz Sentence Builder."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="auth.css" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>"
+    />
+    <style>
+      .trainer-page {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+      .trainer-topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: var(--space-md) var(--space-lg);
+        max-width: var(--container-max);
+        margin: 0 auto;
+        width: 100%;
+      }
+      .trainer-topbar__back {
+        display: flex;
+        align-items: center;
+        gap: var(--space-sm);
+        color: var(--text-secondary);
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition: color var(--transition-fast);
+      }
+      .trainer-topbar__back:hover {
+        color: var(--text-primary);
+      }
+      .trainer-topbar__title {
+        font-family: "Outfit", sans-serif;
+        font-size: 1.25rem;
+        font-weight: 700;
+      }
+      .trainer-topbar__counter {
+        padding: 6px 16px;
+        border-radius: var(--radius-full);
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        font-weight: 700;
+        font-size: 0.9rem;
+      }
+      .trainer-progress {
+        padding: 0 var(--space-lg);
+        max-width: var(--container-max);
+        margin: 0 auto;
+        width: 100%;
+      }
+      .trainer-progress__bar {
+        height: 6px;
+        border-radius: 3px;
+        background: rgba(255, 255, 255, 0.08);
+        overflow: hidden;
+      }
+      .trainer-progress__fill {
+        height: 100%;
+        border-radius: 3px;
+        background: linear-gradient(90deg, var(--teal), #00e5cc);
+        transition: width 0.4s ease-out;
+      }
+      .trainer-main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: var(--space-lg);
+        gap: var(--space-xl);
+        max-width: 700px;
+        margin: 0 auto;
+        width: 100%;
+      }
 
-    /* Sentence prompt */
-    .sb-prompt {
-      width: 100%; text-align: center; padding: var(--space-xl);
-      background: var(--glass-bg); border: 1px solid var(--glass-border);
-      border-radius: var(--radius-2xl); backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px); position: relative; overflow: hidden;
-    }
-    .sb-prompt::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-      background: linear-gradient(90deg, var(--teal), #00E5CC);
-    }
-    .sb-prompt__english {
-      font-family: 'Outfit', sans-serif; font-size: clamp(1.25rem, 3vw, 1.75rem);
-      font-weight: 700; color: var(--text-primary); margin-bottom: var(--space-sm);
-    }
-    .sb-prompt__hint {
-      font-size: 0.9rem; color: var(--text-muted);
-      display: flex; align-items: center; justify-content: center; gap: var(--space-xs);
-    }
-    .sb-prompt__hint-icon { font-size: 1.1rem; }
+      /* Sentence prompt */
+      .sb-prompt {
+        width: 100%;
+        text-align: center;
+        padding: var(--space-xl);
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        border-radius: var(--radius-2xl);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        position: relative;
+        overflow: hidden;
+      }
+      .sb-prompt::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, var(--teal), #00e5cc);
+      }
+      .sb-prompt__english {
+        font-family: "Outfit", sans-serif;
+        font-size: clamp(1.25rem, 3vw, 1.75rem);
+        font-weight: 700;
+        color: var(--text-primary);
+        margin-bottom: var(--space-sm);
+      }
+      .sb-prompt__hint {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-xs);
+      }
+      .sb-prompt__hint-icon {
+        font-size: 1.1rem;
+      }
 
-    /* Drop zone */
-    .sb-dropzone {
-      width: 100%; min-height: 80px; padding: var(--space-md);
-      border: 2px dashed var(--glass-border); border-radius: var(--radius-xl);
-      display: flex; flex-wrap: wrap; gap: var(--space-sm);
-      align-items: center; justify-content: center;
-      transition: border-color 0.3s, background 0.3s, box-shadow 0.3s;
-      position: relative;
-    }
-    .sb-dropzone.correct {
-      border-color: var(--das-green); background: rgba(102, 187, 106, 0.08);
-      box-shadow: 0 0 30px rgba(102, 187, 106, 0.15);
-    }
-    .sb-dropzone.incorrect {
-      border-color: var(--red); background: rgba(239, 83, 80, 0.08);
-      animation: shake 0.5s ease-out;
-    }
-    @keyframes shake {
-      0%, 100% { transform: translateX(0); }
-      20% { transform: translateX(-8px); }
-      40% { transform: translateX(8px); }
-      60% { transform: translateX(-5px); }
-      80% { transform: translateX(5px); }
-    }
-    .sb-dropzone__placeholder {
-      color: var(--text-muted); font-size: 0.9rem; font-style: italic;
-    }
+      /* Drop zone */
+      .sb-dropzone {
+        width: 100%;
+        min-height: 80px;
+        padding: var(--space-md);
+        border: 2px dashed var(--glass-border);
+        border-radius: var(--radius-xl);
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-sm);
+        align-items: center;
+        justify-content: center;
+        transition:
+          border-color 0.3s,
+          background 0.3s,
+          box-shadow 0.3s;
+        position: relative;
+      }
+      .sb-dropzone.correct {
+        border-color: var(--das-green);
+        background: rgba(102, 187, 106, 0.08);
+        box-shadow: 0 0 30px rgba(102, 187, 106, 0.15);
+      }
+      .sb-dropzone.incorrect {
+        border-color: var(--red);
+        background: rgba(239, 83, 80, 0.08);
+        animation: shake 0.5s ease-out;
+      }
+      @keyframes shake {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        20% {
+          transform: translateX(-8px);
+        }
+        40% {
+          transform: translateX(8px);
+        }
+        60% {
+          transform: translateX(-5px);
+        }
+        80% {
+          transform: translateX(5px);
+        }
+      }
+      .sb-dropzone__placeholder {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        font-style: italic;
+      }
 
-    /* Word chips */
-    .sb-word {
-      display: inline-flex; align-items: center;
-      padding: 10px 20px; border-radius: var(--radius-lg);
-      font-family: 'Outfit', sans-serif; font-size: 1.05rem; font-weight: 600;
-      cursor: pointer; user-select: none;
-      transition: transform var(--transition-fast), box-shadow var(--transition-fast),
-                  opacity var(--transition-fast), background var(--transition-fast);
-    }
-    .sb-word:hover { transform: translateY(-2px); }
-    .sb-word:active { transform: scale(0.95); }
+      /* Word chips */
+      .sb-word {
+        display: inline-flex;
+        align-items: center;
+        padding: 10px 20px;
+        border-radius: var(--radius-lg);
+        font-family: "Outfit", sans-serif;
+        font-size: 1.05rem;
+        font-weight: 600;
+        cursor: pointer;
+        user-select: none;
+        transition:
+          transform var(--transition-fast),
+          box-shadow var(--transition-fast),
+          opacity var(--transition-fast),
+          background var(--transition-fast);
+      }
+      .sb-word:hover {
+        transform: translateY(-2px);
+      }
+      .sb-word:active {
+        transform: scale(0.95);
+      }
 
-    .sb-word--bank {
-      background: var(--glass-bg); border: 1px solid var(--glass-border);
-      color: var(--text-primary);
-    }
-    .sb-word--bank:hover {
-      background: rgba(0, 191, 166, 0.1); border-color: rgba(0, 191, 166, 0.3);
-      box-shadow: 0 4px 15px rgba(0, 191, 166, 0.15);
-    }
-    .sb-word--bank.used {
-      opacity: 0.25; pointer-events: none; transform: scale(0.95);
-    }
+      .sb-word--bank {
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        color: var(--text-primary);
+      }
+      .sb-word--bank:hover {
+        background: rgba(0, 191, 166, 0.1);
+        border-color: rgba(0, 191, 166, 0.3);
+        box-shadow: 0 4px 15px rgba(0, 191, 166, 0.15);
+      }
+      .sb-word--bank.used {
+        opacity: 0.25;
+        pointer-events: none;
+        transform: scale(0.95);
+      }
 
-    .sb-word--placed {
-      background: linear-gradient(135deg, rgba(0, 191, 166, 0.15), rgba(0, 229, 204, 0.1));
-      border: 1px solid rgba(0, 191, 166, 0.3);
-      color: var(--teal-light);
-    }
-    .sb-word--placed:hover {
-      background: rgba(239, 83, 80, 0.1); border-color: rgba(239, 83, 80, 0.3);
-    }
+      .sb-word--placed {
+        background: linear-gradient(
+          135deg,
+          rgba(0, 191, 166, 0.15),
+          rgba(0, 229, 204, 0.1)
+        );
+        border: 1px solid rgba(0, 191, 166, 0.3);
+        color: var(--teal-light);
+      }
+      .sb-word--placed:hover {
+        background: rgba(239, 83, 80, 0.1);
+        border-color: rgba(239, 83, 80, 0.3);
+      }
 
-    /* Word bank */
-    .sb-wordbank {
-      display: flex; flex-wrap: wrap; gap: var(--space-sm);
-      justify-content: center; width: 100%;
-    }
+      /* Word bank */
+      .sb-wordbank {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-sm);
+        justify-content: center;
+        width: 100%;
+      }
 
-    /* Action buttons */
-    .sb-actions {
-      display: flex; gap: var(--space-md); flex-wrap: wrap; justify-content: center;
-    }
-    .sb-btn {
-      padding: 12px 32px; border-radius: var(--radius-xl);
-      font-family: 'Outfit', sans-serif; font-size: 1rem; font-weight: 700;
-      cursor: pointer; transition: transform var(--transition-fast), box-shadow var(--transition-fast);
-    }
-    .sb-btn:hover { transform: translateY(-2px); }
-    .sb-btn--check {
-      background: linear-gradient(135deg, var(--teal), #00E5CC);
-      color: #0A0A1A; box-shadow: 0 4px 20px rgba(0, 191, 166, 0.35);
-    }
-    .sb-btn--check:hover { box-shadow: 0 8px 30px rgba(0, 191, 166, 0.5); }
-    .sb-btn--check:disabled { opacity: 0.4; cursor: not-allowed; transform: none !important; }
-    .sb-btn--reset {
-      background: var(--glass-bg); border: 1px solid var(--glass-border);
-      color: var(--text-secondary);
-    }
-    .sb-btn--next {
-      background: linear-gradient(135deg, var(--teal), #00E5CC);
-      color: #0A0A1A; box-shadow: 0 4px 20px rgba(0, 191, 166, 0.35);
-      display: none;
-    }
-    .sb-btn--next.visible { display: inline-flex; }
+      /* Action buttons */
+      .sb-actions {
+        display: flex;
+        gap: var(--space-md);
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .sb-btn {
+        padding: 12px 32px;
+        border-radius: var(--radius-xl);
+        font-family: "Outfit", sans-serif;
+        font-size: 1rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition:
+          transform var(--transition-fast),
+          box-shadow var(--transition-fast);
+      }
+      .sb-btn:hover {
+        transform: translateY(-2px);
+      }
+      .sb-btn--check {
+        background: linear-gradient(135deg, var(--teal), #00e5cc);
+        color: #0a0a1a;
+        box-shadow: 0 4px 20px rgba(0, 191, 166, 0.35);
+      }
+      .sb-btn--check:hover {
+        box-shadow: 0 8px 30px rgba(0, 191, 166, 0.5);
+      }
+      .sb-btn--check:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+        transform: none !important;
+      }
+      .sb-btn--reset {
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        color: var(--text-secondary);
+      }
+      .sb-btn--next {
+        background: linear-gradient(135deg, var(--teal), #00e5cc);
+        color: #0a0a1a;
+        box-shadow: 0 4px 20px rgba(0, 191, 166, 0.35);
+        display: none;
+      }
+      .sb-btn--next.visible {
+        display: inline-flex;
+      }
 
-    /* Feedback */
-    .sb-feedback {
-      width: 100%; padding: var(--space-md); border-radius: var(--radius-lg);
-      text-align: center; font-weight: 600; display: none;
-      animation: feedbackIn 0.3s ease-out;
-    }
-    @keyframes feedbackIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-    .sb-feedback.correct {
-      display: block; background: rgba(102, 187, 106, 0.1);
-      border: 1px solid rgba(102, 187, 106, 0.3); color: var(--das-green);
-    }
-    .sb-feedback.incorrect {
-      display: block; background: rgba(239, 83, 80, 0.1);
-      border: 1px solid rgba(239, 83, 80, 0.3); color: var(--red);
-    }
+      /* Feedback */
+      .sb-feedback {
+        width: 100%;
+        padding: var(--space-md);
+        border-radius: var(--radius-lg);
+        text-align: center;
+        font-weight: 600;
+        display: none;
+        animation: feedbackIn 0.3s ease-out;
+      }
+      @keyframes feedbackIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .sb-feedback.correct {
+        display: block;
+        background: rgba(102, 187, 106, 0.1);
+        border: 1px solid rgba(102, 187, 106, 0.3);
+        color: var(--das-green);
+      }
+      .sb-feedback.incorrect {
+        display: block;
+        background: rgba(239, 83, 80, 0.1);
+        border: 1px solid rgba(239, 83, 80, 0.3);
+        color: var(--red);
+      }
 
-    /* Results */
-    .results {
-      display: none; flex-direction: column; align-items: center;
-      justify-content: center; text-align: center; padding: var(--space-2xl);
-      min-height: 60vh; gap: var(--space-lg);
-    }
-    .results.active { display: flex; }
-    .results__emoji { font-size: 5rem; animation: pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
-    @keyframes pop { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
-    .results__title { font-family: 'Outfit', sans-serif; font-size: 2rem; font-weight: 800; }
-    .results__stats { display: flex; gap: var(--space-2xl); flex-wrap: wrap; justify-content: center; }
-    .results__stat { display: flex; flex-direction: column; align-items: center; gap: 4px; }
-    .results__stat-value { font-family: 'Outfit', sans-serif; font-size: 2rem; font-weight: 800; }
-    .results__stat-label { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
-    .results__xp {
-      display: inline-flex; align-items: center; gap: var(--space-sm);
-      padding: 12px 28px; border-radius: var(--radius-full);
-      background: linear-gradient(135deg, var(--gold), #FFC107);
-      color: #000; font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 1.2rem;
-      box-shadow: 0 4px 20px rgba(255, 213, 79, 0.4);
-    }
-    .results__actions { display: flex; gap: var(--space-md); flex-wrap: wrap; justify-content: center; margin-top: var(--space-md); }
+      /* Results */
+      .results {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: var(--space-2xl);
+        min-height: 60vh;
+        gap: var(--space-lg);
+      }
+      .results.active {
+        display: flex;
+      }
+      .results__emoji {
+        font-size: 5rem;
+        animation: pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+      @keyframes pop {
+        0% {
+          transform: scale(0);
+          opacity: 0;
+        }
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+      .results__title {
+        font-family: "Outfit", sans-serif;
+        font-size: 2rem;
+        font-weight: 800;
+      }
+      .results__stats {
+        display: flex;
+        gap: var(--space-2xl);
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .results__stat {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+      }
+      .results__stat-value {
+        font-family: "Outfit", sans-serif;
+        font-size: 2rem;
+        font-weight: 800;
+      }
+      .results__stat-label {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .results__xp {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-sm);
+        padding: 12px 28px;
+        border-radius: var(--radius-full);
+        background: linear-gradient(135deg, var(--gold), #ffc107);
+        color: #000;
+        font-family: "Outfit", sans-serif;
+        font-weight: 800;
+        font-size: 1.2rem;
+        box-shadow: 0 4px 20px rgba(255, 213, 79, 0.4);
+      }
+      .results__actions {
+        display: flex;
+        gap: var(--space-md);
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: var(--space-md);
+      }
 
-    .confetti-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; overflow: hidden; }
-    .confetti-piece { position: absolute; width: 10px; height: 10px; top: -20px; opacity: 0; animation: confetti-fall 3s ease-in forwards; }
-    @keyframes confetti-fall { 0% { opacity: 1; transform: translateY(0) rotate(0deg); } 100% { opacity: 0; transform: translateY(100vh) rotate(720deg); } }
+      .confetti-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 9999;
+        overflow: hidden;
+      }
+      .confetti-piece {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        top: -20px;
+        opacity: 0;
+        animation: confetti-fall 3s ease-in forwards;
+      }
+      @keyframes confetti-fall {
+        0% {
+          opacity: 1;
+          transform: translateY(0) rotate(0deg);
+        }
+        100% {
+          opacity: 0;
+          transform: translateY(100vh) rotate(720deg);
+        }
+      }
 
-    .start-screen {
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      text-align: center; min-height: 60vh; gap: var(--space-lg); padding: var(--space-2xl);
-    }
-    .start-screen__icon { font-size: 4rem; }
-    .start-screen__title { font-family: 'Outfit', sans-serif; font-size: 2.5rem; font-weight: 800; }
-    .start-screen__desc { font-size: 1.1rem; color: var(--text-secondary); max-width: 500px; line-height: 1.7; }
-  </style>
-</head>
-<body>
-  <div class="trainer-page">
-    <div class="trainer-topbar">
-      <a href="index.html" class="trainer-topbar__back">← Home</a>
-      <span class="trainer-topbar__title">🧩 Sentence Builder</span>
-      <span class="trainer-topbar__counter" id="sb-counter">0 / 8</span>
-    </div>
+      .start-screen {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        min-height: 60vh;
+        gap: var(--space-lg);
+        padding: var(--space-2xl);
+      }
+      .start-screen__icon {
+        font-size: 4rem;
+      }
+      .start-screen__title {
+        font-family: "Outfit", sans-serif;
+        font-size: 2.5rem;
+        font-weight: 800;
+      }
+      .start-screen__desc {
+        font-size: 1.1rem;
+        color: var(--text-secondary);
+        max-width: 500px;
+        line-height: 1.7;
+      }
 
-    <div class="trainer-progress" id="sb-progress-wrap" style="display:none;">
-      <div class="trainer-progress__bar">
-        <div class="trainer-progress__fill" id="sb-progress" style="width: 0%;"></div>
-      </div>
-    </div>
-
-    <!-- Start Screen -->
-    <div class="start-screen" id="sb-start">
-      <div class="start-screen__icon">🧩</div>
-      <h1 class="start-screen__title">Sentence Builder</h1>
-      <p class="start-screen__desc">
-        Arrange the words in the correct German word order. Click words to place them, click placed words to remove them. Master the V2 rule!
-      </p>
-      <button class="btn btn--teal" onclick="startGame()" style="font-size:1.1rem; padding: 16px 48px;">
-        ▶ Start Round (8 sentences)
-      </button>
-    </div>
-
-    <!-- Game Area -->
-    <div class="trainer-main" id="sb-game" style="display:none;">
-      <div class="sb-prompt">
-        <div class="sb-prompt__english" id="sb-english">I drink coffee.</div>
-        <div class="sb-prompt__hint">
-          <span class="sb-prompt__hint-icon">💡</span>
-          <span id="sb-hint">Subject + Verb + Object</span>
+      /* Mobile responsive */
+      @media (max-width: 640px) {
+        .sb-prompt {
+          padding: var(--space-lg);
+        }
+        .sb-prompt__english {
+          font-size: clamp(1.1rem, 4vw, 1.5rem);
+        }
+        .sb-word {
+          padding: 12px 16px;
+          font-size: 0.95rem;
+          min-height: 44px;
+        }
+        .sb-dropzone {
+          min-height: 70px;
+          padding: var(--space-sm);
+        }
+        .sb-actions {
+          flex-direction: column;
+          width: 100%;
+        }
+        .sb-btn {
+          width: 100%;
+          text-align: center;
+          min-height: 48px;
+        }
+        .trainer-main {
+          padding: var(--space-md);
+          gap: var(--space-lg);
+        }
+      }
+      @media (max-width: 480px) {
+        .sb-prompt__hint {
+          font-size: 0.8rem;
+        }
+        .sb-feedback {
+          font-size: 0.9rem;
+          padding: var(--space-sm);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="trainer-page">
+      <div class="trainer-topbar">
+        <div style="flex: 1">
+          <a href="index.html" class="trainer-topbar__back">← Home</a>
+        </div>
+        <span
+          class="trainer-topbar__title"
+          style="flex: 1; justify-content: center; text-align: center"
+          >🧩 Sentence Builder</span
+        >
+        <div
+          style="
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+          "
+        >
+          <span
+            class="trainer-topbar__counter"
+            id="sb-counter"
+            style="margin-right: 12px"
+            >0 / 8</span
+          >
+          <button
+            class="navbar__auth-btn"
+            id="auth-login-btn"
+            onclick="openAuthModal('login')"
+            style="padding: 6px 14px; font-size: 0.8rem"
+          >
+            👤 Log In
+          </button>
+          <div
+            class="navbar__user"
+            id="auth-user-widget"
+            style="display: none"
+            onclick="toggleUserDropdown()"
+          >
+            <div class="navbar__user-avatar">?</div>
+            <span class="navbar__user-name" style="max-width: 80px">User</span>
+            <div class="user-dropdown" id="user-dropdown">
+              <div class="user-dropdown__item" style="pointer-events: none">
+                <span>☁️</span
+                ><span
+                  class="sync-indicator"
+                  id="sync-indicator"
+                  style="display: none"
+                ></span>
+              </div>
+              <div class="user-dropdown__divider"></div>
+              <button
+                class="user-dropdown__item user-dropdown__item--danger"
+                onclick="authSignOut()"
+              >
+                <span>🚪</span> Log Out
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="sb-dropzone" id="sb-dropzone">
-        <span class="sb-dropzone__placeholder" id="sb-placeholder">Click words below to build the sentence...</span>
+      <div class="trainer-progress" id="sb-progress-wrap" style="display: none">
+        <div class="trainer-progress__bar">
+          <div
+            class="trainer-progress__fill"
+            id="sb-progress"
+            style="width: 0%"
+          ></div>
+        </div>
       </div>
 
-      <div class="sb-wordbank" id="sb-wordbank"></div>
+      <!-- Start Screen -->
+      <div class="start-screen" id="sb-start">
+        <div class="start-screen__icon">🧩</div>
+        <h1 class="start-screen__title">Sentence Builder</h1>
+        <p class="start-screen__desc">
+          Arrange the words in the correct German word order. Click words to
+          place them, click placed words to remove them. Master the V2 rule!
+        </p>
+        <button
+          class="btn btn--teal"
+          onclick="startGame()"
+          style="font-size: 1.1rem; padding: 16px 48px"
+        >
+          ▶ Start Round (8 sentences)
+        </button>
+      </div>
 
-      <div class="sb-feedback" id="sb-feedback"></div>
+      <!-- Game Area -->
+      <div class="trainer-main" id="sb-game" style="display: none">
+        <div class="sb-prompt">
+          <div class="sb-prompt__english" id="sb-english">I drink coffee.</div>
+          <div class="sb-prompt__hint">
+            <span class="sb-prompt__hint-icon">💡</span>
+            <span id="sb-hint">Subject + Verb + Object</span>
+          </div>
+        </div>
 
-      <div class="sb-actions">
-        <button class="sb-btn sb-btn--reset" onclick="resetSentence()">↺ Reset</button>
-        <button class="sb-btn sb-btn--check" id="sb-check-btn" onclick="checkSentence()" disabled>✓ Check</button>
-        <button class="sb-btn sb-btn--next" id="sb-next-btn" onclick="nextSentence()">Next →</button>
+        <div class="sb-dropzone" id="sb-dropzone">
+          <span class="sb-dropzone__placeholder" id="sb-placeholder"
+            >Click words below to build the sentence...</span
+          >
+        </div>
+
+        <div class="sb-wordbank" id="sb-wordbank"></div>
+
+        <div class="sb-feedback" id="sb-feedback"></div>
+
+        <div class="sb-actions">
+          <button class="sb-btn sb-btn--reset" onclick="resetSentence()">
+            ↺ Reset
+          </button>
+          <button
+            class="sb-btn sb-btn--check"
+            id="sb-check-btn"
+            onclick="checkSentence()"
+            disabled
+          >
+            ✓ Check
+          </button>
+          <button
+            class="sb-btn sb-btn--next"
+            id="sb-next-btn"
+            onclick="nextSentence()"
+          >
+            Next →
+          </button>
+        </div>
+      </div>
+
+      <!-- Results -->
+      <div class="results" id="sb-results">
+        <div class="results__emoji" id="sr-emoji">🏆</div>
+        <h2 class="results__title" id="sr-title">Ausgezeichnet!</h2>
+        <div class="results__stats">
+          <div class="results__stat">
+            <span
+              class="results__stat-value"
+              style="color: var(--das-green)"
+              id="sr-correct"
+              >0</span
+            >
+            <span class="results__stat-label">Correct</span>
+          </div>
+          <div class="results__stat">
+            <span
+              class="results__stat-value"
+              style="color: var(--red)"
+              id="sr-incorrect"
+              >0</span
+            >
+            <span class="results__stat-label">Wrong</span>
+          </div>
+          <div class="results__stat">
+            <span
+              class="results__stat-value"
+              style="color: var(--teal)"
+              id="sr-accuracy"
+              >0%</span
+            >
+            <span class="results__stat-label">Accuracy</span>
+          </div>
+        </div>
+        <div class="results__xp" id="sr-xp">⚡ +0 XP</div>
+        <div class="results__actions">
+          <a href="index.html" class="btn btn--ghost">🏠 Home</a>
+          <button class="btn btn--teal" onclick="startGame()">
+            🔄 Play Again
+          </button>
+          <a href="article-trainer.html" class="btn btn--ghost"
+            >🇩🇪 Try Articles →</a
+          >
+        </div>
       </div>
     </div>
 
-    <!-- Results -->
-    <div class="results" id="sb-results">
-      <div class="results__emoji" id="sr-emoji">🏆</div>
-      <h2 class="results__title" id="sr-title">Ausgezeichnet!</h2>
-      <div class="results__stats">
-        <div class="results__stat">
-          <span class="results__stat-value" style="color: var(--das-green);" id="sr-correct">0</span>
-          <span class="results__stat-label">Correct</span>
+    <div class="confetti-container" id="confetti-container"></div>
+
+    <script>
+      /* ═══════════════════════════════════════════════════════════
+         SENTENCE BUILDER — Full Game Logic
+         ═══════════════════════════════════════════════════════════ */
+
+      const puzzles = [
+        { english: "I drink coffee.", hint: "Subject + Verb + Object", words: ["Ich", "trinke", "Kaffee."] },
+        { english: "We eat in the cafeteria.", hint: "Subject + Verb + Preposition + Article + Noun", words: ["Wir", "essen", "in", "der", "Mensa."] },
+        { english: "The woman reads a book.", hint: "Article + Subject + Verb + Article + Object", words: ["Die", "Frau", "liest", "ein", "Buch."] },
+        { english: "He goes to school.", hint: "Subject + Verb + Preposition + Noun", words: ["Er", "geht", "zur", "Schule."] },
+        { english: "The child plays in the park.", hint: "Article + Subject + Verb + Preposition + Noun", words: ["Das", "Kind", "spielt", "im", "Park."] },
+        { english: "I need a ticket.", hint: "Subject + Verb + Article + Object", words: ["Ich", "brauche", "einen", "Fahrschein."] },
+        { english: "The coffee is hot.", hint: "Article + Subject + Verb + Adjective", words: ["Der", "Kaffee", "ist", "heiß."] },
+        { english: "My name is Sohan.", hint: "Possessive + Subject + Verb + Name", words: ["Mein", "Name", "ist", "Sohan."] },
+        { english: "The apartment is big.", hint: "Article + Subject + Verb + Adjective", words: ["Die", "Wohnung", "ist", "groß."] },
+        { english: "We protect the environment.", hint: "Subject + Verb + Article + Object", words: ["Wir", "schützen", "die", "Umwelt."] },
+        { english: "She learns German.", hint: "Subject + Verb + Object", words: ["Sie", "lernt", "Deutsch."] },
+        { english: "We go to the cinema.", hint: "Subject + Verb + Preposition + Object", words: ["Wir", "gehen", "ins", "Kino."] },
+        { english: "The dog plays in the garden.", hint: "Article + Subject + Verb + Preposition + Object", words: ["Der", "Hund", "spielt", "im", "Garten."] },
+        { english: "I live in Freiberg.", hint: "Subject + Verb + Preposition + Place", words: ["Ich", "wohne", "in", "Freiberg."] },
+        { english: "The milk is fresh.", hint: "Article + Subject + Verb + Adjective", words: ["Die", "Milch", "ist", "frisch."] },
+        { english: "He speaks German.", hint: "Subject + Verb + Object", words: ["Er", "spricht", "Deutsch."] },
+      ];
+
+      const ROUND_SIZE = 8;
+      const XP_PER_CORRECT = 15;
+      let roundPuzzles = [];
+      let currentIndex = 0;
+      let correctCount = 0;
+      let incorrectCount = 0;
+      let placedWords = [];
+      let availableWords = [];
+      let isChecked = false;
+
+      function shuffleArray(arr) {
+        const a = [...arr];
+        for (let i = a.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a;
+      }
+
+      function startGame() {
+        roundPuzzles = shuffleArray(puzzles).slice(0, ROUND_SIZE);
+        currentIndex = 0;
+        correctCount = 0;
+        incorrectCount = 0;
+        isChecked = false;
+
+        document.getElementById('sb-start').style.display = 'none';
+        document.getElementById('sb-results').classList.remove('active');
+        document.getElementById('sb-game').style.display = 'flex';
+        document.getElementById('sb-progress-wrap').style.display = 'block';
+
+        loadPuzzle();
+      }
+
+      function loadPuzzle() {
+        if (currentIndex >= roundPuzzles.length) {
+          showResults();
+          return;
+        }
+
+        isChecked = false;
+        const puzzle = roundPuzzles[currentIndex];
+
+        document.getElementById('sb-english').textContent = puzzle.english;
+        document.getElementById('sb-hint').textContent = puzzle.hint;
+
+        placedWords = [];
+        availableWords = shuffleArray([...puzzle.words]);
+
+        document.getElementById('sb-dropzone').className = 'sb-dropzone';
+        document.getElementById('sb-feedback').className = 'sb-feedback';
+        document.getElementById('sb-feedback').textContent = '';
+        document.getElementById('sb-next-btn').classList.remove('visible');
+        document.getElementById('sb-check-btn').style.display = '';
+        document.getElementById('sb-check-btn').disabled = true;
+
+        renderUI();
+        updateCounter();
+      }
+
+      function renderUI() {
+        const dropzone = document.getElementById('sb-dropzone');
+        const wordbank = document.getElementById('sb-wordbank');
+
+        // Render dropzone
+        dropzone.innerHTML = '';
+        if (placedWords.length === 0) {
+          dropzone.innerHTML = '<span class="sb-dropzone__placeholder">Click words below to build the sentence...</span>';
+        } else {
+          placedWords.forEach((word, idx) => {
+            const el = document.createElement('div');
+            el.className = 'sb-word sb-word--placed';
+            el.textContent = word;
+            if (!isChecked) el.onclick = () => removeWord(idx);
+            dropzone.appendChild(el);
+          });
+        }
+
+        // Render word bank
+        wordbank.innerHTML = '';
+        availableWords.forEach((word, idx) => {
+          const isUsed = placedWords.includes(word) &&
+            placedWords.filter(w => w === word).length > availableWords.slice(0, idx).filter(w => w === word).length -
+            (availableWords.filter(w => w === word).length - countInArray(availableWords, word));
+
+          // Simple check: is this specific index used?
+          const usedIndices = getUsedIndices();
+          const el = document.createElement('div');
+          el.className = `sb-word sb-word--bank${usedIndices.includes(idx) ? ' used' : ''}`;
+          el.textContent = word;
+          if (!usedIndices.includes(idx) && !isChecked) {
+            el.onclick = () => placeWord(idx);
+          }
+          wordbank.appendChild(el);
+        });
+
+        // Enable check button only when all words placed
+        document.getElementById('sb-check-btn').disabled = placedWords.length !== roundPuzzles[currentIndex].words.length;
+      }
+
+      // Track which bank indices are used
+      let usedBankIndices = [];
+
+      function getUsedIndices() {
+        return usedBankIndices;
+      }
+
+      function placeWord(bankIndex) {
+        if (isChecked) return;
+        placedWords.push(availableWords[bankIndex]);
+        usedBankIndices.push(bankIndex);
+        renderUI();
+      }
+
+      function removeWord(placedIndex) {
+        if (isChecked) return;
+        const word = placedWords[placedIndex];
+        placedWords.splice(placedIndex, 1);
+
+        // Find corresponding bank index
+        const bankIdx = usedBankIndices.find(i => availableWords[i] === word);
+        usedBankIndices = usedBankIndices.filter((v, i) => {
+          if (v === bankIdx && availableWords[v] === word) {
+            // Remove first match
+            usedBankIndices[i] = -1; // mark
+            return false;
+          }
+          return true;
+        });
+        usedBankIndices = usedBankIndices.filter(v => v !== -1);
+
+        renderUI();
+      }
+
+      function resetSentence() {
+        if (isChecked) return;
+        placedWords = [];
+        usedBankIndices = [];
+        renderUI();
+      }
+
+      function checkSentence() {
+        if (isChecked) return;
+        isChecked = true;
+
+        const puzzle = roundPuzzles[currentIndex];
+        const userSentence = placedWords.join(' ');
+        const correctSentence = puzzle.words.join(' ');
+        const isCorrect = userSentence === correctSentence;
+
+        const dropzone = document.getElementById('sb-dropzone');
+        const feedback = document.getElementById('sb-feedback');
+
+        if (isCorrect) {
+          correctCount++;
+          dropzone.className = 'sb-dropzone correct';
+          feedback.className = 'sb-feedback correct';
+          feedback.textContent = '✅ Perfekt! ' + correctSentence;
+          speakText(correctSentence.replace(' .', '.').replace(/ \./g, '.'));
+        } else {
+          incorrectCount++;
+          dropzone.className = 'sb-dropzone incorrect';
+          feedback.className = 'sb-feedback incorrect';
+          feedback.innerHTML = `❌ Not quite.<br>Correct: <strong>${correctSentence}</strong>`;
+        }
+
+        document.getElementById('sb-check-btn').style.display = 'none';
+        document.getElementById('sb-next-btn').classList.add('visible');
+        renderUI();
+        updateCounter();
+      }
+
+      function nextSentence() {
+        currentIndex++;
+        usedBankIndices = [];
+        loadPuzzle();
+      }
+
+      function updateCounter() {
+        const answered = correctCount + incorrectCount;
+        document.getElementById('sb-counter').textContent = `${answered} / ${roundPuzzles.length}`;
+        document.getElementById('sb-progress').style.width = `${(answered / roundPuzzles.length) * 100}%`;
+      }
+
+      function showResults() {
+        document.getElementById('sb-game').style.display = 'none';
+        document.getElementById('sb-results').classList.add('active');
+
+        const total = correctCount + incorrectCount;
+        const accuracy = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+        const xpEarned = correctCount * XP_PER_CORRECT;
+
+        document.getElementById('sr-correct').textContent = correctCount;
+        document.getElementById('sr-incorrect').textContent = incorrectCount;
+        document.getElementById('sr-accuracy').textContent = `${accuracy}%`;
+        document.getElementById('sr-xp').textContent = `⚡ +${xpEarned} XP`;
+
+        if (accuracy >= 80) {
+          document.getElementById('sr-emoji').textContent = '🏆';
+          document.getElementById('sr-title').textContent = 'Ausgezeichnet!';
+        } else if (accuracy >= 50) {
+          document.getElementById('sr-emoji').textContent = '👏';
+          document.getElementById('sr-title').textContent = 'Gut gemacht!';
+        } else {
+          document.getElementById('sr-emoji').textContent = '💪';
+          document.getElementById('sr-title').textContent = 'Weiter so!';
+        }
+
+        if (typeof dbSaveXP === 'function') {
+          dbSaveXP(xpEarned, 'sentences', { correct: correctCount, total: total, bestStreak: 0, accuracy: accuracy });
+        }
+
+        if (accuracy >= 50) launchConfetti();
+      }
+
+      function countInArray(arr, val) {
+        return arr.filter(v => v === val).length;
+      }
+
+      function speakText(text) {
+        window.speechSynthesis.cancel();
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = 'de-DE';
+        u.rate = parseFloat(localStorage.getItem('db_speechRate') || '0.85');
+        window.speechSynthesis.speak(u);
+      }
+
+      function launchConfetti() {
+        const container = document.getElementById('confetti-container');
+        const colors = ['#00BFA6', '#00E5CC', '#42A5F5', '#66BB6A', '#FFD54F', '#EC407A'];
+        for (let i = 0; i < 80; i++) {
+          const p = document.createElement('div');
+          p.className = 'confetti-piece';
+          p.style.left = `${Math.random() * 100}%`;
+          p.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+          p.style.animationDelay = `${Math.random() * 1}s`;
+          p.style.animationDuration = `${2 + Math.random() * 2}s`;
+          p.style.width = `${6 + Math.random() * 8}px`;
+          p.style.height = `${6 + Math.random() * 8}px`;
+          p.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+          container.appendChild(p);
+        }
+        setTimeout(() => { container.innerHTML = ''; }, 4000);
+      }
+        <!-- Auth Modal Overlay -->
+        <div class="auth-overlay" id="auth-overlay">
+          <div class="auth-modal">
+            <button class="auth-modal__close" onclick="closeAuthModal()">✕</button>
+            <div class="auth-modal__header">
+              <span class="auth-modal__emoji" id="auth-modal-emoji">⚡</span>
+              <h2 class="auth-modal__title" id="auth-modal-title">Welcome Back</h2>
+              <p class="auth-modal__subtitle" id="auth-modal-subtitle">Log in to sync your progress</p>
+            </div>
+            <div class="auth-error" id="auth-error"></div>
+            <form class="auth-form" onsubmit="handleAuthSubmit(event)">
+              <div class="auth-form__group" id="auth-name-group" style="display:none;">
+                <label class="auth-form__label" for="auth-name">Display Name</label>
+                <input class="auth-form__input" type="text" id="auth-name" placeholder="e.g. Sohan" autocomplete="name" />
+              </div>
+              <div class="auth-form__group">
+                <label class="auth-form__label" for="auth-email">Email</label>
+                <input class="auth-form__input" type="email" id="auth-email" placeholder="your@email.com" autocomplete="email" required />
+              </div>
+              <div class="auth-form__group">
+                <label class="auth-form__label" for="auth-password">Password</label>
+                <input class="auth-form__input" type="password" id="auth-password" placeholder="Min. 6 characters" autocomplete="current-password" required minlength="6" />
+              </div>
+              <button type="submit" class="auth-form__submit" id="auth-submit-btn" data-mode="login">⚡ Log In</button>
+            </form>
+            <div class="auth-divider">
+              <div class="auth-divider__line"></div><span class="auth-divider__text">or</span><div class="auth-divider__line"></div>
+            </div>
+            <button class="auth-google-btn" id="auth-google-btn" onclick="handleGoogleSignIn()">
+              <svg class="auth-google-btn__icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+              Continue with Google
+            </button>
+            <div class="auth-toggle">
+              <span id="auth-toggle-text">Don't have an account? </span>
+              <button class="auth-toggle__link" id="auth-toggle-link" type="button" onclick="setAuthMode('signup')">Sign up</button>
+            </div>
+          </div>
         </div>
-        <div class="results__stat">
-          <span class="results__stat-value" style="color: var(--red);" id="sr-incorrect">0</span>
-          <span class="results__stat-label">Wrong</span>
-        </div>
-        <div class="results__stat">
-          <span class="results__stat-value" style="color: var(--teal);" id="sr-accuracy">0%</span>
-          <span class="results__stat-label">Accuracy</span>
-        </div>
-      </div>
-      <div class="results__xp" id="sr-xp">⚡ +0 XP</div>
-      <div class="results__actions">
-        <a href="index.html" class="btn btn--ghost">🏠 Home</a>
-        <button class="btn btn--teal" onclick="startGame()">🔄 Play Again</button>
-        <a href="article-trainer.html" class="btn btn--ghost">🇩🇪 Try Articles →</a>
-      </div>
-    </div>
-  </div>
 
-  <div class="confetti-container" id="confetti-container"></div>
-
-<script>
-/* ═══════════════════════════════════════════════════════════
-   SENTENCE BUILDER — Full Game Logic
-   ═══════════════════════════════════════════════════════════ */
-
-const puzzles = [
-  { english: "I drink coffee.", hint: "Subject + Verb + Object", words: ["Ich", "trinke", "Kaffee."] },
-  { english: "We eat in the cafeteria.", hint: "Subject + Verb + Preposition + Article + Noun", words: ["Wir", "essen", "in", "der", "Mensa."] },
-  { english: "The woman reads a book.", hint: "Article + Subject + Verb + Article + Object", words: ["Die", "Frau", "liest", "ein", "Buch."] },
-  { english: "He goes to school.", hint: "Subject + Verb + Preposition + Noun", words: ["Er", "geht", "zur", "Schule."] },
-  { english: "The child plays in the park.", hint: "Article + Subject + Verb + Preposition + Noun", words: ["Das", "Kind", "spielt", "im", "Park."] },
-  { english: "I need a ticket.", hint: "Subject + Verb + Article + Object", words: ["Ich", "brauche", "einen", "Fahrschein."] },
-  { english: "The coffee is hot.", hint: "Article + Subject + Verb + Adjective", words: ["Der", "Kaffee", "ist", "heiß."] },
-  { english: "My name is Sohan.", hint: "Possessive + Subject + Verb + Name", words: ["Mein", "Name", "ist", "Sohan."] },
-  { english: "The apartment is big.", hint: "Article + Subject + Verb + Adjective", words: ["Die", "Wohnung", "ist", "groß."] },
-  { english: "We protect the environment.", hint: "Subject + Verb + Article + Object", words: ["Wir", "schützen", "die", "Umwelt."] },
-  { english: "She learns German.", hint: "Subject + Verb + Object", words: ["Sie", "lernt", "Deutsch."] },
-  { english: "We go to the cinema.", hint: "Subject + Verb + Preposition + Object", words: ["Wir", "gehen", "ins", "Kino."] },
-  { english: "The dog plays in the garden.", hint: "Article + Subject + Verb + Preposition + Object", words: ["Der", "Hund", "spielt", "im", "Garten."] },
-  { english: "I live in Freiberg.", hint: "Subject + Verb + Preposition + Place", words: ["Ich", "wohne", "in", "Freiberg."] },
-  { english: "The milk is fresh.", hint: "Article + Subject + Verb + Adjective", words: ["Die", "Milch", "ist", "frisch."] },
-  { english: "He speaks German.", hint: "Subject + Verb + Object", words: ["Er", "spricht", "Deutsch."] },
-];
-
-const ROUND_SIZE = 8;
-const XP_PER_CORRECT = 15;
-let roundPuzzles = [];
-let currentIndex = 0;
-let correctCount = 0;
-let incorrectCount = 0;
-let placedWords = [];
-let availableWords = [];
-let isChecked = false;
-
-function shuffleArray(arr) {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
-
-function startGame() {
-  roundPuzzles = shuffleArray(puzzles).slice(0, ROUND_SIZE);
-  currentIndex = 0;
-  correctCount = 0;
-  incorrectCount = 0;
-  isChecked = false;
-
-  document.getElementById('sb-start').style.display = 'none';
-  document.getElementById('sb-results').classList.remove('active');
-  document.getElementById('sb-game').style.display = 'flex';
-  document.getElementById('sb-progress-wrap').style.display = 'block';
-
-  loadPuzzle();
-}
-
-function loadPuzzle() {
-  if (currentIndex >= roundPuzzles.length) {
-    showResults();
-    return;
-  }
-
-  isChecked = false;
-  const puzzle = roundPuzzles[currentIndex];
-
-  document.getElementById('sb-english').textContent = puzzle.english;
-  document.getElementById('sb-hint').textContent = puzzle.hint;
-
-  placedWords = [];
-  availableWords = shuffleArray([...puzzle.words]);
-
-  document.getElementById('sb-dropzone').className = 'sb-dropzone';
-  document.getElementById('sb-feedback').className = 'sb-feedback';
-  document.getElementById('sb-feedback').textContent = '';
-  document.getElementById('sb-next-btn').classList.remove('visible');
-  document.getElementById('sb-check-btn').style.display = '';
-  document.getElementById('sb-check-btn').disabled = true;
-
-  renderUI();
-  updateCounter();
-}
-
-function renderUI() {
-  const dropzone = document.getElementById('sb-dropzone');
-  const wordbank = document.getElementById('sb-wordbank');
-
-  // Render dropzone
-  dropzone.innerHTML = '';
-  if (placedWords.length === 0) {
-    dropzone.innerHTML = '<span class="sb-dropzone__placeholder">Click words below to build the sentence...</span>';
-  } else {
-    placedWords.forEach((word, idx) => {
-      const el = document.createElement('div');
-      el.className = 'sb-word sb-word--placed';
-      el.textContent = word;
-      if (!isChecked) el.onclick = () => removeWord(idx);
-      dropzone.appendChild(el);
-    });
-  }
-
-  // Render word bank
-  wordbank.innerHTML = '';
-  availableWords.forEach((word, idx) => {
-    const isUsed = placedWords.includes(word) &&
-      placedWords.filter(w => w === word).length > availableWords.slice(0, idx).filter(w => w === word).length -
-      (availableWords.filter(w => w === word).length - countInArray(availableWords, word));
-
-    // Simple check: is this specific index used?
-    const usedIndices = getUsedIndices();
-    const el = document.createElement('div');
-    el.className = `sb-word sb-word--bank${usedIndices.includes(idx) ? ' used' : ''}`;
-    el.textContent = word;
-    if (!usedIndices.includes(idx) && !isChecked) {
-      el.onclick = () => placeWord(idx);
-    }
-    wordbank.appendChild(el);
-  });
-
-  // Enable check button only when all words placed
-  document.getElementById('sb-check-btn').disabled = placedWords.length !== roundPuzzles[currentIndex].words.length;
-}
-
-// Track which bank indices are used
-let usedBankIndices = [];
-
-function getUsedIndices() {
-  return usedBankIndices;
-}
-
-function placeWord(bankIndex) {
-  if (isChecked) return;
-  placedWords.push(availableWords[bankIndex]);
-  usedBankIndices.push(bankIndex);
-  renderUI();
-}
-
-function removeWord(placedIndex) {
-  if (isChecked) return;
-  const word = placedWords[placedIndex];
-  placedWords.splice(placedIndex, 1);
-
-  // Find corresponding bank index
-  const bankIdx = usedBankIndices.find(i => availableWords[i] === word);
-  usedBankIndices = usedBankIndices.filter((v, i) => {
-    if (v === bankIdx && availableWords[v] === word) {
-      // Remove first match
-      usedBankIndices[i] = -1; // mark
-      return false;
-    }
-    return true;
-  });
-  usedBankIndices = usedBankIndices.filter(v => v !== -1);
-
-  renderUI();
-}
-
-function resetSentence() {
-  if (isChecked) return;
-  placedWords = [];
-  usedBankIndices = [];
-  renderUI();
-}
-
-function checkSentence() {
-  if (isChecked) return;
-  isChecked = true;
-
-  const puzzle = roundPuzzles[currentIndex];
-  const userSentence = placedWords.join(' ');
-  const correctSentence = puzzle.words.join(' ');
-  const isCorrect = userSentence === correctSentence;
-
-  const dropzone = document.getElementById('sb-dropzone');
-  const feedback = document.getElementById('sb-feedback');
-
-  if (isCorrect) {
-    correctCount++;
-    dropzone.className = 'sb-dropzone correct';
-    feedback.className = 'sb-feedback correct';
-    feedback.textContent = '✅ Perfekt! ' + correctSentence;
-    speakText(correctSentence.replace(' .', '.').replace(/ \./g, '.'));
-  } else {
-    incorrectCount++;
-    dropzone.className = 'sb-dropzone incorrect';
-    feedback.className = 'sb-feedback incorrect';
-    feedback.innerHTML = `❌ Not quite.<br>Correct: <strong>${correctSentence}</strong>`;
-  }
-
-  document.getElementById('sb-check-btn').style.display = 'none';
-  document.getElementById('sb-next-btn').classList.add('visible');
-  renderUI();
-  updateCounter();
-}
-
-function nextSentence() {
-  currentIndex++;
-  usedBankIndices = [];
-  loadPuzzle();
-}
-
-function updateCounter() {
-  const answered = correctCount + incorrectCount;
-  document.getElementById('sb-counter').textContent = `${answered} / ${roundPuzzles.length}`;
-  document.getElementById('sb-progress').style.width = `${(answered / roundPuzzles.length) * 100}%`;
-}
-
-function showResults() {
-  document.getElementById('sb-game').style.display = 'none';
-  document.getElementById('sb-results').classList.add('active');
-
-  const total = correctCount + incorrectCount;
-  const accuracy = total > 0 ? Math.round((correctCount / total) * 100) : 0;
-  const xpEarned = correctCount * XP_PER_CORRECT;
-
-  document.getElementById('sr-correct').textContent = correctCount;
-  document.getElementById('sr-incorrect').textContent = incorrectCount;
-  document.getElementById('sr-accuracy').textContent = `${accuracy}%`;
-  document.getElementById('sr-xp').textContent = `⚡ +${xpEarned} XP`;
-
-  if (accuracy >= 80) {
-    document.getElementById('sr-emoji').textContent = '🏆';
-    document.getElementById('sr-title').textContent = 'Ausgezeichnet!';
-  } else if (accuracy >= 50) {
-    document.getElementById('sr-emoji').textContent = '👏';
-    document.getElementById('sr-title').textContent = 'Gut gemacht!';
-  } else {
-    document.getElementById('sr-emoji').textContent = '💪';
-    document.getElementById('sr-title').textContent = 'Weiter so!';
-  }
-
-  const saved = JSON.parse(localStorage.getItem('db_gameState') || '{}');
-  saved.xp = (saved.xp || 0) + xpEarned;
-  const xpNeeded = (saved.level || 1) * 100;
-  if (saved.xp >= xpNeeded) { saved.xp -= xpNeeded; saved.level = (saved.level || 1) + 1; }
-  localStorage.setItem('db_gameState', JSON.stringify(saved));
-
-  if (accuracy >= 50) launchConfetti();
-}
-
-function countInArray(arr, val) {
-  return arr.filter(v => v === val).length;
-}
-
-function speakText(text) {
-  window.speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(text);
-  u.lang = 'de-DE';
-  u.rate = parseFloat(localStorage.getItem('db_speechRate') || '0.85');
-  window.speechSynthesis.speak(u);
-}
-
-function launchConfetti() {
-  const container = document.getElementById('confetti-container');
-  const colors = ['#00BFA6', '#00E5CC', '#42A5F5', '#66BB6A', '#FFD54F', '#EC407A'];
-  for (let i = 0; i < 80; i++) {
-    const p = document.createElement('div');
-    p.className = 'confetti-piece';
-    p.style.left = `${Math.random() * 100}%`;
-    p.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-    p.style.animationDelay = `${Math.random() * 1}s`;
-    p.style.animationDuration = `${2 + Math.random() * 2}s`;
-    p.style.width = `${6 + Math.random() * 8}px`;
-    p.style.height = `${6 + Math.random() * 8}px`;
-    p.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
-    container.appendChild(p);
-  }
-  setTimeout(() => { container.innerHTML = ''; }, 4000);
-}
-</script>
-</body>
+        <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js">
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+    <script src="auth.js"></script>
+  </body>
 </html>

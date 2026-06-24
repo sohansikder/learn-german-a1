@@ -1,470 +1,881 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DeutschBlitz — Master German A1 | Gamified Language Learning</title>
-  <meta name="description" content="DeutschBlitz is a gamified German A1 learning platform. Master articles (der/die/das), vocabulary, sentence structure, and essential phrases — Blitz style ⚡" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="index.css" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>" />
-</head>
-<body>
-  <!-- ===================================================
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DeutschBlitz — Master German A1 | Gamified Language Learning</title>
+    <meta
+      name="description"
+      content="DeutschBlitz is a gamified German A1 learning platform. Master articles (der/die/das), vocabulary, sentence structure, and essential phrases — Blitz style ⚡"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="auth.css" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>"
+    />
+  </head>
+  <body>
+    <!-- ===================================================
        NAVIGATION
        =================================================== -->
-  <nav class="navbar" id="navbar">
-    <div class="navbar__inner">
-      <a href="#hero" class="navbar__logo">
-        <span class="navbar__logo-icon">⚡</span>
-        <span>DeutschBlitz</span>
-      </a>
-      <ul class="navbar__links">
-        <li><a href="#features" class="navbar__link">Features</a></li>
-        <li><a href="article-trainer.html" class="navbar__link">🇩🇪 Articles</a></li>
-        <li><a href="verb-trainer.html" class="navbar__link">💬 Verbs</a></li>
-        <li><a href="sentence-builder.html" class="navbar__link">🧩 Sentences</a></li>
-        <li><a href="vocab-quiz.html" class="navbar__link">📚 Vocabulary</a></li>
-        <li><a href="grammar.html" class="navbar__link">📖 Grammar</a></li>
-        <li><a href="#phrases" class="navbar__link">Phrases</a></li>
-        <li><a href="#resources" class="navbar__link">Resources</a></li>
-      </ul>
-      <a href="#practice" class="navbar__cta">Start Learning →</a>
-      <button class="navbar__hamburger" id="hamburger-btn" aria-label="Toggle navigation">
-        <span></span><span></span><span></span>
-      </button>
+    <nav class="navbar" id="navbar">
+      <div class="navbar__inner">
+        <a href="#hero" class="navbar__logo">
+          <span class="navbar__logo-icon">⚡</span>
+          <span>DeutschBlitz</span>
+        </a>
+        <ul class="navbar__links">
+          <li><a href="#features" class="navbar__link">Features</a></li>
+          <li>
+            <a href="article-trainer.html" class="navbar__link">🇩🇪 Articles</a>
+          </li>
+          <li><a href="verb-trainer.html" class="navbar__link">💬 Verbs</a></li>
+          <li>
+            <a href="sentence-builder.html" class="navbar__link"
+              >🧩 Sentences</a
+            >
+          </li>
+          <li>
+            <a href="vocab-quiz.html" class="navbar__link">📚 Vocabulary</a>
+          </li>
+          <li><a href="grammar.html" class="navbar__link">📖 Grammar</a></li>
+          <li><a href="#phrases" class="navbar__link">Phrases</a></li>
+          <li><a href="#resources" class="navbar__link">Resources</a></li>
+        </ul>
+        <a href="#practice" class="navbar__cta">Start Learning →</a>
+        <!-- Auth: Login Button (shown when logged out) -->
+        <button
+          class="navbar__auth-btn"
+          id="auth-login-btn"
+          onclick="openAuthModal('login')"
+        >
+          👤 Log In
+        </button>
+        <!-- Auth: User Widget (shown when logged in) -->
+        <div
+          class="navbar__user"
+          id="auth-user-widget"
+          style="display: none"
+          onclick="toggleUserDropdown()"
+        >
+          <div class="navbar__user-avatar">?</div>
+          <span class="navbar__user-name">User</span>
+          <div class="user-dropdown" id="user-dropdown">
+            <div class="user-dropdown__item" style="pointer-events: none">
+              <span>☁️</span>
+              <span
+                class="sync-indicator"
+                id="sync-indicator"
+                style="display: none"
+              ></span>
+            </div>
+            <div class="user-dropdown__divider"></div>
+            <button
+              class="user-dropdown__item user-dropdown__item--danger"
+              onclick="authSignOut()"
+            >
+              <span>🚪</span> Log Out
+            </button>
+          </div>
+        </div>
+        <button
+          class="navbar__hamburger"
+          id="hamburger-btn"
+          aria-label="Toggle navigation"
+        >
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+
+    <div class="mobile-nav" id="mobile-nav">
+      <a href="#features" class="mobile-nav__link">Features</a>
+      <a href="article-trainer.html" class="mobile-nav__link"
+        >🇩🇪 Article Trainer</a
+      >
+      <a href="verb-trainer.html" class="mobile-nav__link">💬 Verb Trainer</a>
+      <a href="sentence-builder.html" class="mobile-nav__link"
+        >🧩 Sentence Builder</a
+      >
+      <a href="vocab-quiz.html" class="mobile-nav__link">📚 Vocabulary</a>
+      <a href="grammar.html" class="mobile-nav__link">📖 Grammar</a>
+      <a href="#phrases" class="mobile-nav__link">Phrases</a>
+      <a href="#resources" class="mobile-nav__link">Resources</a>
     </div>
-  </nav>
 
-  <div class="mobile-nav" id="mobile-nav">
-    <a href="#features" class="mobile-nav__link">Features</a>
-    <a href="article-trainer.html" class="mobile-nav__link">🇩🇪 Article Trainer</a>
-    <a href="verb-trainer.html" class="mobile-nav__link">💬 Verb Trainer</a>
-    <a href="sentence-builder.html" class="mobile-nav__link">🧩 Sentence Builder</a>
-    <a href="vocab-quiz.html" class="mobile-nav__link">📚 Vocabulary</a>
-    <a href="grammar.html" class="mobile-nav__link">📖 Grammar</a>
-    <a href="#phrases" class="mobile-nav__link">Phrases</a>
-    <a href="#resources" class="mobile-nav__link">Resources</a>
-  </div>
-
-  <!-- ===================================================
+    <!-- ===================================================
        HERO SECTION
        =================================================== -->
-  <section class="hero" id="hero">
-    <div class="hero__mesh"></div>
-    <div class="hero__orb hero__orb--1"></div>
-    <div class="hero__orb hero__orb--2"></div>
-    <div class="hero__orb hero__orb--3"></div>
-    <div class="hero__content">
-      <div class="hero__badge">
-        <span class="hero__badge-dot"></span>
-        German A1 · CEFR Level
+    <section class="hero" id="hero">
+      <div class="hero__mesh"></div>
+      <div class="hero__orb hero__orb--1"></div>
+      <div class="hero__orb hero__orb--2"></div>
+      <div class="hero__orb hero__orb--3"></div>
+      <div class="hero__content">
+        <div class="hero__badge">
+          <span class="hero__badge-dot"></span>
+          German A1 · CEFR Level
+        </div>
+        <h1 class="hero__title">
+          Master German A1<br />
+          <span class="hero__title-accent" id="hero-typed">Blitz Style ⚡</span>
+        </h1>
+        <p class="hero__subtitle">
+          A gamified learning platform to conquer German articles, vocabulary,
+          sentence structure, and cultural fluency — designed for university
+          students and A1 beginners.
+        </p>
+        <div class="hero__actions">
+          <a href="#practice" class="btn btn--primary">▶ Start Learning</a>
+          <a href="#explore" class="btn btn--ghost">📖 Explore Content</a>
+        </div>
       </div>
-      <h1 class="hero__title">
-        Master German A1<br />
-        <span class="hero__title-accent" id="hero-typed">Blitz Style ⚡</span>
-      </h1>
-      <p class="hero__subtitle">
-        A gamified learning platform to conquer German articles, vocabulary, sentence structure, and cultural fluency — designed for university students and A1 beginners.
-      </p>
-      <div class="hero__actions">
-        <a href="#practice" class="btn btn--primary">▶ Start Learning</a>
-        <a href="#explore" class="btn btn--ghost">📖 Explore Content</a>
+      <div class="hero__scroll-indicator">
+        <span>Scroll to explore</span>
+        <div class="hero__scroll-arrow"></div>
       </div>
-    </div>
-    <div class="hero__scroll-indicator">
-      <span>Scroll to explore</span>
-      <div class="hero__scroll-arrow"></div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ===================================================
+    <!-- ===================================================
        STATS BAR
        =================================================== -->
-  <section class="stats-bar" id="stats-bar">
-    <div class="container">
-      <div class="stats-bar__grid reveal">
-        <div class="stat-item">
-          <span class="stat-item__number" data-count="500">0</span>
-          <span class="stat-item__label">A1 Words Covered</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-item__number stat-item__number--teal" data-count="11">0</span>
-          <span class="stat-item__label">Topic Themes</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-item__number stat-item__number--gold" data-count="4">0</span>
-          <span class="stat-item__label">Game Modes</span>
-        </div>
-        <div class="stat-item">
-          <span class="stat-item__number stat-item__number--streak" data-count="80">0</span>
-          <span class="stat-item__label">Grammar Rules</span>
+    <section class="stats-bar" id="stats-bar">
+      <div class="container">
+        <div class="stats-bar__grid reveal">
+          <div class="stat-item">
+            <span class="stat-item__number" data-count="500">0</span>
+            <span class="stat-item__label">A1 Words Covered</span>
+          </div>
+          <div class="stat-item">
+            <span
+              class="stat-item__number stat-item__number--teal"
+              data-count="11"
+              >0</span
+            >
+            <span class="stat-item__label">Topic Themes</span>
+          </div>
+          <div class="stat-item">
+            <span
+              class="stat-item__number stat-item__number--gold"
+              data-count="4"
+              >0</span
+            >
+            <span class="stat-item__label">Game Modes</span>
+          </div>
+          <div class="stat-item">
+            <span
+              class="stat-item__number stat-item__number--streak"
+              data-count="80"
+              >0</span
+            >
+            <span class="stat-item__label">Grammar Rules</span>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ===================================================
+    <!-- ===================================================
        FEATURES
        =================================================== -->
-  <section class="section features" id="features">
-    <div class="container">
-      <div class="section__header reveal">
-        <h2 class="section__title">Four Powerful Learning Modes</h2>
-        <p class="section__subtitle">Each mode targets a different skill. Mix and match for the fastest A1 progress.</p>
+    <section class="section features" id="features">
+      <div class="container">
+        <div class="section__header reveal">
+          <h2 class="section__title">Four Powerful Learning Modes</h2>
+          <p class="section__subtitle">
+            Each mode targets a different skill. Mix and match for the fastest
+            A1 progress.
+          </p>
+        </div>
+        <div class="features__grid stagger">
+          <div class="feature-card">
+            <div class="feature-card__icon feature-card__icon--blue">🇩🇪</div>
+            <h3 class="feature-card__title">Article Trainer</h3>
+            <p class="feature-card__desc">
+              Master <i>der, die, das</i> with rapid-fire flashcards. Visual
+              color-coding (Blue/Pink/Green) builds subconscious memory.
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-card__icon feature-card__icon--gold">📚</div>
+            <h3 class="feature-card__title">Vocab Decks</h3>
+            <p class="feature-card__desc">
+              Theme-based vocabulary sets. Learn words in context with spaced
+              repetition and pronunciation audio.
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-card__icon feature-card__icon--teal">🧩</div>
+            <h3 class="feature-card__title">Sentence Builder</h3>
+            <p class="feature-card__desc">
+              Drag and drop words to form correct German sentences. Master the
+              tricky V2 word order naturally.
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-card__icon feature-card__icon--pink">🎧</div>
+            <h3 class="feature-card__title">Listening Quiz</h3>
+            <p class="feature-card__desc">
+              Train your ear with native audio clips. Distinguish between
+              similar sounding words and understand spoken A1 German.
+            </p>
+          </div>
+        </div>
       </div>
-      <div class="features__grid stagger">
-        <div class="feature-card">
-          <div class="feature-card__icon feature-card__icon--blue">🇩🇪</div>
-          <h3 class="feature-card__title">Article Trainer</h3>
-          <p class="feature-card__desc">Master <i>der, die, das</i> with rapid-fire flashcards. Visual color-coding (Blue/Pink/Green) builds subconscious memory.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-card__icon feature-card__icon--gold">📚</div>
-          <h3 class="feature-card__title">Vocab Decks</h3>
-          <p class="feature-card__desc">Theme-based vocabulary sets. Learn words in context with spaced repetition and pronunciation audio.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-card__icon feature-card__icon--teal">🧩</div>
-          <h3 class="feature-card__title">Sentence Builder</h3>
-          <p class="feature-card__desc">Drag and drop words to form correct German sentences. Master the tricky V2 word order naturally.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-card__icon feature-card__icon--pink">🎧</div>
-          <h3 class="feature-card__title">Listening Quiz</h3>
-          <p class="feature-card__desc">Train your ear with native audio clips. Distinguish between similar sounding words and understand spoken A1 German.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ===================================================
+    <!-- ===================================================
        PRACTICE HUB — Interactive Trainers
        =================================================== -->
-  <section class="section practice-hub" id="practice">
-    <div class="container">
-      <div class="section__header reveal">
-        <h2 class="section__title">Practice & Train</h2>
-        <p class="section__subtitle">Jump into an interactive training mode. Each session tracks your XP and progress.</p>
+    <section class="section practice-hub" id="practice">
+      <div class="container">
+        <div class="section__header reveal">
+          <h2 class="section__title">Practice & Train</h2>
+          <p class="section__subtitle">
+            Jump into an interactive training mode. Each session tracks your XP
+            and progress.
+          </p>
+        </div>
+        <div class="practice__grid stagger">
+          <a
+            href="article-trainer.html"
+            class="practice-card practice-card--der"
+            id="practice-articles"
+          >
+            <div class="practice-card__icon">🇩🇪</div>
+            <div class="practice-card__body">
+              <h3 class="practice-card__title">Article Trainer</h3>
+              <p class="practice-card__desc">
+                Master <em>der, die, das</em> — 60+ nouns with streaks, XP, and
+                audio.
+              </p>
+            </div>
+            <span class="practice-card__cta">Play →</span>
+          </a>
+          <a
+            href="verb-trainer.html"
+            class="practice-card practice-card--die"
+            id="practice-verbs"
+          >
+            <div class="practice-card__icon">💬</div>
+            <div class="practice-card__body">
+              <h3 class="practice-card__title">Verb Conjugation</h3>
+              <p class="practice-card__desc">
+                Conjugate 20 essential A1 verbs — sein, haben, sprechen, and
+                more.
+              </p>
+            </div>
+            <span class="practice-card__cta">Play →</span>
+          </a>
+          <a
+            href="sentence-builder.html"
+            class="practice-card practice-card--das"
+            id="practice-sentences"
+          >
+            <div class="practice-card__icon">🧩</div>
+            <div class="practice-card__body">
+              <h3 class="practice-card__title">Sentence Builder</h3>
+              <p class="practice-card__desc">
+                Arrange words in correct German order — master V2 word order
+                naturally.
+              </p>
+            </div>
+            <span class="practice-card__cta">Play →</span>
+          </a>
+        </div>
       </div>
-      <div class="practice__grid stagger">
-        <a href="article-trainer.html" class="practice-card practice-card--der" id="practice-articles">
-          <div class="practice-card__icon">🇩🇪</div>
-          <div class="practice-card__body">
-            <h3 class="practice-card__title">Article Trainer</h3>
-            <p class="practice-card__desc">Master <em>der, die, das</em> — 60+ nouns with streaks, XP, and audio.</p>
-          </div>
-          <span class="practice-card__cta">Play →</span>
-        </a>
-        <a href="verb-trainer.html" class="practice-card practice-card--die" id="practice-verbs">
-          <div class="practice-card__icon">💬</div>
-          <div class="practice-card__body">
-            <h3 class="practice-card__title">Verb Conjugation</h3>
-            <p class="practice-card__desc">Conjugate 20 essential A1 verbs — sein, haben, sprechen, and more.</p>
-          </div>
-          <span class="practice-card__cta">Play →</span>
-        </a>
-        <a href="sentence-builder.html" class="practice-card practice-card--das" id="practice-sentences">
-          <div class="practice-card__icon">🧩</div>
-          <div class="practice-card__body">
-            <h3 class="practice-card__title">Sentence Builder</h3>
-            <p class="practice-card__desc">Arrange words in correct German order — master V2 word order naturally.</p>
-          </div>
-          <span class="practice-card__cta">Play →</span>
-        </a>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ===================================================
+    <!-- ===================================================
        EXPLORE CONTENT HUB
        =================================================== -->
-  <section class="section explore-hub" id="explore">
-    <div class="container">
-      <div class="section__header reveal">
-        <h2 class="section__title">Explore Core Content</h2>
-        <p class="section__subtitle">Everything you need to master German A1 in one place.</p>
+    <section class="section explore-hub" id="explore">
+      <div class="container">
+        <div class="section__header reveal">
+          <h2 class="section__title">Explore Core Content</h2>
+          <p class="section__subtitle">
+            Everything you need to master German A1 in one place.
+          </p>
+        </div>
+
+        <div class="explore__grid stagger">
+          <a href="grammar.html" class="explore-card" id="explore-grammar">
+            <div class="explore-card__icon">📖</div>
+            <div class="explore-card__body">
+              <h3 class="explore-card__title">Grammar Reference</h3>
+              <p class="explore-card__desc">
+                Complete A1 grammar guide. Articles, cases, verbs, word order,
+                and time — with full audio and interactive tables.
+              </p>
+              <div class="explore-card__stats">
+                <span>📌 12 Chapters</span>
+                <span>🔊 Full Audio</span>
+                <span>🔍 Searchable</span>
+              </div>
+            </div>
+            <span class="explore-card__arrow">→</span>
+          </a>
+
+          <a href="vocab-quiz.html" class="explore-card" id="explore-vocab">
+            <div class="explore-card__icon">📚</div>
+            <div class="explore-card__body">
+              <h3 class="explore-card__title">Vocabulary Quiz</h3>
+              <p class="explore-card__desc">
+                500+ A1 words across 11 themes. Flash cards with spaced
+                repetition, timed challenges, and score tracking.
+              </p>
+              <div class="explore-card__stats">
+                <span>🃏 500+ Words</span>
+                <span>🗂️ 11 Themes</span>
+                <span>⏱️ Timed Mode</span>
+              </div>
+            </div>
+            <span class="explore-card__arrow">→</span>
+          </a>
+
+          <a
+            href="#pronunciation"
+            class="explore-card"
+            id="explore-pronunciation"
+          >
+            <div class="explore-card__icon">🎤</div>
+            <div class="explore-card__body">
+              <h3 class="explore-card__title">Pronunciation Trainer</h3>
+              <p class="explore-card__desc">
+                Master tricky German sounds — ü, ö, ä, ch, ei/ie, z, w/v — with
+                clickable audio examples and mouth position tips.
+              </p>
+              <div class="explore-card__stats">
+                <span>🗣️ 8 Sound Groups</span>
+                <span>🎙️ 32 Examples</span>
+                <span>💡 Tips</span>
+              </div>
+            </div>
+            <span class="explore-card__arrow">↓</span>
+          </a>
+
+          <a href="#phrases" class="explore-card" id="explore-phrases">
+            <div class="explore-card__icon">💬</div>
+            <div class="explore-card__body">
+              <h3 class="explore-card__title">Essential Phrases</h3>
+              <p class="explore-card__desc">
+                Ready-to-use phrases for greetings, ordering food, asking for
+                directions, shopping, and emergencies.
+              </p>
+              <div class="explore-card__stats">
+                <span>👋 5 Categories</span>
+                <span>🔊 Native Audio</span>
+                <span>🤝 Real Life</span>
+              </div>
+            </div>
+            <span class="explore-card__arrow">↓</span>
+          </a>
+        </div>
       </div>
+    </section>
 
-      <div class="explore__grid stagger">
-        <a href="grammar.html" class="explore-card" id="explore-grammar">
-          <div class="explore-card__icon">📖</div>
-          <div class="explore-card__body">
-            <h3 class="explore-card__title">Grammar Reference</h3>
-            <p class="explore-card__desc">Complete A1 grammar guide. Articles, cases, verbs, word order, and time — with full audio and interactive tables.</p>
-            <div class="explore-card__stats">
-              <span>📌 12 Chapters</span>
-              <span>🔊 Full Audio</span>
-              <span>🔍 Searchable</span>
-            </div>
-          </div>
-          <span class="explore-card__arrow">→</span>
-        </a>
-
-        <a href="vocab-quiz.html" class="explore-card" id="explore-vocab">
-          <div class="explore-card__icon">📚</div>
-          <div class="explore-card__body">
-            <h3 class="explore-card__title">Vocabulary Quiz</h3>
-            <p class="explore-card__desc">500+ A1 words across 11 themes. Flash cards with spaced repetition, timed challenges, and score tracking.</p>
-            <div class="explore-card__stats">
-              <span>🃏 500+ Words</span>
-              <span>🗂️ 11 Themes</span>
-              <span>⏱️ Timed Mode</span>
-            </div>
-          </div>
-          <span class="explore-card__arrow">→</span>
-        </a>
-
-        <a href="#pronunciation" class="explore-card" id="explore-pronunciation">
-          <div class="explore-card__icon">🎤</div>
-          <div class="explore-card__body">
-            <h3 class="explore-card__title">Pronunciation Trainer</h3>
-            <p class="explore-card__desc">Master tricky German sounds — ü, ö, ä, ch, ei/ie, z, w/v — with clickable audio examples and mouth position tips.</p>
-            <div class="explore-card__stats">
-              <span>🗣️ 8 Sound Groups</span>
-              <span>🎙️ 32 Examples</span>
-              <span>💡 Tips</span>
-            </div>
-          </div>
-          <span class="explore-card__arrow">↓</span>
-        </a>
-
-        <a href="#phrases" class="explore-card" id="explore-phrases">
-          <div class="explore-card__icon">💬</div>
-          <div class="explore-card__body">
-            <h3 class="explore-card__title">Essential Phrases</h3>
-            <p class="explore-card__desc">Ready-to-use phrases for greetings, ordering food, asking for directions, shopping, and emergencies.</p>
-            <div class="explore-card__stats">
-              <span>👋 5 Categories</span>
-              <span>🔊 Native Audio</span>
-              <span>🤝 Real Life</span>
-            </div>
-          </div>
-          <span class="explore-card__arrow">↓</span>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================================================
+    <!-- ===================================================
        ESSENTIAL PHRASES
        =================================================== -->
-  <section class="section phrases" id="phrases">
-    <div class="container">
-      <div class="section__header reveal">
-        <h2 class="section__title">Essential A1 Phrases</h2>
-        <p class="section__subtitle">Ready-to-use phrases organized by real-life situations.</p>
-      </div>
+    <section class="section phrases" id="phrases">
+      <div class="container">
+        <div class="section__header reveal">
+          <h2 class="section__title">Essential A1 Phrases</h2>
+          <p class="section__subtitle">
+            Ready-to-use phrases organized by real-life situations.
+          </p>
+        </div>
 
-      <div class="phrases__categories reveal" id="phrase-tabs">
-        <button class="phrases__tab active" data-category="greetings" onclick="filterPhrases('greetings')">👋 Greetings</button>
-        <button class="phrases__tab" data-category="food" onclick="filterPhrases('food')">🍽️ Food & Drink</button>
-        <button class="phrases__tab" data-category="directions" onclick="filterPhrases('directions')">🗺️ Directions</button>
-        <button class="phrases__tab" data-category="shopping" onclick="filterPhrases('shopping')">🛒 Shopping</button>
-        <button class="phrases__tab" data-category="emergency" onclick="filterPhrases('emergency')">🆘 Emergency</button>
-      </div>
+        <div class="phrases__categories reveal" id="phrase-tabs">
+          <button
+            class="phrases__tab active"
+            data-category="greetings"
+            onclick="filterPhrases('greetings')"
+          >
+            👋 Greetings
+          </button>
+          <button
+            class="phrases__tab"
+            data-category="food"
+            onclick="filterPhrases('food')"
+          >
+            🍽️ Food & Drink
+          </button>
+          <button
+            class="phrases__tab"
+            data-category="directions"
+            onclick="filterPhrases('directions')"
+          >
+            🗺️ Directions
+          </button>
+          <button
+            class="phrases__tab"
+            data-category="shopping"
+            onclick="filterPhrases('shopping')"
+          >
+            🛒 Shopping
+          </button>
+          <button
+            class="phrases__tab"
+            data-category="emergency"
+            onclick="filterPhrases('emergency')"
+          >
+            🆘 Emergency
+          </button>
+        </div>
 
-      <div class="phrases__grid stagger" id="phrases-grid">
-        <!-- Content will be injected by JavaScript -->
+        <div class="phrases__grid stagger" id="phrases-grid">
+          <!-- Content will be injected by JavaScript -->
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ===================================================
+    <!-- ===================================================
        CULTURAL TIPS
        =================================================== -->
-  <section class="section culture" id="culture">
-    <div class="container">
-      <div class="section__header reveal">
-        <h2 class="section__title">Culture & Etiquette</h2>
-        <p class="section__subtitle">Language isn't just words; it's understanding the people.</p>
+    <section class="section culture" id="culture">
+      <div class="container">
+        <div class="section__header reveal">
+          <h2 class="section__title">Culture & Etiquette</h2>
+          <p class="section__subtitle">
+            Language isn't just words; it's understanding the people.
+          </p>
+        </div>
+        <div class="culture__grid stagger">
+          <div class="culture-card">
+            <div class="culture-card__icon">🤝</div>
+            <h3 class="culture-card__title">Du vs. Sie</h3>
+            <p class="culture-card__desc">
+              <strong>Sie</strong> is formal — used with strangers, elders, and
+              in business. <strong>Du</strong> is informal — for friends,
+              family, and children.
+            </p>
+          </div>
+          <div class="culture-card">
+            <div class="culture-card__icon">⏱️</div>
+            <h3 class="culture-card__title">Pünktlichkeit</h3>
+            <p class="culture-card__desc">
+              Punctuality is highly valued in Germany. If a meeting is at 14:00,
+              arriving at 13:55 is "on time". Being 5 minutes late requires an
+              apology.
+            </p>
+          </div>
+          <div class="culture-card">
+            <div class="culture-card__icon">🌍</div>
+            <h3 class="culture-card__title">Mülltrennung</h3>
+            <p class="culture-card__desc">
+              Germans take recycling seriously. You must separate your trash
+              into: Papier (Paper), Plastik/Verpackung (Plastic), Restmüll
+              (General), and Biomüll (Organic).
+            </p>
+          </div>
+        </div>
       </div>
-      <div class="culture__grid stagger">
-        <div class="culture-card">
-          <div class="culture-card__icon">🤝</div>
-          <h3 class="culture-card__title">Du vs. Sie</h3>
-          <p class="culture-card__desc"><strong>Sie</strong> is formal — used with strangers, elders, and in business. <strong>Du</strong> is informal — for friends, family, and children.</p>
-        </div>
-        <div class="culture-card">
-          <div class="culture-card__icon">⏱️</div>
-          <h3 class="culture-card__title">Pünktlichkeit</h3>
-          <p class="culture-card__desc">Punctuality is highly valued in Germany. If a meeting is at 14:00, arriving at 13:55 is "on time". Being 5 minutes late requires an apology.</p>
-        </div>
-        <div class="culture-card">
-          <div class="culture-card__icon">🌍</div>
-          <h3 class="culture-card__title">Mülltrennung</h3>
-          <p class="culture-card__desc">Germans take recycling seriously. You must separate your trash into: Papier (Paper), Plastik/Verpackung (Plastic), Restmüll (General), and Biomüll (Organic).</p>
-        </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ===================================================
+    <!-- ===================================================
        PRONUNCIATION TRAINER
        =================================================== -->
-  <section class="section pronunciation" id="pronunciation">
-    <div class="container">
-      <div class="section__header reveal">
-        <h2 class="section__title">Pronunciation Trainer</h2>
-        <p class="section__subtitle">Master tricky German sounds. Click the buttons to hear the audio.</p>
-      </div>
-      <div class="pronunciation__grid stagger">
-        <!-- Vowels -->
-        <div class="pronunciation__group">
-          <h3 class="pronunciation__group-title">Umlauts (ä, ö, ü)</h3>
-          <div class="pronunciation__card" onclick="speakGerman('Mädchen')">
-            <span class="pronunciation__letter">ä</span>
-            <span class="pronunciation__word">Mädchen</span>
-            <span class="pronunciation__hint">Like the 'e' in "bed"</span>
-            <span class="pronunciation__play">🔊</span>
+    <section class="section pronunciation" id="pronunciation">
+      <div class="container">
+        <div class="section__header reveal">
+          <h2 class="section__title">Pronunciation Trainer</h2>
+          <p class="section__subtitle">
+            Master tricky German sounds. Click the buttons to hear the audio.
+          </p>
+        </div>
+        <div class="pronunciation__grid stagger">
+          <!-- Vowels -->
+          <div class="pronunciation__group">
+            <h3 class="pronunciation__group-title">Umlauts (ä, ö, ü)</h3>
+            <div class="pronunciation__card" onclick="speakGerman('Mädchen')">
+              <span class="pronunciation__letter">ä</span>
+              <span class="pronunciation__word">Mädchen</span>
+              <span class="pronunciation__hint">Like the 'e' in "bed"</span>
+              <span class="pronunciation__play">🔊</span>
+            </div>
+            <div class="pronunciation__card" onclick="speakGerman('schön')">
+              <span class="pronunciation__letter">ö</span>
+              <span class="pronunciation__word">schön</span>
+              <span class="pronunciation__hint"
+                >Shape lips for 'o', say 'e'</span
+              >
+              <span class="pronunciation__play">🔊</span>
+            </div>
+            <div class="pronunciation__card" onclick="speakGerman('über')">
+              <span class="pronunciation__letter">ü</span>
+              <span class="pronunciation__word">über</span>
+              <span class="pronunciation__hint"
+                >Shape lips for 'u', say 'ee'</span
+              >
+              <span class="pronunciation__play">🔊</span>
+            </div>
           </div>
-          <div class="pronunciation__card" onclick="speakGerman('schön')">
-            <span class="pronunciation__letter">ö</span>
-            <span class="pronunciation__word">schön</span>
-            <span class="pronunciation__hint">Shape lips for 'o', say 'e'</span>
-            <span class="pronunciation__play">🔊</span>
-          </div>
-          <div class="pronunciation__card" onclick="speakGerman('über')">
-            <span class="pronunciation__letter">ü</span>
-            <span class="pronunciation__word">über</span>
-            <span class="pronunciation__hint">Shape lips for 'u', say 'ee'</span>
-            <span class="pronunciation__play">🔊</span>
+
+          <!-- Consonants -->
+          <div class="pronunciation__group">
+            <h3 class="pronunciation__group-title">Tricky Consonants</h3>
+            <div class="pronunciation__card" onclick="speakGerman('Wasser')">
+              <span class="pronunciation__letter">w</span>
+              <span class="pronunciation__word">Wasser</span>
+              <span class="pronunciation__hint"
+                >Pronounced like English 'v'</span
+              >
+              <span class="pronunciation__play">🔊</span>
+            </div>
+            <div class="pronunciation__card" onclick="speakGerman('Vater')">
+              <span class="pronunciation__letter">v</span>
+              <span class="pronunciation__word">Vater</span>
+              <span class="pronunciation__hint"
+                >Pronounced like English 'f'</span
+              >
+              <span class="pronunciation__play">🔊</span>
+            </div>
+            <div class="pronunciation__card" onclick="speakGerman('Zeit')">
+              <span class="pronunciation__letter">z</span>
+              <span class="pronunciation__word">Zeit</span>
+              <span class="pronunciation__hint"
+                >Pronounced like 'ts' in "cats"</span
+              >
+              <span class="pronunciation__play">🔊</span>
+            </div>
           </div>
         </div>
-
-        <!-- Consonants -->
-        <div class="pronunciation__group">
-          <h3 class="pronunciation__group-title">Tricky Consonants</h3>
-          <div class="pronunciation__card" onclick="speakGerman('Wasser')">
-            <span class="pronunciation__letter">w</span>
-            <span class="pronunciation__word">Wasser</span>
-            <span class="pronunciation__hint">Pronounced like English 'v'</span>
-            <span class="pronunciation__play">🔊</span>
-          </div>
-          <div class="pronunciation__card" onclick="speakGerman('Vater')">
-            <span class="pronunciation__letter">v</span>
-            <span class="pronunciation__word">Vater</span>
-            <span class="pronunciation__hint">Pronounced like English 'f'</span>
-            <span class="pronunciation__play">🔊</span>
-          </div>
-          <div class="pronunciation__card" onclick="speakGerman('Zeit')">
-            <span class="pronunciation__letter">z</span>
-            <span class="pronunciation__word">Zeit</span>
-            <span class="pronunciation__hint">Pronounced like 'ts' in "cats"</span>
-            <span class="pronunciation__play">🔊</span>
-          </div>
-        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ===================================================
+    <!-- ===================================================
        LEARNING RESOURCES
        =================================================== -->
-  <section class="section resources" id="resources">
-    <div class="container">
-      <div class="section__header reveal">
-        <h2 class="section__title">Learning Resources</h2>
-        <p class="section__subtitle">External tools, courses, and references to supercharge your German A1 journey.</p>
+    <section class="section resources" id="resources">
+      <div class="container">
+        <div class="section__header reveal">
+          <h2 class="section__title">Learning Resources</h2>
+          <p class="section__subtitle">
+            External tools, courses, and references to supercharge your German
+            A1 journey.
+          </p>
+        </div>
+
+        <h3 class="resources__category-label reveal">
+          📺 Courses & Video Lessons
+        </h3>
+        <div class="resources__grid stagger">
+          <div class="resource-card">
+            <div
+              class="resource-card__icon"
+              style="background: rgba(108, 99, 255, 0.1)"
+            >
+              📺
+            </div>
+            <h3 class="resource-card__title">Deutsche Welle — Nicos Weg</h3>
+            <p class="resource-card__desc">
+              Free video course for beginners. Follow Nico's journey in Germany.
+            </p>
+            <a
+              href="https://learngerman.dw.com/en/nicos-weg/c-36519789"
+              class="resource-card__link"
+              >Visit DW Learn →</a
+            >
+          </div>
+          <div class="resource-card">
+            <div
+              class="resource-card__icon"
+              style="background: rgba(255, 75, 75, 0.1)"
+            >
+              ▶️
+            </div>
+            <h3 class="resource-card__title">Learn German with Anja</h3>
+            <p class="resource-card__desc">
+              Popular YouTube channel with energetic lessons on grammar and
+              culture.
+            </p>
+            <a
+              href="https://www.youtube.com/c/LearnGermanwithAnja"
+              class="resource-card__link"
+              >Watch on YouTube →</a
+            >
+          </div>
+          <div class="resource-card">
+            <div
+              class="resource-card__icon"
+              style="background: rgba(255, 213, 79, 0.1)"
+            >
+              🚶
+            </div>
+            <h3 class="resource-card__title">Easy German</h3>
+            <p class="resource-card__desc">
+              Street interviews in Germany. Great for hearing natural, spoken
+              German.
+            </p>
+            <a
+              href="https://www.youtube.com/c/EasyGerman"
+              class="resource-card__link"
+              >Watch Easy German →</a
+            >
+          </div>
+        </div>
+
+        <h3 class="resources__category-label reveal">📖 Practice & Grammar</h3>
+        <div class="resources__grid stagger">
+          <div class="resource-card">
+            <div
+              class="resource-card__icon"
+              style="background: rgba(0, 191, 166, 0.1)"
+            >
+              🏛️
+            </div>
+            <h3 class="resource-card__title">Goethe-Institut A1</h3>
+            <p class="resource-card__desc">
+              Official practice exercises and mock exams for the
+              Goethe-Zertifikat A1.
+            </p>
+            <a
+              href="https://www.goethe.de/en/spr/kup/prf/prf/gzsd1.html"
+              class="resource-card__link"
+              >Visit Goethe →</a
+            >
+          </div>
+          <div class="resource-card">
+            <div
+              class="resource-card__icon"
+              style="background: rgba(255, 112, 67, 0.1)"
+            >
+              📖
+            </div>
+            <h3 class="resource-card__title">Schubert Verlag</h3>
+            <p class="resource-card__desc">
+              Free A1 grammar and vocabulary exercises from the textbook
+              publisher.
+            </p>
+            <a
+              href="https://www.schubert-verlag.de/aufgaben/uebungen_a1/a1_uebungen_index.htm"
+              class="resource-card__link"
+              >Practice Now →</a
+            >
+          </div>
+          <div class="resource-card">
+            <div
+              class="resource-card__icon"
+              style="background: rgba(66, 165, 245, 0.1)"
+            >
+              📝
+            </div>
+            <h3 class="resource-card__title">German is Easy! Blog</h3>
+            <p class="resource-card__desc">
+              Humorous, insightful explanations of confusing German grammar
+              concepts.
+            </p>
+            <a href="https://yourdailygerman.com/" class="resource-card__link"
+              >Read the Blog →</a
+            >
+          </div>
+        </div>
+
+        <h3 class="resources__category-label reveal">
+          🛠️ Tools & Dictionaries
+        </h3>
+        <div class="resources__grid stagger">
+          <div class="resource-card">
+            <div
+              class="resource-card__icon"
+              style="background: rgba(66, 165, 245, 0.1)"
+            >
+              📚
+            </div>
+            <h3 class="resource-card__title">Dict.cc — Dictionary</h3>
+            <p class="resource-card__desc">
+              The most comprehensive German-English dictionary with
+              pronunciation.
+            </p>
+            <a href="https://www.dict.cc/" class="resource-card__link"
+              >Look Up Words →</a
+            >
+          </div>
+          <div class="resource-card">
+            <div
+              class="resource-card__icon"
+              style="background: rgba(236, 64, 122, 0.1)"
+            >
+              🗣️
+            </div>
+            <h3 class="resource-card__title">Forvo — Pronunciation</h3>
+            <p class="resource-card__desc">
+              Hear native speakers pronounce any German word.
+            </p>
+            <a
+              href="https://forvo.com/languages/de/"
+              class="resource-card__link"
+              >Listen to Pronunciation →</a
+            >
+          </div>
+          <div class="resource-card">
+            <div
+              class="resource-card__icon"
+              style="background: rgba(171, 71, 188, 0.1)"
+            >
+              🔤
+            </div>
+            <h3 class="resource-card__title">
+              Verbformen.de — Verb Conjugator
+            </h3>
+            <p class="resource-card__desc">
+              Instantly conjugate any German verb in all tenses.
+            </p>
+            <a href="https://www.verbformen.de/" class="resource-card__link"
+              >Conjugate Verbs →</a
+            >
+          </div>
+        </div>
       </div>
+    </section>
 
-      <h3 class="resources__category-label reveal">📺 Courses & Video Lessons</h3>
-      <div class="resources__grid stagger">
-        <div class="resource-card">
-          <div class="resource-card__icon" style="background: rgba(108, 99, 255, 0.1);">📺</div>
-          <h3 class="resource-card__title">Deutsche Welle — Nicos Weg</h3>
-          <p class="resource-card__desc">Free video course for beginners. Follow Nico's journey in Germany.</p>
-          <a href="https://learngerman.dw.com/en/nicos-weg/c-36519789" class="resource-card__link">Visit DW Learn →</a>
-        </div>
-        <div class="resource-card">
-          <div class="resource-card__icon" style="background: rgba(255, 75, 75, 0.1);">▶️</div>
-          <h3 class="resource-card__title">Learn German with Anja</h3>
-          <p class="resource-card__desc">Popular YouTube channel with energetic lessons on grammar and culture.</p>
-          <a href="https://www.youtube.com/c/LearnGermanwithAnja" class="resource-card__link">Watch on YouTube →</a>
-        </div>
-        <div class="resource-card">
-          <div class="resource-card__icon" style="background: rgba(255, 213, 79, 0.1);">🚶</div>
-          <h3 class="resource-card__title">Easy German</h3>
-          <p class="resource-card__desc">Street interviews in Germany. Great for hearing natural, spoken German.</p>
-          <a href="https://www.youtube.com/c/EasyGerman" class="resource-card__link">Watch Easy German →</a>
-        </div>
-      </div>
-
-      <h3 class="resources__category-label reveal">📖 Practice & Grammar</h3>
-      <div class="resources__grid stagger">
-        <div class="resource-card">
-          <div class="resource-card__icon" style="background: rgba(0, 191, 166, 0.1);">🏛️</div>
-          <h3 class="resource-card__title">Goethe-Institut A1</h3>
-          <p class="resource-card__desc">Official practice exercises and mock exams for the Goethe-Zertifikat A1.</p>
-          <a href="https://www.goethe.de/en/spr/kup/prf/prf/gzsd1.html" class="resource-card__link">Visit Goethe →</a>
-        </div>
-        <div class="resource-card">
-          <div class="resource-card__icon" style="background: rgba(255, 112, 67, 0.1);">📖</div>
-          <h3 class="resource-card__title">Schubert Verlag</h3>
-          <p class="resource-card__desc">Free A1 grammar and vocabulary exercises from the textbook publisher.</p>
-          <a href="https://www.schubert-verlag.de/aufgaben/uebungen_a1/a1_uebungen_index.htm" class="resource-card__link">Practice Now →</a>
-        </div>
-        <div class="resource-card">
-          <div class="resource-card__icon" style="background: rgba(66, 165, 245, 0.1);">📝</div>
-          <h3 class="resource-card__title">German is Easy! Blog</h3>
-          <p class="resource-card__desc">Humorous, insightful explanations of confusing German grammar concepts.</p>
-          <a href="https://yourdailygerman.com/" class="resource-card__link">Read the Blog →</a>
-        </div>
-      </div>
-
-      <h3 class="resources__category-label reveal">🛠️ Tools & Dictionaries</h3>
-      <div class="resources__grid stagger">
-        <div class="resource-card">
-          <div class="resource-card__icon" style="background: rgba(66, 165, 245, 0.1);">📚</div>
-          <h3 class="resource-card__title">Dict.cc — Dictionary</h3>
-          <p class="resource-card__desc">The most comprehensive German-English dictionary with pronunciation.</p>
-          <a href="https://www.dict.cc/" class="resource-card__link">Look Up Words →</a>
-        </div>
-        <div class="resource-card">
-          <div class="resource-card__icon" style="background: rgba(236, 64, 122, 0.1);">🗣️</div>
-          <h3 class="resource-card__title">Forvo — Pronunciation</h3>
-          <p class="resource-card__desc">Hear native speakers pronounce any German word.</p>
-          <a href="https://forvo.com/languages/de/" class="resource-card__link">Listen to Pronunciation →</a>
-        </div>
-        <div class="resource-card">
-          <div class="resource-card__icon" style="background: rgba(171, 71, 188, 0.1);">🔤</div>
-          <h3 class="resource-card__title">Verbformen.de — Verb Conjugator</h3>
-          <p class="resource-card__desc">Instantly conjugate any German verb in all tenses.</p>
-          <a href="https://www.verbformen.de/" class="resource-card__link">Conjugate Verbs →</a>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ===================================================
+    <!-- ===================================================
        FOOTER
        =================================================== -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer__inner">
-        <div class="footer__brand">
-          <span class="footer__logo">⚡ DeutschBlitz</span>
-          <p>Mastering German A1 through gamification.</p>
+    <footer class="footer">
+      <div class="container">
+        <div class="footer__inner">
+          <div class="footer__brand">
+            <span class="footer__logo">⚡ DeutschBlitz</span>
+            <p>Mastering German A1 through gamification.</p>
+          </div>
+          <div class="footer__links">
+            <a href="#hero">Home</a>
+            <a href="article-trainer.html">Articles</a>
+            <a href="verb-trainer.html">Verbs</a>
+            <a href="sentence-builder.html">Sentences</a>
+            <a href="vocab-quiz.html">Vocabulary</a>
+            <a href="grammar.html">Grammar</a>
+            <a href="#phrases">Phrases</a>
+          </div>
         </div>
-        <div class="footer__links">
-          <a href="#hero">Home</a>
-          <a href="article-trainer.html">Articles</a>
-          <a href="verb-trainer.html">Verbs</a>
-          <a href="sentence-builder.html">Sentences</a>
-          <a href="vocab-quiz.html">Vocabulary</a>
-          <a href="grammar.html">Grammar</a>
-          <a href="#phrases">Phrases</a>
+        <div class="footer__copyright">
+          © 2026 DeutschBlitz. Built for language learners.
         </div>
       </div>
-      <div class="footer__copyright">
-        © 2026 DeutschBlitz. Built for language learners.
+    </footer>
+
+    <!-- Auth Modal Overlay -->
+    <div class="auth-overlay" id="auth-overlay">
+      <div class="auth-modal">
+        <button class="auth-modal__close" onclick="closeAuthModal()">✕</button>
+        <div class="auth-modal__header">
+          <span class="auth-modal__emoji" id="auth-modal-emoji">⚡</span>
+          <h2 class="auth-modal__title" id="auth-modal-title">Welcome Back</h2>
+          <p class="auth-modal__subtitle" id="auth-modal-subtitle">
+            Log in to sync your progress
+          </p>
+        </div>
+
+        <div class="auth-error" id="auth-error"></div>
+
+        <form class="auth-form" onsubmit="handleAuthSubmit(event)">
+          <div
+            class="auth-form__group"
+            id="auth-name-group"
+            style="display: none"
+          >
+            <label class="auth-form__label" for="auth-name">Display Name</label>
+            <input
+              class="auth-form__input"
+              type="text"
+              id="auth-name"
+              placeholder="e.g. Sohan"
+              autocomplete="name"
+            />
+          </div>
+          <div class="auth-form__group">
+            <label class="auth-form__label" for="auth-email">Email</label>
+            <input
+              class="auth-form__input"
+              type="email"
+              id="auth-email"
+              placeholder="your@email.com"
+              autocomplete="email"
+              required
+            />
+          </div>
+          <div class="auth-form__group">
+            <label class="auth-form__label" for="auth-password">Password</label>
+            <input
+              class="auth-form__input"
+              type="password"
+              id="auth-password"
+              placeholder="Min. 6 characters"
+              autocomplete="current-password"
+              required
+              minlength="6"
+            />
+          </div>
+          <button
+            type="submit"
+            class="auth-form__submit"
+            id="auth-submit-btn"
+            data-mode="login"
+          >
+            ⚡ Log In
+          </button>
+        </form>
+
+        <div class="auth-divider">
+          <div class="auth-divider__line"></div>
+          <span class="auth-divider__text">or</span>
+          <div class="auth-divider__line"></div>
+        </div>
+
+        <button
+          class="auth-google-btn"
+          id="auth-google-btn"
+          onclick="handleGoogleSignIn()"
+        >
+          <svg class="auth-google-btn__icon" viewBox="0 0 24 24">
+            <path
+              fill="#4285F4"
+              d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"
+            />
+            <path
+              fill="#34A853"
+              d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+            />
+            <path
+              fill="#FBBC05"
+              d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+            />
+            <path
+              fill="#EA4335"
+              d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+            />
+          </svg>
+          Continue with Google
+        </button>
+
+        <div class="auth-toggle">
+          <span id="auth-toggle-text">Don't have an account? </span>
+          <button
+            class="auth-toggle__link"
+            id="auth-toggle-link"
+            type="button"
+            onclick="setAuthMode('signup')"
+          >
+            Sign up
+          </button>
+        </div>
       </div>
     </div>
-  </footer>
 
-  <script src="app.js"></script>
-</body>
+    <!-- Firebase SDK (compat mode for CDN usage) -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+    <script src="auth.js"></script>
+    <script src="app.js"></script>
+  </body>
 </html>
