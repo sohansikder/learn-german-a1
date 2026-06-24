@@ -119,7 +119,7 @@ async function authSignInWithGoogle() {
           email: cred.user.email,
           createdAt: firebase.firestore.FieldValue.serverTimestamp(),
         });
-      await mergeLocalProgressToCloud(cred.user.uid);
+      await syncProgressWithCloud(cred.user.uid);
     }
 
     closeAuthModal();
@@ -204,11 +204,9 @@ async function loadProgressFromCloud() {
   }
 }
 
-async function mergeLocalProgressToCloud(uid) {
+async function syncProgressWithCloud(uid) {
   const localData = JSON.parse(localStorage.getItem("db_gameState") || "{}");
   const localVocab = JSON.parse(localStorage.getItem("vocabStats_v2") || "{}");
-
-  if (Object.keys(localData).length === 0 && Object.keys(localVocab).length === 0) return;
 
   try {
     const cloudDoc = await db_firestore
@@ -397,16 +395,16 @@ async function handleAuthStateChanged(user) {
   updateAuthUI(user);
 
   if (user) {
-    // Load cloud progress
-    const cloudData = await loadProgressFromCloud();
-    if (cloudData) {
-      localStorage.setItem("db_gameState", JSON.stringify(cloudData));
-    }
+    // Perform bidirectional sync of local and cloud progress
+    await syncProgressWithCloud(user.uid);
 
     // Update counters on main page
     if (typeof updateNavbarCounters === "function") {
       updateNavbarCounters();
     }
+    
+    // Notify React components (like vocab-quiz) that stats are ready
+    window.dispatchEvent(new Event("db_progressLoaded"));
 
     showSyncStatus("synced");
     console.log(
