@@ -18,8 +18,21 @@
     <link rel="stylesheet" href="auth.css" />
     <link
       rel="icon"
-      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y=\".9em\" font-size=\"90\">⚡</text></svg>"
     />
+    
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
+    <!-- Auth Logic -->
+    <script src="auth.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        if (typeof initFirebase === "function") initFirebase();
+      });
+    </script>
+    
     <style>
       .trainer-page {
         min-height: 100vh;
@@ -535,6 +548,23 @@
           >
             👤 Log In
           </button>
+          
+          <!-- Global Progress Widget (shown when logged in) -->
+          <div
+            class="navbar__progress"
+            id="global-progress-widget"
+            style="display: none; align-items: center; gap: 12px; margin-right: 16px;"
+          >
+            <div class="progress-badge" style="display: flex; align-items: center; gap: 4px; background: rgba(59, 130, 246, 0.2); padding: 4px 10px; border-radius: 20px; font-weight: 700; color: #60a5fa; font-size: 0.9rem;">
+              <span>⭐</span>
+              <span id="nav-level-display">Lvl 1</span>
+            </div>
+            <div class="progress-bar-container" style="width: 100px; height: 8px; background: rgba(255, 255, 255, 0.1); border-radius: 4px; overflow: hidden; position: relative;">
+              <div id="nav-xp-fill" style="width: 0%; height: 100%; background: var(--gradient-primary); transition: width 0.5s ease-out;"></div>
+            </div>
+            <span id="nav-xp-text" style="font-size: 0.8rem; color: #94a3b8; font-variant-numeric: tabular-nums;">0 / 100 XP</span>
+          </div>
+
           <div
             class="navbar__user"
             id="auth-user-widget"
