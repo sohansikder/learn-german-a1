@@ -150,12 +150,16 @@ async function saveProgressToCloud(data) {
   if (!db_currentUser || !db_firestore) return;
 
   try {
+    // Append vocabStats_v2 to the cloud payload so it stays synced
+    const vocabStats = JSON.parse(localStorage.getItem("vocabStats_v2") || "{}");
+    const payload = { ...data, vocabStats_v2: vocabStats };
+
     await db_firestore
       .collection("users")
       .doc(db_currentUser.uid)
       .collection("data")
       .doc("progress")
-      .set(data, { merge: true });
+      .set(payload, { merge: true });
 
     // Also save locally as cache
     localStorage.setItem("db_gameState", JSON.stringify(data));
@@ -179,8 +183,18 @@ async function loadProgressFromCloud() {
 
     if (doc.exists) {
       const data = doc.data();
+      
+      // Restore vocabStats_v2 to localStorage
+      if (data.vocabStats_v2) {
+        localStorage.setItem("vocabStats_v2", JSON.stringify(data.vocabStats_v2));
+      }
+      
+      // Remove it from gameState cache to keep it clean
+      const gameStateData = { ...data };
+      delete gameStateData.vocabStats_v2;
+
       // Update local cache
-      localStorage.setItem("db_gameState", JSON.stringify(data));
+      localStorage.setItem("db_gameState", JSON.stringify(gameStateData));
       return data;
     }
     return null;
@@ -192,7 +206,9 @@ async function loadProgressFromCloud() {
 
 async function mergeLocalProgressToCloud(uid) {
   const localData = JSON.parse(localStorage.getItem("db_gameState") || "{}");
-  if (Object.keys(localData).length === 0) return;
+  const localVocab = JSON.parse(localStorage.getItem("vocabStats_v2") || "{}");
+
+  if (Object.keys(localData).length === 0 && Object.keys(localVocab).length === 0) return;
 
   try {
     const cloudDoc = await db_firestore
@@ -203,9 +219,11 @@ async function mergeLocalProgressToCloud(uid) {
       .get();
 
     let merged = { ...localData };
+    let mergedVocab = { ...localVocab };
 
     if (cloudDoc.exists) {
       const cloudData = cloudDoc.data();
+      
       // Keep the higher values (best of local & cloud)
       merged = {
         xp: Math.max(cloudData.xp || 0, localData.xp || 0),
@@ -234,16 +252,39 @@ async function mergeLocalProgressToCloud(uid) {
           ),
         },
       };
+
+      // Merge vocabStats_v2
+      if (cloudData.vocabStats_v2) {
+        for (const key in cloudData.vocabStats_v2) {
+          if (!mergedVocab[key]) {
+            mergedVocab[key] = cloudData.vocabStats_v2[key];
+          } else {
+            mergedVocab[key] = {
+              ...mergedVocab[key],
+              ...cloudData.vocabStats_v2[key],
+              score: Math.max(mergedVocab[key].score || 0, cloudData.vocabStats_v2[key].score || 0),
+              wordsLearned: Math.max(mergedVocab[key].wordsLearned || 0, cloudData.vocabStats_v2[key].wordsLearned || 0),
+              attempts: Math.max(mergedVocab[key].attempts || 0, cloudData.vocabStats_v2[key].attempts || 0),
+            };
+          }
+        }
+      }
     }
+
+    const payloadToCloud = {
+      ...merged,
+      vocabStats_v2: mergedVocab
+    };
 
     await db_firestore
       .collection("users")
       .doc(uid)
       .collection("data")
       .doc("progress")
-      .set(merged, { merge: true });
+      .set(payloadToCloud, { merge: true });
 
     localStorage.setItem("db_gameState", JSON.stringify(merged));
+    localStorage.setItem("vocabStats_v2", JSON.stringify(mergedVocab));
   } catch (err) {
     console.error("[DeutschBlitz Auth] Merge error:", err);
   }
