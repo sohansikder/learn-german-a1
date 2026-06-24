@@ -3626,3 +3626,10 @@ a.explore-card,
     padding: var(--space-lg);
   }
 }
+
+@media (max-width: 640px) {
+  .progress-bar-container, #nav-xp-text { display: none !important; }
+  .trainer-topbar__title { display: none !important; }
+  .hide-text-mobile { display: none !important; }
+}
+button, a { touch-action: manipulation; }

@@ -36,6 +36,7 @@
     <style>
       .trainer-page {
         min-height: 100vh;
+        min-height: 100dvh;
         display: flex;
         flex-direction: column;
       }
@@ -513,13 +514,19 @@
           padding: var(--space-sm);
         }
       }
+          @media (max-width: 640px) {
+        .progress-bar-container, #nav-xp-text { display: none !important; }
+        .trainer-topbar__title { display: none !important; }
+        .hide-text-mobile { display: none !important; }
+      }
+      button, a { touch-action: manipulation; }
     </style>
   </head>
   <body>
     <div class="trainer-page">
       <div class="trainer-topbar">
         <div style="flex: 1">
-          <a href="index.html" class="trainer-topbar__back">← Home</a>
+          <a href="index.html" class="trainer-topbar__back">←<span class="hide-text-mobile"> Home</span></a>
         </div>
         <span
           class="trainer-topbar__title"

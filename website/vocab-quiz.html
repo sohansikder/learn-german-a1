@@ -121,6 +121,7 @@
         background: var(--bg-primary);
         color: var(--text-primary);
         min-height: 100vh;
+        min-height: 100dvh;
         -webkit-font-smoothing: antialiased;
         overflow-x: hidden;
       }
@@ -360,6 +361,7 @@
        ═══════════════════════════════════════════════ */
       .game-container {
         min-height: 100vh;
+        min-height: 100dvh;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -535,6 +537,7 @@
        ═══════════════════════════════════════════════ */
       .results-container {
         min-height: 100vh;
+        min-height: 100dvh;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -900,6 +903,12 @@
       ::-webkit-scrollbar-thumb:hover {
         background: var(--text-muted);
       }
+          @media (max-width: 640px) {
+        .progress-bar-container, #nav-xp-text { display: none !important; }
+        .trainer-topbar__title { display: none !important; }
+        .hide-text-mobile { display: none !important; }
+      }
+      button, a { touch-action: manipulation; }
     </style>
   </head>
   <body>
